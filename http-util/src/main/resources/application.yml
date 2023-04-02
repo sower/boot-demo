@@ -1,0 +1,42 @@
+https:
+  connectionTimeout: 50
+  keepAliveTimeout: 10
+  readTimeout: 10000
+  writeTimeout: 10000
+  callTimeout: 10000
+
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            url: http://httpbin.org
+            connectTimeout: 5000
+            readTimeout: 5000
+            loggerLevel: full
+            errorDecoder: com.example.SimpleErrorDecoder
+            retryer: com.example.SimpleRetryer
+            defaultQueryParameters:
+              query: queryValue
+            defaultRequestHeaders:
+              header: headerValue
+            requestInterceptors:
+              - com.example.FooRequestInterceptor
+              - com.example.BarRequestInterceptor
+            responseInterceptor: com.example.BazResponseInterceptor
+            dismiss404: false
+            encoder: com.example.SimpleEncoder
+            decoder: com.example.SimpleDecoder
+            contract: com.example.SimpleContract
+            capabilities:
+              - com.example.FooCapability
+              - com.example.BarCapability
+            queryMapEncoder: com.example.SimpleQueryMapEncoder
+            micrometer.enabled: false
