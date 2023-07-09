@@ -7,20 +7,20 @@ package me.boot.base.utils;
  */
 public class BaseContextHolder {
 
-  private static final ThreadLocal<BaseContext> contextHolder = new InheritableThreadLocal<>();
+    private static final ThreadLocal<BaseContext> contextHolder = new InheritableThreadLocal<>();
 
-  // 设置变量
-  public static void setContext(BaseContext baseContext) {
-    contextHolder.set(baseContext);
-  }
-
-  public static BaseContext getContext() {
-    BaseContext baseContext = contextHolder.get();
-    if (baseContext == null) {
-      baseContext = new BaseContext();
-      setContext(baseContext);
+    // 设置变量
+    public static void setContext(BaseContext baseContext) {
+        contextHolder.set(baseContext);
     }
 
-    return baseContext;
-  }
+    public static BaseContext getContext() {
+        BaseContext baseContext = contextHolder.get();
+        if (baseContext == null) {
+            baseContext = new BaseContext();
+            setContext(baseContext);
+        }
+
+        return baseContext;
+    }
 }

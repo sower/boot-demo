@@ -39,129 +39,128 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OkHttpUtil  implements HttpsUtil {
+public class OkHttpUtil implements HttpsUtil {
 
-  private static OkHttpClient client;
+    private static OkHttpClient client;
 
-  @Autowired
-  public void setClient(OkHttpClient client) {
-    this.client = client;
-  }
-
-  public Map<String, String> queryParams;
-  private String url;
-  public static MediaType JSON_MEDIA_TYPE = MediaType.get("application/json; charset=utf-8");
-
-  private Request.Builder request;
-  private Map<String, String> headers;
-  private RequestBody body;
-
-  public static RequestBody jsonBody(@NotNull String json) {
-    return RequestBody.create(json, JSON_MEDIA_TYPE);
-  }
-
-  public static RequestBody jsonBody(Object obj) {
-    if (obj == null) {
-      return null;
+    @Autowired
+    public void setClient(OkHttpClient client) {
+        this.client = client;
     }
-    return jsonBody(JSON.toJSONString(obj));
-  }
 
-  public static FormBody formBody(Map<String, String> map) {
-    FormBody.Builder formBody = new FormBody.Builder(StandardCharsets.UTF_8);
-    map.forEach(formBody::addEncoded);
-    return formBody.build();
-  }
+    public Map<String, String> queryParams;
+    private String url;
+    public static MediaType JSON_MEDIA_TYPE = MediaType.get("application/json; charset=utf-8");
 
-  public OkHttpUtil fileBody() {
-    RequestBody fileBody =
-        RequestBody.create(new File("path/attachment.png"), MediaType.parse("image/png"));
-    body =
-        new MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart("file", "head_img", fileBody)
-            .addFormDataPart("key", "val")
-            .build();
-    return this;
-  }
+    private Request.Builder request;
+    private Map<String, String> headers;
+    private RequestBody body;
 
-  private void beforeRequest() {
-    log.info("build request");
+    public static RequestBody jsonBody(@NotNull String json) {
+        return RequestBody.create(json, JSON_MEDIA_TYPE);
+    }
 
-    // 构建url
-    HttpUrl.Builder urlBuilder = HttpUrl.get(url).newBuilder();
-    if (ObjectUtils.isNotEmpty(queryParams)) {
-      queryParams.forEach(
-          (key, value) -> {
-            if (value != null) {
-              urlBuilder.addQueryParameter(key, value);
+    public static RequestBody jsonBody(Object obj) {
+        if (obj == null) {
+            return null;
+        }
+        return jsonBody(JSON.toJSONString(obj));
+    }
+
+    public static FormBody formBody(Map<String, String> map) {
+        FormBody.Builder formBody = new FormBody.Builder(StandardCharsets.UTF_8);
+        map.forEach(formBody::addEncoded);
+        return formBody.build();
+    }
+
+    public OkHttpUtil fileBody() {
+        RequestBody fileBody =
+            RequestBody.create(new File("path/attachment.png"), MediaType.parse("image/png"));
+        body =
+            new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", "head_img", fileBody)
+                .addFormDataPart("key", "val")
+                .build();
+        return this;
+    }
+
+    private void beforeRequest() {
+        log.info("build request");
+
+        // 构建url
+        HttpUrl.Builder urlBuilder = HttpUrl.get(url).newBuilder();
+        if (ObjectUtils.isNotEmpty(queryParams)) {
+            queryParams.forEach(
+                (key, value) -> {
+                    if (value != null) {
+                        urlBuilder.addQueryParameter(key, value);
+                    }
+                });
+        }
+
+        request = new Request.Builder().url(urlBuilder.build());
+        if (ObjectUtils.isNotEmpty(headers)) {
+            request.headers(Headers.of(headers));
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public String executeRequest(String method) {
+        try {
+            beforeRequest();
+            request.method(method, body);
+            Response response = client.newCall(request.build()).execute();
+            ResponseBody responseBody = Optional.ofNullable(response.body())
+                .orElse(ResponseBody.create("", null));
+            return responseBody.string();
+        } finally {
+            log.info("end request");
+        }
+    }
+
+
+    private static volatile Semaphore semaphore = null;
+
+    /**
+     * 用于异步请求时，控制访问线程数，返回结果
+     */
+    private static Semaphore getSemaphoreInstance() {
+        // 只能1个线程同时访问
+        synchronized (OkHttpUtil.class) {
+            if (semaphore == null) {
+                semaphore = new Semaphore(0);
             }
-          });
+        }
+        return semaphore;
     }
 
-    request = new Request.Builder().url(urlBuilder.build());
-    if (ObjectUtils.isNotEmpty(headers)) {
-      request.headers(Headers.of(headers));
+    public String async() {
+        StringBuffer buffer = new StringBuffer();
+        client
+            .newCall(request.build())
+            .enqueue(
+                new Callback() {
+
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        buffer.append("request failed: ").append(e.getMessage());
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response)
+                        throws IOException {
+                        ResponseBody body = response.body();
+                        if (body != null) {
+                            buffer.append(body.string());
+                        }
+                        getSemaphoreInstance().release();
+                    }
+                });
+        getSemaphoreInstance().release();
+        return buffer.toString();
     }
-  }
-
-  @Override
-  @SneakyThrows
-  public String executeRequest(String method) {
-    try {
-      beforeRequest();
-      request.method(method, body);
-      Response response = client.newCall(request.build()).execute();
-      ResponseBody responseBody = Optional.ofNullable(response.body())
-          .orElse(ResponseBody.create("", null));
-      return responseBody.string();
-    } finally {
-      log.info("end request");
-    }
-  }
-
-
-
-  private static volatile Semaphore semaphore = null;
-
-  /**
-   * 用于异步请求时，控制访问线程数，返回结果
-   */
-  private static Semaphore getSemaphoreInstance() {
-    // 只能1个线程同时访问
-    synchronized (OkHttpUtil.class) {
-      if (semaphore == null) {
-        semaphore = new Semaphore(0);
-      }
-    }
-    return semaphore;
-  }
-
-  public String async() {
-    StringBuffer buffer = new StringBuffer();
-    client
-        .newCall(request.build())
-        .enqueue(
-            new Callback() {
-
-              @Override
-              public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                buffer.append("request failed: ").append(e.getMessage());
-                e.printStackTrace();
-              }
-
-              @Override
-              public void onResponse(@NotNull Call call, @NotNull Response response)
-                  throws IOException {
-                ResponseBody body = response.body();
-                if (body != null) {
-                  buffer.append(body.string());
-                }
-                getSemaphoreInstance().release();
-              }
-            });
-    getSemaphoreInstance().release();
-    return buffer.toString();
-  }
 
 }

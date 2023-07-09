@@ -1,0 +1,54 @@
+server:
+  servlet:
+    context-path: /${spring.application.name}
+
+spring:
+
+  application:
+    name: web
+
+  jackson:
+    time-zone: GMT+8
+    locale: zh_CN
+    date-format: yyyy-MM-dd HH:mm:ss
+    #    property-naming-strategy: LOWER_CAMEL_CASE
+    default-property-inclusion: NON_NULL #不为空的属性才会序列化
+    mapper:
+      SORT_PROPERTIES_ALPHABETICALLY: true
+    deserialization:
+      #      # 常用,json中含pojo不存在属性时是否失败报错,默认true
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    serialization:
+      INDENT_OUTPUT: true
+
+
+  jpa:
+    hibernate:
+      # 自动创建、更新、验证数据库表结构
+      ddl-auto: update
+    open-in-view: true
+    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#        new_generator_mappings: false
+#        format_sql: true
+      show-sql: true
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _audit
+            revision_field_name: revision_id
+            revision_type_field_name: revision_type
+            store_data_at_delete: true
+
+
+  datasource:
+    url: jdbc:h2:./web/src/main/resources/data;NON_KEYWORDS=USER
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2
+

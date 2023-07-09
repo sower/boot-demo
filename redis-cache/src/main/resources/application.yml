@@ -7,6 +7,9 @@ spring:
 #    password: ${REDIS_PWD:}
     # 连接超时时间（记得添加单位，Duration）
     timeout: 10000ms
+#    cluster:
+#      nodes: 123
+#      max-redirects: 5
     # Redis默认情况下有16个分片，这里配置具体使用的分片
     # database: 0
     lettuce:

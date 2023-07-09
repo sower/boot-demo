@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = "me.boot")
 public class RedisCacheApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(RedisCacheApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(RedisCacheApplication.class, args);
+    }
 
 }

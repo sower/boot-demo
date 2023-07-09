@@ -18,42 +18,42 @@ import org.apache.commons.lang3.SystemUtils;
 @Slf4j
 public class CommandUtils {
 
-  // non-thread-safe
-  static ProcessBuilder processBuilder;
+    // non-thread-safe
+    static ProcessBuilder processBuilder;
 
-  static File defaultWorkspace;
+    static File defaultWorkspace;
 
-  static {
-    processBuilder = new ProcessBuilder();
-    processBuilder.redirectErrorStream(true);
-    defaultWorkspace = FileUtils.getFile(SystemUtils.JAVA_IO_TMPDIR);
-  }
-
-  public static Map<String, String> getEnvironmentVariables() {
-    return processBuilder.environment();
-  }
-
-  public static void environment(Map<String, String> environment) {
-    environment.entrySet().removeIf(pair -> ObjectUtils.isNotEmpty(pair.getValue()));
-    getEnvironmentVariables().putAll(environment);
-  }
-
-  public static String execute(String... commands) {
-    return execute(defaultWorkspace, commands);
-  }
-
-  public static String execute(File workspace, String... commands) {
-    processBuilder.directory(workspace).command(commands);
-    log.info("At {} execution commands: {}", workspace.getPath(), processBuilder.command());
-    String result = StringUtils.EMPTY;
-    try {
-      Process process = processBuilder.start();
-      result = IOUtils.toString(process.getInputStream(), StandardCharsets.UTF_8);
-      log.info("Process result is: {}", result);
-      log.info("Exit code is {}", process.waitFor());
-    } catch (Exception e) {
-      log.error("Execution failed", e);
+    static {
+        processBuilder = new ProcessBuilder();
+        processBuilder.redirectErrorStream(true);
+        defaultWorkspace = FileUtils.getFile(SystemUtils.JAVA_IO_TMPDIR);
     }
-    return result;
-  }
+
+    public static Map<String, String> getEnvironmentVariables() {
+        return processBuilder.environment();
+    }
+
+    public static void environment(Map<String, String> environment) {
+        environment.entrySet().removeIf(pair -> ObjectUtils.isNotEmpty(pair.getValue()));
+        getEnvironmentVariables().putAll(environment);
+    }
+
+    public static String execute(String... commands) {
+        return execute(defaultWorkspace, commands);
+    }
+
+    public static String execute(File workspace, String... commands) {
+        processBuilder.directory(workspace).command(commands);
+        log.info("At {} execution commands: {}", workspace.getPath(), processBuilder.command());
+        String result = StringUtils.EMPTY;
+        try {
+            Process process = processBuilder.start();
+            result = IOUtils.toString(process.getInputStream(), StandardCharsets.UTF_8);
+            log.info("Process result is: {}", result);
+            log.info("Exit code is {}", process.waitFor());
+        } catch (Exception e) {
+            log.error("Execution failed", e);
+        }
+        return result;
+    }
 }

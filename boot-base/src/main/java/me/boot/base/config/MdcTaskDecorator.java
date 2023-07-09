@@ -13,24 +13,25 @@ import org.springframework.core.task.TaskDecorator;
  * @date 2023/02/19
  */
 public class MdcTaskDecorator implements TaskDecorator {
-  @Override
-  public Runnable decorate(Runnable runnable) {
-    Map<String, String> map = MDC.getCopyOfContextMap();
+
+    @Override
+    public Runnable decorate(Runnable runnable) {
+        Map<String, String> map = MDC.getCopyOfContextMap();
 //    RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
-    return () -> {
-      try {
-        MDC.setContextMap(map);
+        return () -> {
+            try {
+                MDC.setContextMap(map);
 //        RequestContextHolder.setRequestAttributes(attributes);
-        String traceId = MDC.get(Constants.TRACE_ID);
-        if (StringUtils.isBlank(traceId)) {
-          traceId = UUID.randomUUID().toString();
-          MDC.put(Constants.TRACE_ID, traceId);
-        }
-        runnable.run();
-      } finally {
-        MDC.clear();
+                String traceId = MDC.get(Constants.TRACE_ID);
+                if (StringUtils.isBlank(traceId)) {
+                    traceId = UUID.randomUUID().toString();
+                    MDC.put(Constants.TRACE_ID, traceId);
+                }
+                runnable.run();
+            } finally {
+                MDC.clear();
 //        RequestContextHolder.resetRequestAttributes();
-      }
-    };
-  }
+            }
+        };
+    }
 }

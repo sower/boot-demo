@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "https")
 public class HttpsClientConfig {
 
-  int connectionTimeout;
-  int keepAliveTimeout;
-  int readTimeout;
-  int writeTimeout;
-  int callTimeout;
+    int connectionTimeout;
+    int keepAliveTimeout;
+    int readTimeout;
+    int writeTimeout;
+    int callTimeout;
 }

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Minio 配置
+ *
  * @date 2023/04/02
  **/
 @Data
@@ -15,17 +16,17 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "minio")
 public class MinioConfig {
 
-  private String endpoint;
-  private String accessKey;
-  private String secretKey;
-  private String bucketName;
+    private String endpoint;
+    private String accessKey;
+    private String secretKey;
+    private String bucketName;
 
-  @Bean
-  public MinioClient minioClient() {
-    return MinioClient.builder()
-        .endpoint(endpoint)
-        .credentials(accessKey, secretKey)
-        .build();
-  }
+    @Bean
+    public MinioClient minioClient() {
+        return MinioClient.builder()
+            .endpoint(endpoint)
+            .credentials(accessKey, secretKey)
+            .build();
+    }
 }
 
