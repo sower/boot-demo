@@ -1,13 +1,13 @@
-package me.boot.httputil;
+package me.boot.dataaudit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HttpUtilApplication {
+public class DataAuditApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HttpUtilApplication.class, args);
+        SpringApplication.run(DataAuditApplication.class, args);
     }
 
 }

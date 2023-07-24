@@ -2,7 +2,7 @@ package me.boot.base.config;
 
 import java.util.Map;
 import java.util.UUID;
-import me.boot.base.Constant.Constants;
+import me.boot.base.constant.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.core.task.TaskDecorator;

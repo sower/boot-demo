@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Max;
@@ -20,7 +21,7 @@ import javax.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 import me.boot.web.aspect.AnyOf;
-import me.boot.web.bean.converter.JpaConverterList;
+import me.boot.web.bean.converter.ListConverter;
 import org.hibernate.Hibernate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -44,8 +45,8 @@ public class User {
 
     private String password;
 
-    //  @Lob
-    @Convert(converter = JpaConverterList.class)
+    @Lob
+    @Convert(converter = ListConverter.class)
     private List<String> roles;
 
     @Positive
@@ -63,7 +64,7 @@ public class User {
     @Column(name = "birthday")
     private LocalDate birth;
 
-    //  @Enumerated(EnumType.STRING)
+
     @AnyOf(
         values = {"man", "woman"},
         message = "only special values")

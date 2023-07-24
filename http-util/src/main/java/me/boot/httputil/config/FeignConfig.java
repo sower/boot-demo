@@ -5,8 +5,6 @@
 //import java.util.concurrent.TimeUnit;
 //import javax.net.ssl.TrustManager;
 //import javax.net.ssl.X509TrustManager;
-//import me.boot.httputil.util.HttpsUtils;
-//import me.boot.httputil.util.HttpsUtils.BasicLoggingInterceptor;
 //import okhttp3.ConnectionPool;
 //import okhttp3.OkHttpClient;
 //import org.apache.commons.lang3.StringUtils;
@@ -16,6 +14,7 @@
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.core.annotation.AnnotatedElementUtils;
+//import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 //
 ///**
 // * @description
@@ -50,44 +49,44 @@
 //    }
 //  }
 //
-//  @Bean
-//  public OkHttpClient.Builder okHttpClientBuilder(HttpsClientConfig clientConfig) {
-//    TrustManager[] trustManagers = HttpsUtils.buildTrustManagers();
-//    return new OkHttpClient()
-//        .newBuilder()
-//        .addInterceptor(new BasicLoggingInterceptor())
-//        //      .cache(cache) // configure cache
-//        //      .proxy(proxy) // configure proxy
-//        //      .certificatePinner(certificatePinner) // certificate pinning
-//        //      .addNetworkInterceptor(interceptor) // network level interceptor
-//        //      .authenticator(authenticator) // authenticator for requests (it supports similar
-//        // use-cases as "Authorization header" earlier
-//        .callTimeout(
-//            clientConfig.getCallTimeout(), TimeUnit.SECONDS) // default timeout for complete calls
-//        .readTimeout(
-//            clientConfig.getReadTimeout(),
-//            TimeUnit.SECONDS) // default read timeout for new connections
-//        .writeTimeout(
-//            clientConfig.getWriteTimeout(),
-//            TimeUnit.SECONDS) // default write timeout for new connections
-//        //      .dns(dns) // DNS service used to lookup IP addresses for hostnames
-//        //      .followRedirects(true) // follow requests redirects
-//        //      .followSslRedirects(true) // follow HTTP tp HTTPS redirects
-//        //      .connectionPool(connectionPool) // connection pool used to recycle HTTP and HTTPS
-//        // connections
-//        //      .retryOnConnectionFailure(true) // retry or not when a connectivity problem is
-//        // encountered
-//        //      .cookieJar(cookieJar) // cookie manager
-//        //      .dispatcher(dispatcher) // dispatcher used to set policy and execute asynchronous
-//        // requests
-//        .sslSocketFactory(
-//            HttpsUtils.createSSLSocketFactory(trustManagers), (X509TrustManager) trustManagers[0])
-//        .hostnameVerifier((hostName, session) -> StringUtils.isNotBlank(hostName))
-//        // 设置连接池  最大连接数量  , 持续存活的连接
-//        .connectionPool(
-//            new ConnectionPool(
-//                clientConfig.getConnectionTimeout(),
-//                clientConfig.getKeepAliveTimeout(),
-//                TimeUnit.MINUTES));
-//  }
+////  @Bean
+////  public OkHttpClient.Builder okHttpClientBuilder(HttpsClientConfig clientConfig) {
+////    TrustManager[] trustManagers = HttpsUtils.buildTrustManagers();
+////    return new OkHttpClient()
+////        .newBuilder()
+////        .addInterceptor(new BasicLoggingInterceptor())
+////        //      .cache(cache) // configure cache
+////        //      .proxy(proxy) // configure proxy
+////        //      .certificatePinner(certificatePinner) // certificate pinning
+////        //      .addNetworkInterceptor(interceptor) // network level interceptor
+////        //      .authenticator(authenticator) // authenticator for requests (it supports similar
+////        // use-cases as "Authorization header" earlier
+////        .callTimeout(
+////            clientConfig.getCallTimeout(), TimeUnit.SECONDS) // default timeout for complete calls
+////        .readTimeout(
+////            clientConfig.getReadTimeout(),
+////            TimeUnit.SECONDS) // default read timeout for new connections
+////        .writeTimeout(
+////            clientConfig.getWriteTimeout(),
+////            TimeUnit.SECONDS) // default write timeout for new connections
+////        //      .dns(dns) // DNS service used to lookup IP addresses for hostnames
+////        //      .followRedirects(true) // follow requests redirects
+////        //      .followSslRedirects(true) // follow HTTP tp HTTPS redirects
+////        //      .connectionPool(connectionPool) // connection pool used to recycle HTTP and HTTPS
+////        // connections
+////        //      .retryOnConnectionFailure(true) // retry or not when a connectivity problem is
+////        // encountered
+////        //      .cookieJar(cookieJar) // cookie manager
+////        //      .dispatcher(dispatcher) // dispatcher used to set policy and execute asynchronous
+////        // requests
+////        .sslSocketFactory(
+////            HttpsUtils.createSSLSocketFactory(trustManagers), (X509TrustManager) trustManagers[0])
+////        .hostnameVerifier((hostName, session) -> StringUtils.isNotBlank(hostName))
+////        // 设置连接池  最大连接数量  , 持续存活的连接
+////        .connectionPool(
+////            new ConnectionPool(
+////                clientConfig.getConnectionTimeout(),
+////                clientConfig.getKeepAliveTimeout(),
+////                TimeUnit.MINUTES));
+////  }
 //}

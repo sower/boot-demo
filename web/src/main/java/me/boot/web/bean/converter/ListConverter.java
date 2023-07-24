@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
  * @date 2022/10/02
  */
 @Converter
-public class JpaConverterList implements AttributeConverter<Object, String> {
+public class ListConverter implements AttributeConverter<Object, String> {
 
     @Override
     public String convertToDatabaseColumn(Object object) {

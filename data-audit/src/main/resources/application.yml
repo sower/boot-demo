@@ -1,0 +1,51 @@
+
+spring:
+  jpa:
+    hibernate:
+      # 自动创建、更新、验证数据库表结构
+      ddl-auto: update
+    open-in-view: true
+    properties:
+      #      hibernate:
+      #        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      #        new_generator_mappings: false
+      #        format_sql: true
+      show-sql: true
+  #      org:
+  #        hibernate:
+  #          envers:
+  #            audit_table_suffix: _audit
+  #            revision_field_name: revision_id
+  #            revision_type_field_name: revision_type
+  #            store_data_at_delete: true
+
+
+
+  datasource:
+    url: jdbc:h2:./audit-db;NON_KEYWORDS=USER
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
+javers:
+  mappingStyle: FIELD
+  algorithm: SIMPLE
+  commitIdGenerator: synchronized_sequence
+  prettyPrint: true
+  typeSafeValues: false
+  initialChanges: true
+  terminalChanges: true
+  packagesToScan:
+  auditableAspectEnabled: true
+  springDataAuditableRepositoryAspectEnabled: true
+  objectAccessHook:
+  usePrimitiveDefaults: true
+  prettyPrintDateFormats:
+    localDateTime: 'yyyy-MM-dd HH:mm:ss'
+    zonedDateTime: 'yyyy-MM-dd HH:mm:ssZ'
+    localDate: 'yyyy-MM-dd'
+    localTime: 'HH:mm:ss'
