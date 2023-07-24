@@ -1,0 +1,44 @@
+spring:
+  batch:
+    jdbc:
+      isolation-level-for-create: default
+
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      # 自动创建、更新、验证数据库表结构
+      ddl-auto: update
+
+    open-in-view: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        new_generator_mappings: false
+        format_sql: true
+      show-sql: true
+
+
+datasource:
+  mysql:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:web}?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false
+    username: ${DB_USER:root}
+    password: ${DB_PWD:mysql8}
+
+  hsql:
+    driverClassName: org.hsqldb.jdbcDriver
+    jdbcUrl: jdbc:hsqldb:mem:testdb;sql.enforce_strict_size=true;hsqldb.tx=mvcc
+    username: sa
+    password:
+
+
+#logging:
+#  config: classpath:log4j2.yml
+#  level:
+#    org.hibernate.SQL: debug
+#    org.hibernate.engine.QueryParameters: debug
+#    org.hibernate.engine.query.HQLQueryPlan: debug
+#    org.hibernate.type.descriptor.sql.BasicBinder: trace
+#    me:
+#      demo: debug
