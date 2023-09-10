@@ -3,8 +3,8 @@ package me.boot.dataaudit.service;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.boot.dataaudit.entity.User;
-import me.boot.dataaudit.repository.UserDao;
+import me.boot.datajpa.entity.User;
+import me.boot.datajpa.repository.UserDao;
 import org.javers.core.Javers;
 import org.javers.core.metamodel.object.CdoSnapshot;
 import org.javers.repository.jql.JqlQuery;
@@ -41,7 +41,7 @@ public class UserService {
     }
 
     public String getUserShadows(Object id) {
-        User user = userDao.findById((Integer) id).orElse(null);
+        User user = userDao.findById((String) id).orElse(null);
         JqlQuery jqlQuery = QueryBuilder.byInstance(user)
             .withChildValueObjects().build();
         List<Shadow<User>> shadows = javers.findShadows(jqlQuery);

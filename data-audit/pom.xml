@@ -13,15 +13,16 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>data-audit</name>
   <description>data-audit</description>
-  <properties>
-    <java.version>11</java.version>
-  </properties>
+
   <dependencies>
-    
+
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <groupId>me.boot</groupId>
+      <artifactId>data-jpa</artifactId>
+      <version>${project.version}</version>
     </dependency>
+
+
 <!--    <dependency>-->
 <!--      <groupId>org.flywaydb</groupId>-->
 <!--      <artifactId>flyway-core</artifactId>-->
@@ -31,12 +32,6 @@
       <groupId>org.javers</groupId>
       <artifactId>javers-spring-boot-starter-sql</artifactId>
       <version>6.14.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
     </dependency>
 
   </dependencies>

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -26,7 +27,10 @@ public class RequestContextUtil {
 
     public static HttpServletResponse getDownloadResponse(String fileName) {
         HttpServletResponse response = getContextResponse();
-        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        String contentType = MediaTypeFactory.getMediaType(fileName)
+            .map(MediaType::toString)
+            .orElse(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        response.setContentType(contentType);
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
             "attachment;fileName=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
         return response;

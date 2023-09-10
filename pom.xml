@@ -10,7 +10,8 @@
     <module>redis-cache</module>
     <module>http-util</module>
     <module>minio</module>
-    <module>data-batch</module>
+    <module>data-jpa</module>
+    <module>multi-data-source</module>
     <module>data-rest</module>
     <module>data-audit</module>
     <module>web</module>
@@ -33,9 +34,22 @@
   <properties>
     <java.version>11</java.version>
     <spring.boot.version>2.7.12</spring.boot.version>
+    <spring-cloud.version>2021.0.8</spring-cloud.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -87,61 +101,61 @@
 <!--    </plugins>-->
 <!--  </build>-->
 
-  <build>
-    <pluginManagement>
-      <plugins>
-        <!-- maven-surefire-plugin 插件，用于运行单元测试。 -->
-        <!-- 注意，需要使用 3.0.X+，因为要支持 Junit 5 版本 -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${maven-surefire-plugin.version}</version>
-        </plugin>
-        <!-- maven-compiler-plugin 插件，解决 Lombok + MapStruct 组合 -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>${maven-compiler-plugin.version}</version>
-          <configuration>
-            <annotationProcessorPaths>
-              <path>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-              </path>
+<!--  <build>-->
+<!--    <pluginManagement>-->
+<!--      <plugins>-->
+<!--        &lt;!&ndash; maven-surefire-plugin 插件，用于运行单元测试。 &ndash;&gt;-->
+<!--        &lt;!&ndash; 注意，需要使用 3.0.X+，因为要支持 Junit 5 版本 &ndash;&gt;-->
+<!--        <plugin>-->
+<!--          <groupId>org.apache.maven.plugins</groupId>-->
+<!--          <artifactId>maven-surefire-plugin</artifactId>-->
+<!--          <version>${maven-surefire-plugin.version}</version>-->
+<!--        </plugin>-->
+<!--        &lt;!&ndash; maven-compiler-plugin 插件，解决 Lombok + MapStruct 组合 &ndash;&gt;-->
+<!--        <plugin>-->
+<!--          <groupId>org.apache.maven.plugins</groupId>-->
+<!--          <artifactId>maven-compiler-plugin</artifactId>-->
+<!--          <version>${maven-compiler-plugin.version}</version>-->
+<!--          <configuration>-->
+<!--            <annotationProcessorPaths>-->
 <!--              <path>-->
-<!--                <groupId>org.mapstruct</groupId>-->
-<!--                <artifactId>mapstruct-processor</artifactId>-->
-<!--                <version>${mapstruct.version}</version>-->
+<!--                <groupId>org.projectlombok</groupId>-->
+<!--                <artifactId>lombok</artifactId>-->
+<!--                <version>${lombok.version}</version>-->
 <!--              </path>-->
-              <path>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-configuration-processor</artifactId>
-                <version>${spring.boot.version}</version>
-              </path>
-            </annotationProcessorPaths>
-          </configuration>
-        </plugin>
+<!--&lt;!&ndash;              <path>&ndash;&gt;-->
+<!--&lt;!&ndash;                <groupId>org.mapstruct</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;                <artifactId>mapstruct-processor</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;                <version>${mapstruct.version}</version>&ndash;&gt;-->
+<!--&lt;!&ndash;              </path>&ndash;&gt;-->
+<!--              <path>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-configuration-processor</artifactId>-->
+<!--                <version>${spring.boot.version}</version>-->
+<!--              </path>-->
+<!--            </annotationProcessorPaths>-->
+<!--          </configuration>-->
+<!--        </plugin>-->
 
-        <!--提供source-->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-          <configuration>
-            <attach>true</attach>
-          </configuration>
-          <executions>
-            <execution>
-              <phase>compile</phase>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
+<!--        &lt;!&ndash;提供source&ndash;&gt;-->
+<!--        <plugin>-->
+<!--          <groupId>org.apache.maven.plugins</groupId>-->
+<!--          <artifactId>maven-source-plugin</artifactId>-->
+<!--          <configuration>-->
+<!--            <attach>true</attach>-->
+<!--          </configuration>-->
+<!--          <executions>-->
+<!--            <execution>-->
+<!--              <phase>compile</phase>-->
+<!--              <goals>-->
+<!--                <goal>jar</goal>-->
+<!--              </goals>-->
+<!--            </execution>-->
+<!--          </executions>-->
+<!--        </plugin>-->
 
-      </plugins>
-    </pluginManagement>
-  </build>
+<!--      </plugins>-->
+<!--    </pluginManagement>-->
+<!--  </build>-->
 
 </project>

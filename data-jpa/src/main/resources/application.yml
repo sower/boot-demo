@@ -1,0 +1,40 @@
+spring:
+
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        one-indexed-parameters: true
+        max-page-size: 100
+
+  jpa:
+    hibernate:
+      # 自动创建、更新、验证数据库表结构
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+        # 默认表名及字段全小写下划线分隔命名策略
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+#      use-new-id-generator-mappings: true
+    open-in-view: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        new_generator_mappings: false
+        format_sql: true
+        show-sql: true
+        use_sql_comments: true
+
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:boot}?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false
+    username: ${DB_USER:root}
+    password: ${DB_PWD:mysql8}
+
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.engine.QueryParameters: debug
+    org.hibernate.engine.query.HQLQueryPlan: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace

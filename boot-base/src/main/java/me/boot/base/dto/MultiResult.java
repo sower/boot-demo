@@ -8,7 +8,6 @@ import java.util.List;
 
 public class MultiResult<T> extends Result {
 
-
     private Collection<T> data;
 
     public List<T> getData() {

@@ -10,12 +10,10 @@ import lombok.Setter;
  */
 public class SingleResult<T> extends Result {
 
-
     // 数据体
     @Getter
     @Setter
     private T data;
-
 
     public static <T> SingleResult<T> success(T data) {
         SingleResult<T> response = new SingleResult<>();

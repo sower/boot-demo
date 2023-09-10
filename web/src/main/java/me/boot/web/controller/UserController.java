@@ -4,8 +4,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import me.boot.base.dto.SingleResult;
-import me.boot.web.bean.User;
-import me.boot.web.repository.UserDao;
+import me.boot.datajpa.entity.User;
+import me.boot.datajpa.repository.UserDao;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User queryUser(@PathVariable Long id) {
+    public User queryUser(@PathVariable String id) {
         return userDao.findById(id).orElse(null);
     }
 
@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @DeleteMapping
-    public SingleResult<?> deleteUser(Long id) {
+    public SingleResult<?> deleteUser(String id) {
         userDao.deleteById(id);
         return SingleResult.success();
     }

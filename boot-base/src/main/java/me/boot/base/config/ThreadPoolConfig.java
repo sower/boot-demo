@@ -11,14 +11,14 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  *
  * @date 2023/02/19
  */
-@EnableAsync
+//@EnableAsync
 @Configuration
 public class ThreadPoolConfig {
 
-    private int corePoolSize = Runtime.getRuntime().availableProcessors() + 1;
-    private int maxPoolSize = corePoolSize * 2;
-    private static final int queueCapacity = 50;
-    private static final int keepAliveSeconds = 30;
+    private final int corePoolSize = Runtime.getRuntime().availableProcessors() + 1;
+    private final int maxPoolSize = corePoolSize * 2;
+    private final int queueCapacity = 50;
+    private final int keepAliveSeconds = 30;
 
     @Bean(name = "asyncTaskExecutor")
     public ThreadPoolTaskExecutor threadPoolTaskExecutor() {

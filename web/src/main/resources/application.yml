@@ -42,13 +42,13 @@ spring:
             store_data_at_delete: true
 
 
-  datasource:
-    url: jdbc:h2:./web/src/main/resources/data;NON_KEYWORDS=USER
-    username: sa
-    password:
-    driverClassName: org.h2.Driver
-  h2:
-    console:
-      enabled: true
-      path: /h2
+#  datasource:
+#    url: jdbc:h2:./web/src/main/resources/data;NON_KEYWORDS=USER
+#    username: sa
+#    password:
+#    driverClassName: org.h2.Driver
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2
 
