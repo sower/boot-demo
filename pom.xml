@@ -16,6 +16,7 @@
     <module>data-audit</module>
     <module>web</module>
     <module>websocket</module>
+    <module>easy-excel</module>
   </modules>
 
   <parent>
