@@ -14,7 +14,7 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
  **/
 public class ExcelStyle {
 
-    public static HorizontalCellStyleStrategy centerDefaultStyle() {
+    public static HorizontalCellStyleStrategy defaultCenterStyle() {
         //内容样式
         WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
         //垂直居中,水平居中
@@ -30,6 +30,7 @@ public class ExcelStyle {
         WriteFont contentWriteFont = new WriteFont();
         // 字体大小
         contentWriteFont.setFontHeightInPoints((short) 12);
+        contentWriteFont.setFontName("宋体");
         contentWriteCellStyle.setWriteFont(contentWriteFont);
         // 使用默认样式策略，头样式使用easyexcel默认
         DefaultStyle defaultStyle = new DefaultStyle();

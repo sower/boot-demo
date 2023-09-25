@@ -17,11 +17,8 @@ import org.springframework.cglib.beans.BeanMap;
  **/
 public class TransposeUtil {
 
-
     public static List<List<Object>> getHeaders(List<?> data) {
-        Object object = data.get(0);
-        List<Field> fields = FieldUtils.getFieldsListWithAnnotation(
-            object.getClass(), ExcelProperty.class);
+        List<Field> fields = getExcelPropertyFields(data);
         return fields.stream()
             .map(field -> {
                 ExcelProperty annotation = field.getAnnotation(ExcelProperty.class);
@@ -37,19 +34,20 @@ public class TransposeUtil {
 
 
     public static List<List<Object>> getContents(List<?> data) {
-        Object object = data.get(0);
-
         List<BeanMap> beanMaps = data.stream().map(BeanMap::create).collect(Collectors.toList());
-        List<Field> fields = FieldUtils.getFieldsListWithAnnotation(
-            object.getClass(), ExcelProperty.class);
+        List<Field> fields = getExcelPropertyFields(data);
         return fields.stream().map(Field::getName)
             .map(e -> beanMaps.stream().map(beanMap -> beanMap.get(e)).collect(Collectors.toList()))
             .collect(Collectors.toList());
 
     }
 
-    public static List<List<Object>> transpose(List<?> data) {
+    private static List<Field> getExcelPropertyFields(List<?> data) {
+        return FieldUtils.getFieldsListWithAnnotation(
+            data.get(0).getClass(), ExcelProperty.class);
+    }
 
+    public static List<List<Object>> transpose(List<?> data) {
         List<List<Object>> headers = getHeaders(data);
         List<List<Object>> contents = getContents(data);
         for (int i = 0; i < contents.size(); i++) {

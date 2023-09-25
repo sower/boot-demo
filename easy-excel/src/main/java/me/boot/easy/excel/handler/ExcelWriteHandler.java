@@ -42,7 +42,7 @@ public class ExcelWriteHandler {
                 response.getOutputStream(), returnValue.get(0).getClass())
             .excelType(responseExcel.suffix()).sheet(responseExcel.sheetName())
             .registerWriteHandler(new AutoColumnWidthStrategy())
-            .registerWriteHandler(ExcelStyle.centerDefaultStyle());
+            .registerWriteHandler(ExcelStyle.defaultCenterStyle());
 
         if (responseExcel.mergeColumn().length > 0) {
             excelWriterSheetBuilder.registerWriteHandler(getMergeStrategy(responseExcel, returnValue));

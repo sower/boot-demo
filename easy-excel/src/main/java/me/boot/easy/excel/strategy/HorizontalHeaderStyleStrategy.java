@@ -19,6 +19,17 @@ import org.apache.poi.ss.usermodel.Workbook;
  **/
 public class HorizontalHeaderStyleStrategy implements CellWriteHandler {
 
+    private final int lastHeaderIndex;
+
+    public HorizontalHeaderStyleStrategy() {
+        this(0);
+    }
+
+    public HorizontalHeaderStyleStrategy(int lastHeaderIndex) {
+        this.lastHeaderIndex = lastHeaderIndex;
+    }
+
+
     /**
      * 在单元上的所有操作完成后调用
      */
@@ -29,15 +40,16 @@ public class HorizontalHeaderStyleStrategy implements CellWriteHandler {
 
         Workbook workbook = cell.getSheet().getWorkbook();
 
-        HorizontalCellStyleStrategy horizontalCellStyle = ExcelStyle.centerDefaultStyle();
+        HorizontalCellStyleStrategy horizontalCellStyle = ExcelStyle.defaultCenterStyle();
         WriteCellStyle writeCellStyle =
-            cell.getColumnIndex() == 0 ?
+            cell.getColumnIndex() == lastHeaderIndex ?
                 horizontalCellStyle.getHeadWriteCellStyle()
                 : horizontalCellStyle.getContentWriteCellStyleList().get(0);
 
         CellStyle cellStyle =
             StyleUtil.buildCellStyle(workbook, null, writeCellStyle);
 
+        cellStyle.setFont(StyleUtil.buildFont(workbook, null, writeCellStyle.getWriteFont()));
         cell.setCellStyle(cellStyle);
 
         //设置行高
