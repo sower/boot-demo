@@ -4,9 +4,10 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.converters.Converter;
 import com.google.common.collect.Lists;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import me.boot.easy.excel.strategy.CommonConverter;
+import me.boot.easy.excel.converter.CommonConverter;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanMap;
@@ -47,21 +48,25 @@ public class TransposeUtil {
             data.get(0).getClass(), ExcelProperty.class);
     }
 
-    public static List<List<Object>> transpose(List<?> data) {
+    public static List<List<String>> transpose(List<?> data) {
         List<List<Object>> headers = getHeaders(data);
         List<List<Object>> contents = getContents(data);
+        List<List<String>> table = new ArrayList<>(headers.size());
         for (int i = 0; i < contents.size(); i++) {
             List<Object> header = headers.get(i);
             List<Object> content = contents.get(i);
+            List<String> row = new ArrayList<>(header.size());
+            row.add((String) header.get(0));
             CommonConverter<Object> converter = (CommonConverter<Object>) header.get(1);
             if (converter != null) {
-                content = content.stream().map(converter::convertToExcelData)
-                    .collect(Collectors.toList());
-                contents.set(i, content);
+                content.stream().map(converter::convertToExcelData)
+                    .forEach(row::add);
+            } else {
+                content.forEach(e -> row.add((String) e));
             }
-            content.add(0, header.get(0));
+            table.add(row);
         }
-        return contents;
+        return table;
     }
 
 }

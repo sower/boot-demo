@@ -1,4 +1,4 @@
-package me.boot.easy.excel.strategy;
+package me.boot.easy.excel.converter;
 
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.util.StringUtils;
@@ -44,6 +44,6 @@ public class ObjectCollectionConverter implements CommonConverter<Collection<Obj
                 log.error("Failed to invokeMethod finalMethodName", ex);
             }
             return StringUtils.EMPTY;
-        }).collect(Collectors.joining());
+        }).collect(Collectors.joining("; "));
     }
 }

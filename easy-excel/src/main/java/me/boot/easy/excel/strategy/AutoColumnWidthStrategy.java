@@ -52,25 +52,22 @@ public class AutoColumnWidthStrategy extends AbstractColumnWidthStyleStrategy {
         }
         WriteCellData<?> cellData = cellDataList.get(0);
         CellDataTypeEnum type = cellData.getType();
-        if (type == null) {
-            return -1;
-        } else {
-            switch (type) {
-                case STRING:
-                    return cellData.getStringValue().getBytes(StandardCharsets.UTF_8).length + 2;
-                case BOOLEAN:
-                    return cellData.getBooleanValue().toString()
-                        .getBytes(StandardCharsets.UTF_8).length;
-                case NUMBER:
-                    return cellData.getNumberValue().toString()
-                        .getBytes(StandardCharsets.UTF_8).length;
-                case DATE:
-                    return
-                        cellData.getDateValue().toString().getBytes(StandardCharsets.UTF_8).length
-                            + 2;
-                default:
-                    return -1;
-            }
+
+        switch (type) {
+            case STRING:
+                return cellData.getStringValue().getBytes(StandardCharsets.UTF_8).length + 2;
+            case BOOLEAN:
+                return cellData.getBooleanValue().toString()
+                    .getBytes(StandardCharsets.UTF_8).length;
+            case NUMBER:
+                return cellData.getNumberValue().toString()
+                    .getBytes(StandardCharsets.UTF_8).length;
+            case DATE:
+                return
+                    cellData.getDateValue().toString().getBytes(StandardCharsets.UTF_8).length
+                        + 2;
+            default:
+                return -1;
         }
 
     }

@@ -4,8 +4,11 @@ import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.util.ListUtils;
 import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import lombok.Data;
-import me.boot.easy.excel.strategy.ObjectCollectionConverter;
+import lombok.NoArgsConstructor;
+import me.boot.easy.excel.annotation.ExcelDropDown;
 
 /**
  * @description
@@ -13,21 +16,25 @@ import me.boot.easy.excel.strategy.ObjectCollectionConverter;
  **/
 @Data
 @ExcelIgnoreUnannotated
+@NoArgsConstructor
 public class WebSite {
 
     private int id = 0;
 
     @ExcelProperty("名称")
-    private String name = "Ravi";
+    @ExcelDropDown(values = {"baidu", "bing"})
+    @NotBlank
+    private String name;
 
     @ExcelProperty("url")
+    @Size(max = 8)
     private String url;
 
 //    @ExcelProperty("时间")
 //    private LocalDateTime time = LocalDateTime.now();
 
 
-    @ExcelProperty(value = "self", converter = ObjectCollectionConverter.class)
+    //    @ExcelProperty(value = "self", converter = ObjectCollectionConverter.class)
     private List<Site> self;
 
 

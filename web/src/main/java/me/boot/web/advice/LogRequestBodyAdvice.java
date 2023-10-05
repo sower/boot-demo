@@ -1,7 +1,6 @@
 package me.boot.web.advice;
 
 import com.alibaba.fastjson2.JSON;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +30,7 @@ public class LogRequestBodyAdvice implements RequestBodyAdvice {
     @Override
     public Object afterBodyRead(Object body, HttpInputMessage httpInputMessage, MethodParameter methodParameter, Type type, Class<? extends HttpMessageConverter<?>> aClass) {
         Method method = methodParameter.getMethod();
-        log.info("{}.{}:{}", method.getDeclaringClass().getSimpleName(), method.getName(), JSON.toJSONString(body));
+        log.info("{}.{}: {}", method.getDeclaringClass().getSimpleName(), method.getName(), JSON.toJSONString(body));
         return body;
     }
 

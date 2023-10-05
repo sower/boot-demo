@@ -1,10 +1,11 @@
 package me.boot.easy.excel.strategy;
 
-import com.alibaba.excel.util.ListUtils;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.DefaultStyle;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import java.util.Collections;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 
@@ -20,21 +21,20 @@ public class ExcelStyle {
         //垂直居中,水平居中
         contentWriteCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
         contentWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.CENTER);
-//        contentWriteCellStyle.setBorderLeft(BorderStyle.THIN);
-//        contentWriteCellStyle.setBorderTop(BorderStyle.THIN);
-//        contentWriteCellStyle.setBorderRight(BorderStyle.THIN);
-//        contentWriteCellStyle.setBorderBottom(BorderStyle.THIN);
+        contentWriteCellStyle.setBorderLeft(BorderStyle.THIN);
+        contentWriteCellStyle.setBorderTop(BorderStyle.THIN);
+        contentWriteCellStyle.setBorderRight(BorderStyle.THIN);
+        contentWriteCellStyle.setBorderBottom(BorderStyle.THIN);
         // 自动换行
         contentWriteCellStyle.setWrapped(true);
-        // 字体策略
+        // 内容字体
         WriteFont contentWriteFont = new WriteFont();
-        // 字体大小
         contentWriteFont.setFontHeightInPoints((short) 12);
         contentWriteFont.setFontName("宋体");
         contentWriteCellStyle.setWriteFont(contentWriteFont);
-        // 使用默认样式策略，头样式使用easyexcel默认
+        // 使用默认头样式
         DefaultStyle defaultStyle = new DefaultStyle();
-        defaultStyle.setContentWriteCellStyleList(ListUtils.newArrayList(contentWriteCellStyle));
+        defaultStyle.setContentWriteCellStyleList(Collections.singletonList(contentWriteCellStyle));
         return defaultStyle;
     }
 }

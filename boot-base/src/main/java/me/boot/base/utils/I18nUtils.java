@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import me.boot.base.context.SpringContextHolder;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
