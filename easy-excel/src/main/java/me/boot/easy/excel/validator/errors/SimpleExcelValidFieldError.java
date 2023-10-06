@@ -1,12 +1,12 @@
 package me.boot.easy.excel.validator.errors;
 
 
-public class DefaultExcelValidFieldError extends DefaultExcelObjectError implements
+public class SimpleExcelValidFieldError extends SimpleExcelObjectError implements
     ExcelValidFieldError {
 
     private final Integer column;
 
-    public DefaultExcelValidFieldError(Integer row, Integer column, String message) {
+    public SimpleExcelValidFieldError(Integer row, Integer column, String message) {
         super(row, message);
         this.column = column;
     }

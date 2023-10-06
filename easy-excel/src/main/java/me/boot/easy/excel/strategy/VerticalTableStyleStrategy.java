@@ -14,16 +14,16 @@ import org.apache.poi.ss.usermodel.Workbook;
  * @description
  * @date 2023/09/15
  **/
-public class VerticalHeaderStyleStrategy implements RowWriteHandler {
+public class VerticalTableStyleStrategy implements RowWriteHandler {
 
     private final int lastHeaderIndex;
     private HorizontalCellStyleStrategy cellStyleStrategy;
 
-    public VerticalHeaderStyleStrategy() {
+    public VerticalTableStyleStrategy() {
         this(0);
     }
 
-    public VerticalHeaderStyleStrategy(int lastHeaderIndex) {
+    public VerticalTableStyleStrategy(int lastHeaderIndex) {
         this.lastHeaderIndex = lastHeaderIndex;
         cellStyleStrategy = ExcelStyle.defaultCenterStyle();
     }

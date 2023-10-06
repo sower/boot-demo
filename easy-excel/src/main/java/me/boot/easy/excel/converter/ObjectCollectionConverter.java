@@ -4,6 +4,7 @@ import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.util.StringUtils;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +31,13 @@ public class ObjectCollectionConverter implements CommonConverter<Collection<Obj
 
     @Override
     public String convertToExcelData(Collection<Object> collection) {
+        Collection<String> strings = transferStrCollection(collection);
+        return String.join("; ", strings);
+    }
+
+    private Collection<String> transferStrCollection(Collection<Object> collection) {
         if (CollectionUtils.isEmpty(collection)) {
-            return StringUtils.EMPTY;
+            return Collections.emptyList();
         }
         Object object = collection.stream().findFirst().get();
         String methodName = Optional.ofNullable(object.getClass().getAnnotation(ExcelContent.class))
@@ -41,9 +47,9 @@ public class ObjectCollectionConverter implements CommonConverter<Collection<Obj
             try {
                 return (String) MethodUtils.invokeMethod(e, methodName);
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {
-                log.error("Failed to invokeMethod finalMethodName", ex);
+                log.error("Failed to invoke {} method {}", e.getClass(), methodName, ex);
             }
             return StringUtils.EMPTY;
-        }).collect(Collectors.joining("; "));
+        }).collect(Collectors.toList());
     }
 }

@@ -7,9 +7,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import me.boot.easy.excel.util.CellUtil;
+import me.boot.easy.excel.util.CellValueUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.springframework.lang.Nullable;
 
 /**
  * @description
@@ -18,25 +19,40 @@ import org.apache.poi.ss.util.CellRangeAddress;
 public class MergeSameColumnStrategy implements RowWriteHandler {
 
     /**
-     * 需要合并行的下标，从0开始
-     */
-    private final Collection<Integer> mergeRowIndex;
-
-    /**
      * 从第几列开始合并，表头下标为0
      */
-    private final int startMergedColumn;
+    private int startColumn;
 
-    public MergeSameColumnStrategy(int startMergedColumn, Collection<Integer> mergeRowIndex) {
-        this.startMergedColumn = startMergedColumn;
-        this.mergeRowIndex = mergeRowIndex;
+    /**
+     * 合并的结束列
+     */
+    private int endColumn;
+
+    /**
+     * 需要合并行的下标，从0开始
+     */
+    private Collection<Integer> mergeRows;
+
+
+    public MergeSameColumnStrategy() {
+    }
+
+    public MergeSameColumnStrategy(int startColumn, int endColumn,
+        @Nullable Collection<Integer> mergeRows) {
+        this.startColumn = Math.max(startColumn, 0);
+        this.endColumn = endColumn;
+        this.mergeRows = mergeRows;
     }
 
     @Override
     public void afterRowDispose(WriteSheetHolder writeSheetHolder,
         WriteTableHolder writeTableHolder, Row row, Integer relativeRowIndex, Boolean isHead) {
-        if (!mergeRowIndex.contains(relativeRowIndex)) {
+        if (mergeRows != null && !mergeRows.contains(relativeRowIndex)) {
             return;
+        }
+
+        if (endColumn <= 0) {
+            endColumn = Math.max(endColumn, row.getPhysicalNumberOfCells());
         }
 
         Map<Integer, Integer> mergeMap = getMergeMap(row);
@@ -48,11 +64,11 @@ public class MergeSameColumnStrategy implements RowWriteHandler {
     // 获取当前行相同值的 开始列：结束列 map
     private Map<Integer, Integer> getMergeMap(Row row) {
         Map<Integer, Integer> mergeMap = new HashMap<>(4);
-        int cols = row.getPhysicalNumberOfCells();
-        for (int pos = startMergedColumn; pos < cols; ) {
-            Object data = CellUtil.getCellValue(row.getCell(pos));
+        for (int pos = startColumn; pos < endColumn; ) {
+            Object data = CellValueUtil.getCellValue(row.getCell(pos));
             int start = pos++;
-            while (pos < cols && Objects.equals(data, CellUtil.getCellValue(row.getCell(pos)))) {
+            while (pos < endColumn && Objects.equals(data,
+                CellValueUtil.getCellValue(row.getCell(pos)))) {
                 ++pos;
             }
             if (start != pos - 1) {

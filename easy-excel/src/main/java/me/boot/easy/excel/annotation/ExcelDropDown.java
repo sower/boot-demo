@@ -34,4 +34,8 @@ public @interface ExcelDropDown {
      * 设置下拉框的结束行，默认为最后一行
      */
     int endRow() default 1000;
+
+
+    boolean showErrorBox() default true;
+
 }

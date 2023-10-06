@@ -1,7 +1,7 @@
 package me.boot.easy.excel.validator.errors;
 
 
-public class DefaultExcelObjectError implements ExcelValidObjectError {
+public class SimpleExcelObjectError implements ExcelValidObjectError {
 
     /**
      * 行号
@@ -13,7 +13,7 @@ public class DefaultExcelObjectError implements ExcelValidObjectError {
      */
     private final String message;
 
-    public DefaultExcelObjectError(Integer row, String message) {
+    public SimpleExcelObjectError(Integer row, String message) {
         this.row = row;
         this.message = message;
     }

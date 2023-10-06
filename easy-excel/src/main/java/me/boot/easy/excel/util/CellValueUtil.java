@@ -3,13 +3,15 @@ package me.boot.easy.excel.util;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.springframework.lang.Nullable;
 
 /**
  * @description
  * @date 2023/09/29
  **/
-public class CellUtil {
+public class CellValueUtil {
 
+    @Nullable
     public static Object getCellValue(Cell cell) {
         switch (cell.getCellType()) {
             case STRING:

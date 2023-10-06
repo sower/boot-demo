@@ -11,18 +11,25 @@ import org.apache.poi.ss.usermodel.Sheet;
  **/
 public class FreezeHandler implements SheetWriteHandler {
 
-    public int colSplit = 0;
-    public int rowSplit = 1;
+    private int rowSplit = -1;
+    private int colSplit = 0;
 
-    public FreezeHandler(int colSplit, int rowSplit) {
-        this.colSplit = colSplit;
+    public FreezeHandler() {
+    }
+
+    public FreezeHandler(int rowSplit, int colSplit) {
         this.rowSplit = rowSplit;
+        this.colSplit = Math.max(colSplit, 0);
     }
 
     @Override
     public void afterSheetCreate(WriteWorkbookHolder writeWorkbookHolder,
         WriteSheetHolder writeSheetHolder) {
         Sheet sheet = writeSheetHolder.getSheet();
+
+        if (rowSplit < 0) {
+            rowSplit = writeSheetHolder.getExcelWriteHeadProperty().getHeadRowNumber();
+        }
         sheet.createFreezePane(colSplit, rowSplit);
     }
 }
