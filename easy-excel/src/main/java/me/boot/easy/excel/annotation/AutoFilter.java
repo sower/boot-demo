@@ -9,25 +9,17 @@ import java.lang.annotation.Target;
 /**
  * @description
  * @date 2023/09/29
- **/
+ */
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MergeSameRow {
+public @interface AutoFilter {
 
-    /**
-     * 需要合并列，从0开始
-     */
-    int[] mergeColumns() default {-1};
+    int firstRow() default 0;
 
-    /**
-     * 开始合并行
-     */
-    int startRow() default 0;
+    int lastRow() default -1;
 
-    /**
-     * 结束合并行
-     */
-    int endRow() default 0;
+    int firstCol() default 0;
 
+    int lastCol() default -1;
 }

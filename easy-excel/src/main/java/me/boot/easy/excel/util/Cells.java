@@ -1,18 +1,20 @@
 package me.boot.easy.excel.util;
 
+import java.util.Objects;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
  * @description
  * @date 2023/09/29
  **/
-public class CellValueUtil {
+public abstract class Cells {
 
     @Nullable
-    public static Object getCellValue(Cell cell) {
+    public static Object getValue(@NonNull Cell cell) {
         switch (cell.getCellType()) {
             case STRING:
                 return cell.getStringCellValue();
@@ -30,5 +32,9 @@ public class CellValueUtil {
             default:
                 return null;
         }
+    }
+
+    public static boolean equals(Cell cell1, Cell cell2) {
+        return Objects.equals(getValue(cell1), getValue(cell2));
     }
 }

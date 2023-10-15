@@ -14,8 +14,8 @@ public class AutoFilterHandler implements SheetWriteHandler {
 
     private int firstRow;
     private int lastRow;
-    private int firstCol;
-    private int lastCol;
+    private int firstCol = -1;
+    private int lastCol = -1;
 
     public AutoFilterHandler() {
     }
@@ -31,14 +31,13 @@ public class AutoFilterHandler implements SheetWriteHandler {
     public void afterSheetCreate(WriteWorkbookHolder writeWorkbookHolder,
         WriteSheetHolder writeSheetHolder) {
         Sheet sheet = writeSheetHolder.getSheet();
-        // Todo: handle no head
         firstRow = Math.max(firstRow, 0);
         firstCol = Math.max(firstCol, 0);
-        if (lastRow < 0) {
+        if (lastRow < firstRow) {
             lastRow = writeSheetHolder.getExcelWriteHeadProperty().getHeadRowNumber();
         }
-        if (lastCol < 0) {
-            lastCol = writeSheetHolder.getExcelWriteHeadProperty().getHeadMap().keySet().size();
+        if (lastCol < firstCol) {
+            lastCol = writeSheetHolder.getExcelWriteHeadProperty().getHeadMap().keySet().size() - 1;
         }
         sheet.setAutoFilter(new CellRangeAddress(firstRow, lastRow, firstCol, lastCol));
     }

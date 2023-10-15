@@ -7,8 +7,8 @@ import com.alibaba.excel.write.metadata.holder.WriteSheetHolder;
 import com.alibaba.excel.write.metadata.holder.WriteTableHolder;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
-import me.boot.easy.excel.util.CellValueUtil;
+import me.boot.easy.excel.util.Cells;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -18,29 +18,26 @@ import org.springframework.lang.Nullable;
 /**
  * @description
  * @date 2023/09/15
- **/
+ */
 public class MergeSameRowStrategy implements CellWriteHandler {
 
-    /**
-     * 开始合并行
-     */
+    // 开始合并行
     private int startRow;
 
     private int endRow = Integer.MAX_VALUE;
 
-    /**
-     * 需要合并列的下标，从0开始
-     */
+    // 需要合并列的下标，从0开始
     private Collection<Integer> mergeColumns;
 
     public MergeSameRowStrategy() {
     }
 
-    public MergeSameRowStrategy(int startRow, int endRow,
-        @Nullable Collection<Integer> mergeColumns) {
+    public MergeSameRowStrategy(
+        int startRow, int endRow, @Nullable Collection<Integer> mergeColumns) {
         this.startRow = Math.max(startRow, 0);
         this.endRow = endRow <= 0 ? Integer.MAX_VALUE : endRow;
-        this.mergeColumns = mergeColumns;
+        this.mergeColumns =
+            CollectionUtils.filterInverse(mergeColumns, item -> item < 0) ? null : mergeColumns;
     }
 
     @Override
@@ -64,14 +61,11 @@ public class MergeSameRowStrategy implements CellWriteHandler {
     }
 
     // 获取当前行的当前列的数据和上一行的当前列列数据，通过上一行数据是否相同进行合并
-    private void mergeWithPreRow(Sheet sheet, Cell cell, int curRowIndex,
-        int curColIndex) {
+    private void mergeWithPreRow(Sheet sheet, Cell cell, int curRowIndex, int curColIndex) {
         Row preRow = sheet.getRow(curRowIndex - 1);
         Cell preCell = preRow.getCell(curColIndex);
-        Object preData = CellValueUtil.getCellValue(preCell);
-        Object curData = CellValueUtil.getCellValue(cell);
 
-        if (!Objects.equals(curData, preData)) {
+        if (!Cells.equals(cell, preCell)) {
             return;
         }
         boolean isMerged = false;
@@ -90,9 +84,8 @@ public class MergeSameRowStrategy implements CellWriteHandler {
 
         // 若上一个单元格未被合并，则新增合并单元
         if (!isMerged) {
-            sheet.addMergedRegion(new CellRangeAddress(curRowIndex - 1,
-                curRowIndex, curColIndex,
-                curColIndex));
+            sheet.addMergedRegion(
+                new CellRangeAddress(curRowIndex - 1, curRowIndex, curColIndex, curColIndex));
         }
     }
 }

@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExcelFreeze {
+public @interface FreezePane {
 
     /**
      * 冻结的行数 默认为表头最后一行

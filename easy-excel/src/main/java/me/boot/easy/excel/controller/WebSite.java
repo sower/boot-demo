@@ -8,7 +8,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.boot.easy.excel.annotation.AutoCellSize;
+import me.boot.easy.excel.annotation.AutoFilter;
 import me.boot.easy.excel.annotation.ExcelDropDown;
+import me.boot.easy.excel.annotation.FreezePane;
+import me.boot.easy.excel.annotation.MergeSameRow;
+import me.boot.easy.excel.converter.ObjectCollectionConverter;
 
 /**
  * @description
@@ -17,6 +22,10 @@ import me.boot.easy.excel.annotation.ExcelDropDown;
 @Data
 @ExcelIgnoreUnannotated
 @NoArgsConstructor
+@FreezePane
+@AutoFilter
+@AutoCellSize
+@MergeSameRow
 public class WebSite {
 
     private int id = 0;
@@ -34,7 +43,7 @@ public class WebSite {
 //    private LocalDateTime time = LocalDateTime.now();
 
 
-    //    @ExcelProperty(value = "self", converter = ObjectCollectionConverter.class)
+    @ExcelProperty(value = "self", converter = ObjectCollectionConverter.class)
     private List<Site> self;
 
 

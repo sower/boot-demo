@@ -1,17 +1,18 @@
 package me.boot.easy.excel.handler;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.builder.ExcelWriterBuilder;
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
-import com.alibaba.excel.write.handler.WriteHandler;
+import java.io.File;
 import java.io.OutputStream;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import me.boot.easy.excel.annotation.ExcelFreeze;
-import me.boot.easy.excel.controller.ExcelResponse;
-import me.boot.easy.excel.strategy.FreezeHandler;
+import me.boot.easy.excel.controller.ExcelObject;
+import me.boot.easy.excel.controller.SheetObject;
+import me.boot.easy.excel.resolver.WriteStrategyResolver;
+import me.boot.easy.excel.spi.ExcelWriterHandler;
+import me.boot.easy.excel.spi.ServiceLoaderUtil;
+import me.boot.easy.excel.spi.SheetWriterHandler;
 import org.apache.commons.collections4.CollectionUtils;
 
 /**
@@ -20,58 +21,68 @@ import org.apache.commons.collections4.CollectionUtils;
  **/
 public class ExcelWriteResolver {
 
-    public static void write(ExcelResponse excelResponse) {
+    private static final List<ExcelWriterHandler> EXCEL_WRITER_HANDLERS = ServiceLoaderUtil.excelWriterHandlers();
+    private static final List<SheetWriterHandler> SHEET_WRITER_HANDLERS = ServiceLoaderUtil.sheetWriterHandlers();
 
+    public static void resolve(ExcelObject excelObject) {
         ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(
-            excelResponse.getName() + excelResponse.getType().getValue());
-        buildExcel(excelResponse, excelWriterBuilder);
+            excelObject.getName() + excelObject.getType().getValue());
+        writeExcel(excelObject, excelWriterBuilder);
     }
 
-    public static void write(ExcelResponse excelResponse, OutputStream outputStream) {
+    public static void resolve(ExcelObject excelObject, OutputStream outputStream) {
         ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(outputStream);
-        buildExcel(excelResponse, excelWriterBuilder);
+        writeExcel(excelObject, excelWriterBuilder);
     }
 
+    public static void resolve(ExcelObject excelObject, File file) {
+        ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(file);
+        writeExcel(excelObject, excelWriterBuilder);
+    }
 
-    public static void buildExcel(ExcelResponse excelResponse,
+    public static void writeExcel(ExcelObject excelObject,
         ExcelWriterBuilder excelWriterBuilder) {
         excelWriterBuilder
-            .excelType(excelResponse.getType());
+            .excelType(excelObject.getType());
 
-        if (CollectionUtils.isNotEmpty(excelResponse.getWriteHandlers())) {
-            excelResponse.getWriteHandlers()
+        // before
+        EXCEL_WRITER_HANDLERS.forEach(
+            excelWriterHandler -> excelWriterHandler.handleExcelWriter(excelWriterBuilder,
+                excelObject)
+        );
+
+        if (CollectionUtils.isNotEmpty(excelObject.getWriteHandlers())) {
+            excelObject.getWriteHandlers()
                 .forEach(excelWriterBuilder::registerWriteHandler);
         }
 
-        ExcelWriterSheetBuilder sheet = excelWriterBuilder
-            .sheet(excelResponse.getSheetName());
-        if (excelResponse.getHeadClass() != null) {
-            sheet.head(excelResponse.getHeadClass());
-            getWriteHandlers(excelResponse.getHeadClass())
-                .forEach(sheet::registerWriteHandler);
+        try (ExcelWriter excelWriter = excelWriterBuilder.build()) {
+            excelObject.getSheets().forEach(sheet -> writeSheet(sheet, excelWriter));
         }
-        if (excelResponse.getHead() != null) {
-            sheet.head(excelResponse.getHead());
-        }
-        sheet.doWrite(excelResponse.getData());
-
     }
 
-
-    public static List<WriteHandler> getWriteHandlers(Class<?> headClass) {
-        List<WriteHandler> writeHandlers = new LinkedList<>();
-        writeHandlers.add(getFreezeHandler(headClass));
-
-        return writeHandlers.stream().filter(Objects::nonNull).collect(Collectors.toList());
-    }
-
-    private static WriteHandler getFreezeHandler(Class<?> headClass) {
-        ExcelFreeze annotation = headClass.getAnnotation(ExcelFreeze.class);
-        if (annotation == null) {
-            return null;
+    private static void writeSheet(SheetObject sheetObject, ExcelWriter excelWriter) {
+        ExcelWriterSheetBuilder sheetBuilder = EasyExcel.writerSheet(sheetObject.getSheetName());
+        SHEET_WRITER_HANDLERS.forEach(
+            sheetWriterHandler -> sheetWriterHandler.beforeHandleSheetWriter(sheetBuilder,
+                sheetObject));
+        if (sheetObject.getHeadClass() != null) {
+            sheetBuilder.head(sheetObject.getHeadClass());
+            List<WriteStrategyResolver> strategyResolvers = ServiceLoaderUtil.writeStrategyResolvers();
+            strategyResolvers.forEach(
+                writeStrategyResolver -> writeStrategyResolver.resolveExcelObject(sheetBuilder,
+                    sheetObject));
         }
-        return new FreezeHandler(annotation.rowIndex(), annotation.rowIndex());
-    }
+        if (sheetObject.getHead() != null) {
+            sheetBuilder.head(sheetObject.getHead());
+        }
 
+        // after
+        SHEET_WRITER_HANDLERS.forEach(
+            sheetWriterHandler -> sheetWriterHandler.afterHandleSheetWriter(sheetBuilder,
+                sheetObject));
+
+        excelWriter.write(sheetObject.getData(), sheetBuilder.build());
+    }
 
 }

@@ -18,7 +18,7 @@ public @interface MergeSameColumn {
     /**
      * 需要合并行的下标，从0开始
      */
-    int[] mergeRows();
+    int[] mergeRows() default {-1};
 
     /**
      * 开始合并列

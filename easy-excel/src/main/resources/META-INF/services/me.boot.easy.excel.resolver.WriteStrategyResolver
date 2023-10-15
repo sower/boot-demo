@@ -1,0 +1,6 @@
+me.boot.easy.excel.resolver.AutoCellSizeStrategyResolver
+me.boot.easy.excel.resolver.AutoFilterStrategyResolver
+me.boot.easy.excel.resolver.FreezeStrategyResolver
+me.boot.easy.excel.resolver.DropDownStrategyResolver
+me.boot.easy.excel.resolver.MergeSameColumnStrategyResolver
+me.boot.easy.excel.resolver.MergeSameRowStrategyResolver

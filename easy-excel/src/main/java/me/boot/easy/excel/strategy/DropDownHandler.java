@@ -1,10 +1,12 @@
 package me.boot.easy.excel.strategy;
 
+import com.alibaba.excel.enums.HeadKindEnum;
 import com.alibaba.excel.write.handler.SheetWriteHandler;
 import com.alibaba.excel.write.metadata.holder.WriteSheetHolder;
 import com.alibaba.excel.write.metadata.holder.WriteWorkbookHolder;
 import com.alibaba.excel.write.property.ExcelWriteHeadProperty;
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import me.boot.easy.excel.annotation.ExcelDropDown;
@@ -37,7 +39,6 @@ public class DropDownHandler implements SheetWriteHandler {
         Sheet sheet = writeSheetHolder.getSheet();
 
         ExcelWriteHeadProperty excelWriteHeadProperty = writeSheetHolder.getExcelWriteHeadProperty();
-
         if (selectedMap == null) {
             selectedMap = getDropDownMap(excelWriteHeadProperty);
         } else {
@@ -72,8 +73,11 @@ public class DropDownHandler implements SheetWriteHandler {
 
     private Map<Integer, ExcelDropDownProperty> getDropDownMap(
         ExcelWriteHeadProperty headProperty) {
+        if (!HeadKindEnum.CLASS.equals(headProperty.getHeadKind())) {
+            return Collections.emptyMap();
+        }
+
         Map<Integer, ExcelDropDownProperty> map = new HashMap<>(4);
-        // headProperty.getHeadKind() ?
         int headRowNumber = headProperty.getHeadRowNumber();
         headProperty.getHeadMap().forEach((index, head) -> {
             Field field = head.getField();

@@ -7,7 +7,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import me.boot.easy.excel.util.CellValueUtil;
+import me.boot.easy.excel.util.Cells;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.lang.Nullable;
@@ -15,7 +16,7 @@ import org.springframework.lang.Nullable;
 /**
  * @description
  * @date 2023/09/15
- **/
+ */
 public class MergeSameColumnStrategy implements RowWriteHandler {
 
     /**
@@ -33,7 +34,6 @@ public class MergeSameColumnStrategy implements RowWriteHandler {
      */
     private Collection<Integer> mergeRows;
 
-
     public MergeSameColumnStrategy() {
     }
 
@@ -41,7 +41,7 @@ public class MergeSameColumnStrategy implements RowWriteHandler {
         @Nullable Collection<Integer> mergeRows) {
         this.startColumn = Math.max(startColumn, 0);
         this.endColumn = endColumn;
-        this.mergeRows = mergeRows;
+        this.mergeRows = CollectionUtils.filterInverse(mergeRows, item -> item < 0) ? null : mergeRows;
     }
 
     @Override
@@ -65,10 +65,9 @@ public class MergeSameColumnStrategy implements RowWriteHandler {
     private Map<Integer, Integer> getMergeMap(Row row) {
         Map<Integer, Integer> mergeMap = new HashMap<>(4);
         for (int pos = startColumn; pos < endColumn; ) {
-            Object data = CellValueUtil.getCellValue(row.getCell(pos));
+            Object data = Cells.getValue(row.getCell(pos));
             int start = pos++;
-            while (pos < endColumn && Objects.equals(data,
-                CellValueUtil.getCellValue(row.getCell(pos)))) {
+            while (pos < endColumn && Objects.equals(data, Cells.getValue(row.getCell(pos)))) {
                 ++pos;
             }
             if (start != pos - 1) {
@@ -77,8 +76,4 @@ public class MergeSameColumnStrategy implements RowWriteHandler {
         }
         return mergeMap;
     }
-
-
 }
-
-

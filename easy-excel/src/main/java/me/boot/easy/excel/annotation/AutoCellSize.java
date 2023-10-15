@@ -13,14 +13,14 @@ import java.lang.annotation.Target;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExcelAutoFilter {
+public @interface AutoCellSize {
 
-    int firstRow() default 0;
+    /**
+     * 冻结的行数 默认为表头最后一行
+     */
+    int maxColumnWidth() default 50;
 
-    int lastRow() default 0;
-
-    int firstCol() default 0;
-
-    int lastCol() default 0;
+    // 冻结的列数
+    int maxRowHeight() default -1;
 
 }
