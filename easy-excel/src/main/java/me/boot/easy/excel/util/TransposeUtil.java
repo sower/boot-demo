@@ -27,7 +27,7 @@ public class TransposeUtil {
                 if (CommonConverter.class.isAssignableFrom(annotation.converter())) {
                     converter = BeanUtils.instantiateClass(annotation.converter());
                 }
-                return Lists.newArrayList(annotation.value()[0], converter);
+                return Lists.newArrayList(String.join(" ", annotation.value()), converter);
             })
             .collect(Collectors.toList());
 

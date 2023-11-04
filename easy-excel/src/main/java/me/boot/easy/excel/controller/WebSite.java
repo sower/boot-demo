@@ -3,6 +3,7 @@ package me.boot.easy.excel.controller;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.util.ListUtils;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -39,8 +40,8 @@ public class WebSite {
     @Size(max = 8)
     private String url;
 
-//    @ExcelProperty("时间")
-//    private LocalDateTime time = LocalDateTime.now();
+    @ExcelProperty("时间")
+    private LocalDateTime time = LocalDateTime.now();
 
 
     @ExcelProperty(value = "self", converter = ObjectCollectionConverter.class)
