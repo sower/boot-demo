@@ -1,4 +1,4 @@
-package me.boot.base.utils;
+package me.boot.base.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

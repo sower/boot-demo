@@ -2,9 +2,9 @@ package me.boot.web.aspect;
 
 import com.alibaba.fastjson2.JSON;
 import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import me.boot.web.utils.RequestContextUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -18,8 +18,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
@@ -36,20 +34,23 @@ public class WebLogAspect {
     public void requestLog() {
     }
 
-    /*前置通知*/
+    @Pointcut("@within(me.boot.base.annotation.LogMethod)")
+    public void methodLog() {
+    }
+
     @Before("requestLog()")
+    public void requestBefore() {
+        HttpServletRequest request = RequestContextUtil.getContextRequest();
+        log.info(
+            "Received {} - {} request {}",
+            request.getRemoteAddr(),
+            request.getMethod(),
+            ServletUriComponentsBuilder.fromRequest(request).encode().build());
+    }
+
+    /*前置通知*/
+    @Before("requestLog() || methodLog()")
     public void doBefore(JoinPoint joinPoint) {
-        ServletRequestAttributes requestAttributes =
-            (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        Optional.ofNullable(requestAttributes)
-            .map(ServletRequestAttributes::getRequest)
-            .ifPresent(
-                request ->
-                    log.info(
-                        "Received {} - {} request {}",
-                        request.getRemoteAddr(),
-                        request.getMethod(),
-                        ServletUriComponentsBuilder.fromRequest(request).encode().build()));
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         log.info(
             "Ready into {} . {} - ARGS: (name) {} - (value) {}",
@@ -60,15 +61,14 @@ public class WebLogAspect {
     }
 
     // 后置通知
-    @AfterReturning(value = "requestLog()")
+    @AfterReturning(value = "requestLog() || methodLog()")
     public void doAfterReturning(JoinPoint joinPoint) {
         log.info("Exit from {} - {}", joinPoint.getTarget(), joinPoint.getSignature().getName());
     }
 
     // 环绕通知
-    @Around("requestLog()")
+    @Around("requestLog() || methodLog()")
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-
         StopWatch stopWatch = new StopWatch(proceedingJoinPoint.toShortString());
         stopWatch.start();
         Object obj = null;
@@ -77,7 +77,6 @@ public class WebLogAspect {
             obj = proceedingJoinPoint.proceed();
             return obj;
         } finally {
-
             stopWatch.stop();
             String methodName = proceedingJoinPoint.getSignature().getName();
             log.info(
@@ -85,12 +84,10 @@ public class WebLogAspect {
                 proceedingJoinPoint.getTarget(),
                 methodName,
                 stopWatch.getLastTaskTimeMillis());
-            if (Objects.nonNull(obj)) {
-                log.info(
-                    "{} return result -> {}",
-                    methodName,
-                    StringUtils.abbreviate(JSON.toJSONString(obj), 1000));
-            }
+            log.info(
+                "{} return result -> {}",
+                methodName,
+                StringUtils.abbreviate(JSON.toJSONString(obj), 1000));
         }
     }
 

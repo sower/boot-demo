@@ -27,7 +27,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class AuditEntity {
 
     @Id
-    @GenericGenerator(name = "idGenerator", strategy = "org.hibernate.id.UUIDGenerator")
+    @GenericGenerator(name = "idGenerator", strategy = "me.boot.datajpa.generator.AutoUUIDGenerator")
     @GeneratedValue(generator = "idGenerator")
     @Column(length = 50)
     private String id;

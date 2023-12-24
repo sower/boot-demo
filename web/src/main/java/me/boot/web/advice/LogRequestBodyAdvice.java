@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
 
 /**
@@ -15,29 +14,39 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
  * @date 2023/08/06
  **/
 @Slf4j
-@ControllerAdvice
+//@ControllerAdvice
 public class LogRequestBodyAdvice implements RequestBodyAdvice {
+
     @Override
-    public boolean supports(MethodParameter methodParameter, Type type, Class<? extends HttpMessageConverter<?>> aClass) {
+    public boolean supports(MethodParameter parameter, Type targetType,
+        Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
     }
 
     @Override
-    public HttpInputMessage beforeBodyRead(HttpInputMessage httpInputMessage, MethodParameter methodParameter, Type type, Class<? extends HttpMessageConverter<?>> aClass) {
-        return httpInputMessage;
+    public HttpInputMessage beforeBodyRead(HttpInputMessage inputMessage, MethodParameter parameter,
+        Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
+        return inputMessage;
     }
 
     @Override
-    public Object afterBodyRead(Object body, HttpInputMessage httpInputMessage, MethodParameter methodParameter, Type type, Class<? extends HttpMessageConverter<?>> aClass) {
-        Method method = methodParameter.getMethod();
-        log.info("{}.{}: {}", method.getDeclaringClass().getSimpleName(), method.getName(), JSON.toJSONString(body));
+    public Object afterBodyRead(Object body, HttpInputMessage inputMessage,
+        MethodParameter parameter, Type targetType,
+        Class<? extends HttpMessageConverter<?>> converterType) {
+        return logMethod(body, parameter);
+    }
+
+    private static Object logMethod(Object body, MethodParameter parameter) {
+        Method method = parameter.getMethod();
+        log.info("{}.{}: {}", method.getDeclaringClass().getSimpleName(), method.getName(),
+            JSON.toJSONString(body));
         return body;
     }
 
     @Override
-    public Object handleEmptyBody(Object body, HttpInputMessage httpInputMessage, MethodParameter methodParameter, Type type, Class<? extends HttpMessageConverter<?>> aClass) {
-        Method method = methodParameter.getMethod();
-        log.info("{}.{}", method.getDeclaringClass().getSimpleName(), method.getName());
-        return body;
+    public Object handleEmptyBody(Object body, HttpInputMessage inputMessage,
+        MethodParameter parameter, Type targetType,
+        Class<? extends HttpMessageConverter<?>> converterType) {
+        return logMethod(body, parameter);
     }
 }

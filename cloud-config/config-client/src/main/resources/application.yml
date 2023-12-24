@@ -1,0 +1,21 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: config
+  config:
+    import: optional:configserver:http://localhost:8080
+#    name: config
+#    uri: http://boot:2023@localhost:8080
+#    activate:
+#      on-profile: dev
+
+  profiles:
+    active: prod
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

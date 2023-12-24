@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config
+
+  #          git:
+#          clone-on-start: true
+#          uri: file:///${user.home}/config-repo
+  security:
+    user:
+      name: boot
+      password: 2023

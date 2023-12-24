@@ -1,4 +1,4 @@
-package me.boot.base.utils;
+package me.boot.base.util;
 
 import java.io.IOException;
 import java.util.Arrays;

@@ -1,9 +1,10 @@
-package me.boot.base.utils;
+package me.boot.base.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
@@ -61,7 +62,7 @@ public class ZipUtils {
      * @param targetPath 存放位置
      */
     public static void unZip(String srcFile, String targetPath) throws Exception {
-        try (InputStream fileInputStream = new FileInputStream(srcFile);
+        try (InputStream fileInputStream = Files.newInputStream(Paths.get(srcFile));
             ZipArchiveInputStream archiveInputStream = new ZipArchiveInputStream(fileInputStream)) {
             ZipArchiveEntry entry;
             while ((entry = archiveInputStream.getNextZipEntry()) != null) {

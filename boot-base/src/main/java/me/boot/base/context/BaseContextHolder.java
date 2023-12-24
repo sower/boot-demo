@@ -9,7 +9,6 @@ public class BaseContextHolder {
 
     private static final ThreadLocal<BaseContext> contextHolder = new InheritableThreadLocal<>();
 
-    // 设置变量
     public static void setContext(BaseContext baseContext) {
         contextHolder.set(baseContext);
     }
@@ -22,5 +21,9 @@ public class BaseContextHolder {
         }
 
         return baseContext;
+    }
+
+    public void clearContext() {
+        contextHolder.remove();
     }
 }

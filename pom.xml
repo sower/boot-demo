@@ -17,6 +17,7 @@
     <module>web</module>
     <module>websocket</module>
     <module>easy-excel</module>
+    <module>cloud-config</module>
   </modules>
 
   <parent>

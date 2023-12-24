@@ -7,7 +7,6 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -32,7 +31,8 @@ import org.hibernate.annotations.DynamicInsert;
 @DynamicInsert
 public class User extends AuditEntity {
 
-    @Column(length = 32, nullable = false)
+//    @Comment("用户名")
+    @Column(length = 30, nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
@@ -43,10 +43,13 @@ public class User extends AuditEntity {
     @Column(name = "birthday")
     private LocalDate birth;
 
-    @Lob
+//    @Comment("角色")
     @Convert(converter = StrListConverter.class)
     @Column(columnDefinition = "text")
     private List<String> roles;
 
     private boolean online;
+
+//    @Formula("cast(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', birthday) as 'int')")
+//    private Integer age;
 }

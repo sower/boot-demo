@@ -1,11 +1,27 @@
 server:
   servlet:
     context-path: /${spring.application.name}
+  shutdown: graceful
+
 
 spring:
 
   application:
     name: web
+
+  mvc:
+    async:
+      request-timeout: 30000
+    format:
+      date: iso
+      time: HH:mm:ss
+      date-time: yyyy-MM-dd HH:mm:ss
+
+
+  web:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
   jackson:
     time-zone: GMT+8

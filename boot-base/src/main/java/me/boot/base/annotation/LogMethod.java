@@ -12,8 +12,8 @@ import java.lang.annotation.Target;
  * @date 2022/09/28
  */
 @Documented
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LogInOutParam {
+public @interface LogMethod {
 
 }
