@@ -14,7 +14,6 @@ public interface CommonConverter<T> extends Converter<T> {
     @Override
     default WriteCellData<?> convertToExcelData(T value, ExcelContentProperty contentProperty,
         GlobalConfiguration globalConfiguration) {
-
         return new WriteCellData<String>(convertToExcelData(value));
     }
 

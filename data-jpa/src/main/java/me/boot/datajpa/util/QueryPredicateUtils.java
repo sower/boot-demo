@@ -25,16 +25,16 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 @Slf4j
 public abstract class QueryPredicateUtils {
 
-    public static <R, Q> Predicate toPredicate(Root<R> root, Q query, CriteriaBuilder cb) {
+    public static <T, Q> Predicate toPredicate(Root<T> root, CriteriaBuilder cb, Q query) {
         if (query == null) {
             return cb.and();
         }
-        List<QueryCriteriaProperty> properties = getProperties(query);
+        List<QueryCriteriaProperty> properties = getCriteriaProperties(query);
         return cb.and(properties.stream().map(property -> toPredicate(root, cb, property))
             .filter(Objects::nonNull).toArray(Predicate[]::new));
     }
 
-    private static <R> Predicate toPredicate(Root<R> root, CriteriaBuilder cb,
+    public static <T> Predicate toPredicate(Root<T> root, CriteriaBuilder cb,
         QueryCriteriaProperty property) {
         switch (property.getOperation()) {
             case EQUAL:
@@ -75,15 +75,16 @@ public abstract class QueryPredicateUtils {
         }
     }
 
-    public static List<QueryCriteriaProperty> getProperties(Object query) {
+    public static List<QueryCriteriaProperty> getCriteriaProperties(Object query) {
         List<Field> fields = FieldUtils.getFieldsListWithAnnotation(query.getClass(),
             QueryCriteria.class);
-        return fields.stream().map(field -> getProperty(query, field)).filter(Objects::nonNull)
+        return fields.stream().map(field -> toCriteriaProperty(query, field))
+            .filter(Objects::nonNull)
             .collect(Collectors.toList());
     }
 
     @SneakyThrows
-    public static QueryCriteriaProperty getProperty(Object query, Field field) {
+    public static QueryCriteriaProperty toCriteriaProperty(Object query, Field field) {
         Object value = FieldUtils.readField(field, query, true);
         if (ObjectUtils.isEmpty(value)) {
             return null;

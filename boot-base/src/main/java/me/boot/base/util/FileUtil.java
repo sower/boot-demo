@@ -1,4 +1,4 @@
-package me.boot.base.utils;
+package me.boot.base.util;
 
 import com.alibaba.fastjson.JSON;
 import java.io.File;

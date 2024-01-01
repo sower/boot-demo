@@ -23,7 +23,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import me.boot.base.utils.FileUtil;
+import me.boot.base.util.FileUtil;
 import me.boot.minio.config.MinioConfig;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;

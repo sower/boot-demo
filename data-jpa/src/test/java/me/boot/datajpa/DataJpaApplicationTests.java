@@ -8,12 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import me.boot.base.constant.Operation;
 import me.boot.datajpa.annotation.QueryCriteria;
+import me.boot.datajpa.base.QuerySpecification;
 import me.boot.datajpa.constant.Gender;
 import me.boot.datajpa.entity.User;
 import me.boot.datajpa.entity.WebSite;
 import me.boot.datajpa.repository.UserDao;
 import me.boot.datajpa.repository.WebSiteDao;
-import me.boot.datajpa.util.QueryPredicateUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Example;
@@ -40,23 +40,22 @@ class DataJpaApplicationTests {
     @Test
     void queryWebSite() {
 
-//        WebSite jack = webSiteDao.save(
-//            new WebSite().version("1.0").name("jack").url("https://www.jack.com"));
-//        webSiteDao.save(new WebSite().version("2.0").name("bing").url("https://www.bing.com"));
+        WebSite jack = webSiteDao.save(
+            new WebSite().version("1.0").name("jack").url("https://www.jack.com"));
+        webSiteDao.save(new WebSite().version("2.0").name("bing").url("https://www.bing.com"));
 //        webSiteDao.findAllByName("jack").forEach(System.err::println);
 //        webSiteDao.findById(new VersionId("1.0", "1.0")).ifPresent(System.err::println);
-        List<WebSite> bing = webSiteDao.findAllByNameAndVersion("bing", "2.0");
-        webSiteDao.deleteAll(bing);
-        System.err.println(webSiteDao.findAll());
+//        List<WebSite> bing = webSiteDao.findAllByNameAndVersion("bing", "2.0");
+//        webSiteDao.deleteAll(bing);
+//        System.err.println(webSiteDao.findAll());
     }
 
     @Test
     void predicateQuery() {
-        userDao.findAll(
-            (root, criteriaQuery, cb) -> QueryPredicateUtils.toPredicate(root, new QueryBean(null,
-                Gender.UNKNOWN), cb)).forEach(System.err::println);
-        webSiteDao.findAll((root, criteriaQuery, cb) -> QueryPredicateUtils.toPredicate(root,
-            new QueryBean("jac", null), cb)).forEach(System.err::println);
+        userDao.findAll(QuerySpecification.of(new QueryBean(null, Gender.UNKNOWN)))
+            .forEach(System.err::println);
+        webSiteDao.findAll(QuerySpecification.of(new QueryBean("jac", null)))
+            .forEach(System.err::println);
     }
 
     @Test
