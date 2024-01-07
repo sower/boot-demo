@@ -1,7 +1,7 @@
 package me.boot.web.aspect;
 
-import com.alibaba.fastjson2.JSON;
 import java.util.Arrays;
+import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import me.boot.web.utils.RequestContextUtil;
@@ -87,7 +87,7 @@ public class WebLogAspect {
             log.info(
                 "{} return result -> {}",
                 methodName,
-                StringUtils.abbreviate(JSON.toJSONString(obj), 1000));
+                StringUtils.abbreviate(Objects.toString(obj) , 1000));
         }
     }
 
