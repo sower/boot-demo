@@ -1,8 +1,10 @@
 package me.boot.base.util;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.google.common.collect.MapDifference;
 import com.google.common.collect.MapDifference.ValueDifference;
 import com.google.common.collect.Maps;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,6 +29,21 @@ public abstract class ObjectDiffUtils {
     public static List<FiledDifference> diff(@NonNull Object before, @NonNull Object after) {
         Map<String, ?> beforeMap = (Map<String, ?>) BeanMap.create(before);
         Map<String, ?> afterMap = (Map<String, ?>) BeanMap.create(after);
+        return diff(beforeMap, afterMap);
+    }
+
+    public static List<FiledDifference> diff(@NonNull Object before, @NonNull Object after,
+        Collection<String> ignoreProperties) {
+//        Map<String, ?> beforeMap =new HashMap<String, Object>(BeanMap.create(before)) ;
+//        Map<String, ?> afterMap =  new HashMap<String, Object>(BeanMap.create(after)) ;
+
+        Map<String, ?> beforeMap = JSONObject.from(before) ;
+        Map<String, ?> afterMap =  JSONObject.from(after) ;
+
+        for (String ignoreProperty : ignoreProperties) {
+            beforeMap.remove(ignoreProperty);
+            afterMap.remove(ignoreProperty);
+        }
         return diff(beforeMap, afterMap);
     }
 

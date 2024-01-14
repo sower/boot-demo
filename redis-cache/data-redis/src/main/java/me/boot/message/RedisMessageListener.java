@@ -1,4 +1,4 @@
-package me.boot;
+package me.boot.message;
 
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

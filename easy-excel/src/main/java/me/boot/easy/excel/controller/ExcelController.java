@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExcelController {
 
     @GetMapping("excel")
-    public ExcelResponse exportTest() {
+    public ExcelObject exportTest() {
         ArrayList<WebSite> webSites = ListUtils.newArrayList(new WebSite("baidu", "baidu.com"),
             new WebSite("bing", "bing.cn"));
 

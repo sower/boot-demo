@@ -1,7 +1,7 @@
 package me.boot.config;
 
-import me.boot.MessageReceiver;
-import me.boot.RedisMessageListener;
+import me.boot.message.MessageReceiver;
+import me.boot.message.RedisMessageListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;

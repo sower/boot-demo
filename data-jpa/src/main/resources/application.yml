@@ -21,10 +21,10 @@ spring:
       hibernate:
 #        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         dialect: org.sqlite.hibernate.dialect.SQLiteDialect
-        new_generator_mappings: false
-        format_sql: true
+        new-generator-mappings: false
+        format-sql: true
         show-sql: true
-        use_sql_comments: true
+        use-sql-comments: true
 
 
 #  datasource:
@@ -35,6 +35,18 @@ spring:
   datasource:
     driver-class-name: org.sqlite.JDBC
     url: jdbc:sqlite::resource:db/boot.db
+
+    hikari:
+    # 连接数 = ((cpu核数 * 2) + 磁盘有效主轴数)
+      maximum-pool-size: 10
+      minimum-idle: 10
+      # 官方推荐 MYSQL驱动的配置参数
+      data-source-properties:
+        cachePrepStmts: true
+        # 开启服务端预编译
+        useServerPrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
 
 logging:
   level:

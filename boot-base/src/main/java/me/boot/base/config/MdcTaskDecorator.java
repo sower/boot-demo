@@ -6,6 +6,7 @@ import me.boot.base.constant.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.core.task.TaskDecorator;
+import org.springframework.lang.NonNull;
 
 /**
  * MDC任务装饰器
@@ -15,7 +16,7 @@ import org.springframework.core.task.TaskDecorator;
 public class MdcTaskDecorator implements TaskDecorator {
 
     @Override
-    public Runnable decorate(Runnable runnable) {
+    public @NonNull Runnable decorate(@NonNull Runnable runnable) {
         Map<String, String> map = MDC.getCopyOfContextMap();
 //    RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
         return () -> {

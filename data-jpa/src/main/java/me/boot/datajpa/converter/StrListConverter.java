@@ -1,5 +1,6 @@
 package me.boot.datajpa.converter;
 
+import com.alibaba.fastjson2.TypeReference;
 import java.util.List;
 import javax.persistence.Converter;
 import org.apache.commons.collections4.ListUtils;
@@ -11,6 +12,10 @@ import org.apache.commons.collections4.ListUtils;
  */
 @Converter
 public class StrListConverter extends JsonConverter<List<String>> {
+
+    public StrListConverter() {
+        super(new TypeReference<List<String>>() {});
+    }
 
     @Override
     public List<String> convertToEntityAttribute(String json) {

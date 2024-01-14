@@ -1,6 +1,7 @@
 package me.boot.datajpa;
 
 import com.google.common.collect.ImmutableList;
+import com.zaxxer.hikari.HikariConfig;
 import java.time.LocalDate;
 import java.util.List;
 import javax.annotation.Resource;
@@ -28,6 +29,15 @@ class DataJpaApplicationTests {
 
     @Resource
     private WebSiteDao webSiteDao;
+
+    @Resource
+    private HikariConfig hikariConfig;
+
+    @Test
+    public void config() {
+        System.err.println(hikariConfig.getMaximumPoolSize());
+        System.err.println(hikariConfig.getDataSourceProperties());
+    }
 
     @Test
     void init() {

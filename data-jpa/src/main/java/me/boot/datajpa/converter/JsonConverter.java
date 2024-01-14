@@ -15,7 +15,11 @@ import org.apache.commons.lang3.StringUtils;
 @Converter
 public abstract class JsonConverter<T> implements AttributeConverter<T, String> {
 
-    private final TypeReference<T> typeReference = new TypeReference<T>() {};
+    private final TypeReference<T> typeReference;
+
+    protected JsonConverter(TypeReference<T> typeReference) {
+        this.typeReference = typeReference;
+    }
 
 
     @Override

@@ -27,7 +27,7 @@ public class RedisTemplateConfig {
         // 设置键（key）的序列化采用StringRedisSerializer。
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         redisTemplate.setKeySerializer(stringRedisSerializer);
-        // 设置值（value）的序列化采用FastJsonRedisSerializer。
+        // 设置值（value）的序列化采用jackson2JsonRedisSerializer
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);

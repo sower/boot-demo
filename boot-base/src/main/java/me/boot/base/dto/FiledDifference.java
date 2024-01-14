@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FiledDifference {
 
-    private String name;
+    private String property;
 
     private Object oldValue;
 
