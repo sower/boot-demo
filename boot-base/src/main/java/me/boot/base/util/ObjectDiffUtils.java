@@ -22,9 +22,9 @@ public abstract class ObjectDiffUtils {
     /**
      * Generates a list of differences between two objects.
      *
-     * @param  before	the object before the changes
-     * @param  after	the object after the changes
-     * @return         	a list of filed differences between the two objects
+     * @param before the object before the changes
+     * @param after  the object after the changes
+     * @return a list of filed differences between the two objects
      */
     public static List<FiledDifference> diff(@NonNull Object before, @NonNull Object after) {
         Map<String, ?> beforeMap = (Map<String, ?>) BeanMap.create(before);
@@ -37,13 +37,15 @@ public abstract class ObjectDiffUtils {
 //        Map<String, ?> beforeMap =new HashMap<String, Object>(BeanMap.create(before)) ;
 //        Map<String, ?> afterMap =  new HashMap<String, Object>(BeanMap.create(after)) ;
 
-        Map<String, ?> beforeMap = JSONObject.from(before) ;
-        Map<String, ?> afterMap =  JSONObject.from(after) ;
+        Map<String, ?> beforeMap = JSONObject.from(before);
+        Map<String, ?> afterMap = JSONObject.from(after);
 
-        for (String ignoreProperty : ignoreProperties) {
-            beforeMap.remove(ignoreProperty);
-            afterMap.remove(ignoreProperty);
-        }
+        beforeMap = Maps.filterKeys(beforeMap, key -> !ignoreProperties.contains(key));
+        afterMap = Maps.filterKeys(afterMap, key -> !ignoreProperties.contains(key));
+//        for (String ignoreProperty : ignoreProperties) {
+//            beforeMap.remove(ignoreProperty);
+//            afterMap.remove(ignoreProperty);
+//        }
         return diff(beforeMap, afterMap);
     }
 
