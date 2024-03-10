@@ -30,13 +30,13 @@ public class JacksonConfig {
      */
     private final String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
     /**
-     * 默认日期格式
+     * 默认日期格式 "yyyy-MM-dd"
      */
-    private final String dateFormat = "yyyy-MM-dd";
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
     /**
-     * 默认时间格式
+     * 默认时间格式 "HH:mm:ss"
      */
-    private final String timeFormat = "HH:mm:ss";
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_TIME;
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -55,12 +55,10 @@ public class JacksonConfig {
             javaTimeModule.addDeserializer(LocalDateTime.class,
                 new LocalDateTimeDeserializer(dateTimeFormatter));
 
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
             javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(dateFormatter));
             javaTimeModule.addDeserializer(LocalDate.class,
                 new LocalDateDeserializer(dateFormatter));
 
-            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(timeFormat);
             javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(timeFormatter));
             javaTimeModule.addDeserializer(LocalTime.class,
                 new LocalTimeDeserializer(timeFormatter));

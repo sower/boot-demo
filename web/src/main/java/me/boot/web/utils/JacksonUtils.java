@@ -107,8 +107,6 @@ public class JacksonUtils {
   /**
    * 泛化转换方式
    *
-   * <p>example：
-   *
    * <p>{@code Map<String, List<UserInfo>> listMap = genericConvert(jsonStr, new
    * TypeReference<Map<String, List<UserInfo>>>() {});}
    *

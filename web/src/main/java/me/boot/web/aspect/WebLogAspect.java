@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import me.boot.web.utils.RequestContextUtil;
+import me.boot.web.utils.RequestContextUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -34,13 +34,13 @@ public class WebLogAspect {
     public void requestLog() {
     }
 
-    @Pointcut("@within(me.boot.base.annotation.LogMethod)")
+    @Pointcut("@within(me.boot.base.annotation.LogMethod) || @annotation(me.boot.base.annotation.LogMethod)")
     public void methodLog() {
     }
 
     @Before("requestLog()")
     public void requestBefore() {
-        HttpServletRequest request = RequestContextUtil.getContextRequest();
+        HttpServletRequest request = RequestContextUtils.getContextRequest();
         log.info(
             "Received {} - {} request {}",
             request.getRemoteAddr(),

@@ -12,11 +12,11 @@
   <artifactId>web</artifactId>
 
   <dependencies>
-    <dependency>
-      <groupId>me.boot</groupId>
-      <artifactId>data-jpa</artifactId>
-      <version>${project.version}</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>me.boot</groupId>-->
+<!--      <artifactId>data-jpa</artifactId>-->
+<!--      <version>${project.version}</version>-->
+<!--    </dependency>-->
 
     <dependency>
       <groupId>me.boot</groupId>
@@ -43,6 +43,12 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <version>1.7.0</version>
     </dependency>
 
 

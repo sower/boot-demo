@@ -1,15 +1,13 @@
-package me.boot.web;
+package me.boot.mq.rabbit;
 
-import me.boot.httputil.EnableHttpBin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@EnableHttpBin
 @SpringBootApplication
-public class WebApplication {
+public class RabbitmqApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WebApplication.class, args);
+        SpringApplication.run(RabbitmqApplication.class, args);
     }
 
 }

@@ -29,7 +29,6 @@ server:
       # 最小空闲线程数量
       min-spare: 100
 
-
     basedir: /log
     access-log:
       directory: tomcat
@@ -39,9 +38,21 @@ server:
 
 
 spring:
+  config:
+    import:
+#      - classpath:application.yml
+      - optional:D:\Code\Mine\boot-demo\http-util\src\main\resources\application.yml
 
   application:
     name: web
+
+
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+      additional-paths: src/main/java #重启目录
+      exclude: WEB-INF/**
+
 
   mvc:
     async:
@@ -101,4 +112,27 @@ spring:
 #    console:
 #      enabled: true
 #      path: /h2
+
+
+
+springdoc:
+  api-docs:
+    enabled: true
+  override-with-generic-response: false
+  writer-with-order-by-keys: true
+  default-support-form-data: true
+
+  swagger-ui:
+    enabled: true
+    filter: true
+#    operationsSorter: method
+    tagsSorter: alpha
+    displayOperationId: true
+    displayRequestDuration: true
+    docExpansion: none
+    showExtensions: true
+    showCommonExtensions: true
+    persistAuthorization: true
+
+
 

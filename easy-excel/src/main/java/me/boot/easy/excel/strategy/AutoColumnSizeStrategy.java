@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.NoArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 
@@ -77,7 +78,7 @@ public class AutoColumnSizeStrategy extends AbstractColumnWidthStyleStrategy {
         if (isHead) {
             return cell.getStringCellValue().getBytes(StandardCharsets.UTF_8).length;
         }
-        WriteCellData<?> cellData = cellDataList.get(0);
+        WriteCellData<?> cellData = IterableUtils.first(cellDataList);
 
         switch (cellData.getType()) {
             case STRING:
@@ -85,7 +86,7 @@ public class AutoColumnSizeStrategy extends AbstractColumnWidthStyleStrategy {
                         cellData.getStringValue().split(StringUtils.LF))
                     .map(str -> str.getBytes(StandardCharsets.UTF_8).length)
                     .collect(Collectors.toList());
-                return Collections.max(lineLengths);
+                return lineLengths.isEmpty() ? -1 : Collections.max(lineLengths);
             case BOOLEAN:
                 return cellData.getBooleanValue().toString()
                     .getBytes(StandardCharsets.UTF_8).length;

@@ -10,11 +10,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>data-batch</artifactId>
+  <artifactId>multi-data-source</artifactId>
   <packaging>jar</packaging>
 
   <properties>
-    <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
+    <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
   </properties>
 
   <dependencies>
@@ -36,9 +36,8 @@
 
     <!--Mysql依赖包-->
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.28</version>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
       <scope>runtime</scope>
     </dependency>
 
