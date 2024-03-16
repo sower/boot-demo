@@ -14,11 +14,11 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AnyOf {
 
-    String message() default "";
+    String message() default "{boot.validation.constraints.AnyOf.message}";
 
     String[] values() default {};
 
-    Class<? extends Enum<?>>[] enumClasses() default {};
+    Class<? extends Enum<?>> enumClass() default Empty.class;
 
     boolean nullable() default false;
 
@@ -27,4 +27,9 @@ public @interface AnyOf {
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
+
+    enum Empty {
+
+    }
+
 }

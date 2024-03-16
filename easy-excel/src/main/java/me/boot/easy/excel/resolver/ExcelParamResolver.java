@@ -66,7 +66,7 @@ public class ExcelParamResolver implements HandlerMethodArgumentResolver {
             methodParameter.getGenericParameterType()).getGenerics();
         Class<?> component = generics[generics.length - 1].resolve();
 
-        EasyExcel.read(file.getInputStream(), component, new AnalysisEventListener<>() {
+        EasyExcel.read(file.getInputStream(), component, new AnalysisEventListener<Object>() {
 
             @Override
             public void invoke(Object data, AnalysisContext context) {

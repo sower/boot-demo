@@ -44,7 +44,7 @@ public class SpringContextHolder implements ApplicationContextAware {
      * @param requiredType 返回类型
      * @return /
      */
-    public static <T> T getProperties(String property, Class<T> requiredType) {
+    public static <T> T getProperty(String property, Class<T> requiredType) {
         return getBean(Environment.class).getProperty(property, requiredType);
     }
 
@@ -54,8 +54,8 @@ public class SpringContextHolder implements ApplicationContextAware {
      * @param property 属性key
      * @return /
      */
-    public static String getProperties(String property) {
-        return getProperties(property, String.class);
+    public static String getProperty(String property) {
+        return getProperty(property, String.class);
     }
 
 }

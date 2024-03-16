@@ -1,4 +1,4 @@
-package me.boot.web.service;
+package me.boot.web.controller;
 
 import com.alibaba.fastjson2.JSONObject;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,7 +9,10 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.boot.httputil.service.HttpBinService;
+import me.boot.web.validation.AnyOf;
+import me.boot.web.validation.SizePlus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
  **/
 @Tag(name = "HttpBin", description = "By httpbin.org")
 @Slf4j
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/bin")
@@ -52,14 +56,16 @@ public class HttpBinController {
 
     @Operation(summary = "请求体")
     @PutMapping(value = "map")
-    public JSONObject map(@RequestBody Map body) {
+    public JSONObject map(
+        @SizePlus(min = "1", max = "${validation.bin.max:3}") @RequestBody Map body) {
         return httpBinService.put(body);
     }
 
     @Operation(summary = "状态码", description = "HTTP 状态")
     @DeleteMapping(value = "status/{code}")
-    public JSONObject status(
-        @Parameter(description = "Status code", example = "200") @PathVariable String code) {
+    public JSONObject status(@AnyOf(values = {"200", "300", "400", "500"})
+    @Parameter(description = "Status code", example = "200") @PathVariable String code) {
         return httpBinService.delete(code);
     }
+
 }

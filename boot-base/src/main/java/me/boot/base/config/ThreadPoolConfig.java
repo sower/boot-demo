@@ -1,9 +1,15 @@
 package me.boot.base.config;
 
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.stream.Stream;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
+import org.springframework.boot.task.TaskExecutorBuilder;
+import org.springframework.boot.task.TaskExecutorCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
+import org.springframework.core.task.TaskDecorator;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
@@ -20,15 +26,37 @@ public class ThreadPoolConfig {
     private final int queueCapacity = 50;
     private final int keepAliveSeconds = 30;
 
+    @Bean
+    public TaskExecutorBuilder taskExecutorBuilder(TaskExecutionProperties properties,
+        ObjectProvider<TaskExecutorCustomizer> taskExecutorCustomizers,
+        ObjectProvider<TaskDecorator> taskDecorator) {
+        TaskExecutionProperties.Pool pool = properties.getPool();
+        TaskExecutorBuilder builder = new TaskExecutorBuilder();
+        TaskExecutionProperties.Shutdown shutdown = properties.getShutdown();
+        Stream<TaskExecutorCustomizer> customizerStream = taskExecutorCustomizers.orderedStream();
+        builder = builder.queueCapacity(pool.getQueueCapacity());
+        builder = builder.corePoolSize(pool.getCoreSize());
+        builder = builder.maxPoolSize(pool.getMaxSize());
+        builder = builder.allowCoreThreadTimeOut(pool.isAllowCoreThreadTimeout());
+        builder = builder.keepAlive(pool.getKeepAlive());
+        builder = builder.awaitTermination(shutdown.isAwaitTermination());
+        builder = builder.awaitTerminationPeriod(shutdown.getAwaitTerminationPeriod());
+        builder = builder.threadNamePrefix(properties.getThreadNamePrefix());
+        builder = builder.customizers(customizerStream::iterator);
+        builder = builder.taskDecorator(taskDecorator.getIfUnique());
+        return builder;
+    }
+
+    @Primary
     @Bean(name = "asyncTaskExecutor")
-    public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setMaxPoolSize(maxPoolSize);
-        executor.setCorePoolSize(corePoolSize);
-        executor.setQueueCapacity(queueCapacity);
-        executor.setKeepAliveSeconds(keepAliveSeconds);
-        executor.setTaskDecorator(new MdcTaskDecorator());
-        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-        return executor;
+    public ThreadPoolTaskExecutor asyncTaskExecutor(TaskExecutorBuilder builder) {
+        return builder.build();
+    }
+
+
+    @Lazy
+    @Bean(name = "singleTaskExecutor")
+    public ThreadPoolTaskExecutor singleTaskExecutor(TaskExecutorBuilder builder) {
+        return builder.corePoolSize(1).maxPoolSize(1).threadNamePrefix("singleTask-").build();
     }
 }

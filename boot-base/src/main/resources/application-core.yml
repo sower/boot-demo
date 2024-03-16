@@ -1,0 +1,53 @@
+server:
+  servlet:
+    context-path: /${spring.application.name}
+  shutdown: graceful
+  http2:
+    enabled: true
+  compression:
+    enabled: true
+
+spring:
+#  application:
+#    name: boot
+
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+      additional-paths: src/main/java #重启目录
+      exclude: WEB-INF/**
+
+  jackson:
+    time-zone: GMT+8
+    locale: zh_CN
+    date-format: yyyy-MM-dd HH:mm:ss
+    #    property-naming-strategy: LOWER_CAMEL_CASE
+    default-property-inclusion: NON_NULL #不为空的属性才会序列化
+    mapper:
+      SORT_PROPERTIES_ALPHABETICALLY: true
+    deserialization:
+      #      # 常用,json中含pojo不存在属性时是否失败报错,默认true
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    serialization:
+      INDENT_OUTPUT: true
+
+# 线程池配置
+  task:
+    execution:
+      thread-name-prefix: boot-async-
+      pool:
+        core-size: ${2C:8}
+        max-size: 20
+        queue-capacity: 50
+        keep-alive: 30s
+      shutdown:
+        await-termination: true
+        await-termination-period: 30s
+    scheduling:
+      thread-name-prefix: boot-schedule-
+      shutdown:
+        await-termination: true
+        await-termination-period: 30s
+
+  lifecycle:
+    timeout-per-shutdown-phase: 1m

@@ -23,7 +23,7 @@ public class RedissonUtils {
     private static final RedissonClient redisson = SpringContextHolder.getBean(
         RedissonClient.class);
 
-    private static final String REDIS_KEY_PREFIX = SpringContextHolder.getProperties(
+    private static final String REDIS_KEY_PREFIX = SpringContextHolder.getProperty(
         "spring.cache.redis.key-prefix");
 
     private static final NumberFormat NUMBER_FORMAT = new DecimalFormat("000000");

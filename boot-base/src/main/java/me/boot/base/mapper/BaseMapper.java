@@ -1,5 +1,4 @@
-
-package me.boot.entity;
+package me.boot.base.mapper;
 
 import java.util.List;
 
@@ -8,6 +7,7 @@ public interface BaseMapper<D, E> {
 
     /**
      * DTO转Entity
+     *
      * @param dto /
      * @return /
      */
@@ -15,6 +15,7 @@ public interface BaseMapper<D, E> {
 
     /**
      * Entity转DTO
+     *
      * @param entity /
      * @return /
      */
@@ -22,15 +23,17 @@ public interface BaseMapper<D, E> {
 
     /**
      * DTO集合转Entity集合
+     *
      * @param dtoList /
      * @return /
      */
-    List <E> toEntities(List<D> dtoList);
+    List<E> toEntities(List<D> dtoList);
 
     /**
      * Entity集合转DTO集合
+     *
      * @param entityList /
      * @return /
      */
-    List <D> toDtos(List<E> entityList);
+    List<D> toDtos(List<E> entityList);
 }

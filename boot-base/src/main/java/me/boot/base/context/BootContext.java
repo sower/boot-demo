@@ -10,7 +10,9 @@ import lombok.Data;
  * @date 2023/02/26
  */
 @Data
-public class BaseContext {
+public class BootContext {
+
+    private String userId;
 
     private Map<String, Object> properties = new HashMap<>();
 

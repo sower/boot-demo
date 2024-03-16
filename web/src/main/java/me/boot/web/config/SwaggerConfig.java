@@ -6,7 +6,14 @@ import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.security.SecurityScheme.In;
+import io.swagger.v3.oas.models.security.SecurityScheme.Type;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.BiConsumer;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,15 +29,28 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI bootOpenAPI() {
 
-        // 自定义请求头
-        ImmutableList<String> headers = ImmutableList.of("X-Trace-ID", "X-User-ID");
-        Components components = new Components().addSecuritySchemes("basicScheme",
+        Components components = new Components()
+            .addSecuritySchemes("basicScheme",
             new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("basic"));
-        headers.forEach(header -> components
-            .addSecuritySchemes(header, new SecurityScheme()
-                .type(SecurityScheme.Type.APIKEY)
-                .in(SecurityScheme.In.HEADER)
-                .name(header)));
+
+        BiConsumer<String, SecurityScheme.In> addSecurityScheme = (item, ins) -> components
+            .addSecuritySchemes(item, new SecurityScheme()
+                .type(Type.APIKEY)
+                .name(item)
+                .in(ins));
+
+        // 公共请求头
+        ImmutableList<String> headers = ImmutableList.of("X-Trace-ID", "X-User-ID");
+        headers.forEach(header -> addSecurityScheme.accept(header, SecurityScheme.In.HEADER));
+
+        // 站点Cookies
+        Set<String> cookies = Collections.singleton("sessionId");
+        cookies.forEach(cookie -> addSecurityScheme.accept(cookie, In.COOKIE));
+
+        // 对所有端点应用
+        Map<String, SecurityScheme> securitySchemes = components.getSecuritySchemes();
+        SecurityRequirement requirement = new SecurityRequirement();
+        securitySchemes.keySet().forEach(requirement::addList);
 
         return new OpenAPI()
             .info(new Info().title("Boot Demo API")
@@ -40,7 +60,7 @@ public class SwaggerConfig {
             .externalDocs(new ExternalDocumentation()
                 .description("Boot Demo Wiki Documentation")
                 .url("https://boot.me/docs"))
-            .components(components);
+            .components(components).addSecurityItem(requirement);
     }
 
 
@@ -52,7 +72,7 @@ public class SwaggerConfig {
             .build();
     }
 
-//    @Bean
+    //    @Bean
     public GroupedOpenApi othersApi() {
         return GroupedOpenApi.builder()
             .group("Demo Api")

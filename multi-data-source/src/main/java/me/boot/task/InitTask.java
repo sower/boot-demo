@@ -2,7 +2,7 @@ package me.boot.task;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.boot.repository.WebSiteDao;
+import me.boot.datajpa.repository.WebSiteDao;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;

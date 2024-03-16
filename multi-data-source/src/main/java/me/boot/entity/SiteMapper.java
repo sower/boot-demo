@@ -1,5 +1,6 @@
 package me.boot.entity;
 
+import me.boot.datajpa.entity.WebSite;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

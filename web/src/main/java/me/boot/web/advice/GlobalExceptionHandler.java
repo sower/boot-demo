@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
      * bean validate exception
      */
     @ExceptionHandler({BindException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     protected SingleResult<?> handleBindException(BindException ex) {
         List<Map<String, Object>> list =
             ex.getFieldErrors().stream().map(this::fieldErrorToMap).collect(Collectors.toList());
@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
      * 普通参数(非 java bean)校验出错时抛出 ConstraintViolationException 异常
      */
     @ExceptionHandler({ConstraintViolationException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public SingleResult<?> handleConstraintViolationException(ConstraintViolationException ex) {
         log.warn("Valid params failed: {}", ex.getMessage());
         return SingleResult.failure(ex.getMessage());

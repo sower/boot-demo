@@ -12,11 +12,11 @@
   <artifactId>web</artifactId>
 
   <dependencies>
-<!--    <dependency>-->
-<!--      <groupId>me.boot</groupId>-->
-<!--      <artifactId>data-jpa</artifactId>-->
-<!--      <version>${project.version}</version>-->
-<!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>me.boot</groupId>-->
+    <!--      <artifactId>data-jpa</artifactId>-->
+    <!--      <version>${project.version}</version>-->
+    <!--    </dependency>-->
 
     <dependency>
       <groupId>me.boot</groupId>
@@ -51,12 +51,51 @@
       <version>1.7.0</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
 
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.boot</groupId>-->
-<!--      <artifactId>spring-boot-starter-security</artifactId>-->
-<!--    </dependency>-->
+
+    <!--    <dependency>-->
+    <!--      <groupId>org.springframework.boot</groupId>-->
+    <!--      <artifactId>spring-boot-starter-security</artifactId>-->
+    <!--    </dependency>-->
 
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <!-- devtools依赖此配置（否则，devtools不生效）。 -->
+          <fork>true</fork>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+            <exclude>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct</artifactId>
+            </exclude>
+          </excludes>
+          <additionalProperties>
+            <encoding.source>UTF-8</encoding.source>
+            <java.version>${java.version}</java.version>
+          </additionalProperties>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>build-info</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
