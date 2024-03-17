@@ -5,11 +5,11 @@
   <parent>
     <artifactId>boot-parent</artifactId>
     <groupId>me.boot</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
   </parent>
+
   <modelVersion>4.0.0</modelVersion>
   <artifactId>http-util</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <name>http-util</name>
   <description>http-util</description>
 

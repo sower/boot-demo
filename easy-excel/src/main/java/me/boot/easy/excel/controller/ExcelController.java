@@ -26,10 +26,7 @@ public class ExcelController {
         ArrayList<WebSite> webSites = ListUtils.newArrayList(new WebSite("baidu", "baidu.com"),
             new WebSite("bing", "bing.cn"));
 
-        return ExcelResponse.builder()
-            .data(webSites)
-            .headClass(WebSite.class)
-            .build();
+        return new ExcelObject();
     }
 
     @PostMapping("excel")

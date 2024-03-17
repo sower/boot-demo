@@ -1,6 +1,7 @@
 package me.boot.web.controller;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.nimbusds.jose.Payload;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,6 +10,7 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.boot.httputil.service.HttpBinService;
+import me.boot.jwt.service.JwtService;
 import me.boot.web.validation.AnyOf;
 import me.boot.web.validation.SizePlus;
 import org.springframework.http.MediaType;
@@ -39,6 +41,8 @@ public class HttpBinController {
 
     private final HttpBinService httpBinService;
 
+    private final JwtService jwtService;
+
     @Operation(summary = "Generate UUID")
     @ApiResponse(responseCode = "200", description = "UUID")
     @GetMapping("uuid")
@@ -56,9 +60,10 @@ public class HttpBinController {
 
     @Operation(summary = "请求体")
     @PutMapping(value = "map")
-    public JSONObject map(
-        @SizePlus(min = "1", max = "${validation.bin.max:3}") @RequestBody Map body) {
-        return httpBinService.put(body);
+    public String map(
+        @SizePlus(min = "1", max = "${validation.bin.max:3}") @RequestBody Map<String, Object> body) {
+//        return httpBinService.put(body).toString();
+        return jwtService.sign(new Payload(body));
     }
 
     @Operation(summary = "状态码", description = "HTTP 状态")

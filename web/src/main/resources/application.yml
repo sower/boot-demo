@@ -1,11 +1,11 @@
 server:
   servlet:
     context-path: /${spring.application.name}
-  shutdown: graceful
   http2:
     enabled: true
   compression:
     enabled: true
+  forward-headers-strategy: framework
 
   undertow:
     threads:
@@ -40,18 +40,13 @@ server:
 spring:
   config:
     import:
-#      - classpath:application.yml
+      - optional:classpath:application-core.yml
+      - optional:classpath:application-jwt.yml
       - optional:D:\Code\Mine\boot-demo\http-util\src\main\resources\application.yml
 
   application:
     name: web
-
-
-  devtools:
-    restart:
-      enabled: true  #设置开启热部署
-      additional-paths: src/main/java #重启目录
-      exclude: WEB-INF/**
+    version: @project.version@
 
 
   mvc:
@@ -67,20 +62,6 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-
-  jackson:
-    time-zone: GMT+8
-    locale: zh_CN
-    date-format: yyyy-MM-dd HH:mm:ss
-    #    property-naming-strategy: LOWER_CAMEL_CASE
-    default-property-inclusion: NON_NULL #不为空的属性才会序列化
-    mapper:
-      SORT_PROPERTIES_ALPHABETICALLY: true
-    deserialization:
-      #      # 常用,json中含pojo不存在属性时是否失败报错,默认true
-      FAIL_ON_UNKNOWN_PROPERTIES: false
-    serialization:
-      INDENT_OUTPUT: true
 
 
   jpa:
@@ -102,19 +83,6 @@ spring:
             revision_type_field_name: revision_type
             store_data_at_delete: true
 
-
-#  datasource:
-#    url: jdbc:h2:./web/src/main/resources/data;NON_KEYWORDS=USER
-#    username: sa
-#    password:
-#    driverClassName: org.h2.Driver
-#  h2:
-#    console:
-#      enabled: true
-#      path: /h2
-
-
-
 springdoc:
   api-docs:
     enabled: true
@@ -134,5 +102,26 @@ springdoc:
     showCommonExtensions: true
     persistAuthorization: true
 
+  # management actuator
+  show-actuator: true
+#  use-management-port: true
 
+management:
+  server:
+    port: 9090
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+#        openapi, swagger-ui, health, info, env, mappings, beans, features
+  endpoint:
+    health:
+      show-details: always
 
+validation:
+  bin:
+    max: 3
+
+#logging:
+#  level:
+#    root: info

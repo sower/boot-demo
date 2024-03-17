@@ -6,11 +6,10 @@
   <parent>
     <artifactId>boot-parent</artifactId>
     <groupId>me.boot</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
   </parent>
 
   <artifactId>minio</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <name>minio</name>
   <description>minio</description>
 
@@ -30,11 +29,25 @@
   </dependencies>
 
   <build>
+
     <plugins>
+
       <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
+        <groupId>me.boot</groupId>
+        <artifactId>counter-maven-plugin</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>dependency-counter</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <scope>test</scope>
+        </configuration>
       </plugin>
+
     </plugins>
   </build>
 

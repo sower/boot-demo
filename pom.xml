@@ -31,24 +31,32 @@
 
   <groupId>me.boot</groupId>
   <artifactId>boot-parent</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <name>boot-parent</name>
   <description>boot parent</description>
 
   <properties>
     <spring.boot.version>2.7.18</spring.boot.version>
-    <spring-cloud.version>2021.0.9</spring-cloud.version>
+    <spring.cloud.version>2021.0.9</spring.cloud.version>
     <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <service.version>0.0.2-SNAPSHOT</service.version>
   </properties>
 
   <dependencyManagement>
+
     <dependencies>
+<!--      <dependency>-->
+<!--        <groupId>org.springframework.boot</groupId>-->
+<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
+<!--        <version>${spring.boot.version}</version>-->
+<!--        <type>pom</type>-->
+<!--        <scope>import</scope>-->
+<!--      </dependency>-->
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring-cloud.version}</version>
+        <version>${spring.cloud.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -104,9 +112,20 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
         <version>2.16.2</version>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <id>set-project-version</id>
+            <goals>
+              <goal>set</goal>
+            </goals>
+            <phase>compile</phase>
+          </execution>
+        </executions>
         <configuration>
           <!--pom不备份-->
           <generateBackupPoms>false</generateBackupPoms>
+          <newVersion>${service.version}</newVersion>
         </configuration>
       </plugin>
 
@@ -114,7 +133,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
+<!--        <version>${maven-compiler-plugin.version}</version>-->
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
@@ -172,11 +191,11 @@
         </configuration>
       </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.6.1</version>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-dependency-plugin</artifactId>-->
+<!--        <version>3.6.1</version>-->
+<!--      </plugin>-->
 
     </plugins>
   </build>

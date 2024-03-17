@@ -45,7 +45,7 @@ public class OkHttpUtil implements HttpsUtil {
 
     @Autowired
     public void setClient(OkHttpClient client) {
-        this.client = client;
+        OkHttpUtil.client = client;
     }
 
     public Map<String, String> queryParams;

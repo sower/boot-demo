@@ -1,0 +1,21 @@
+jwt:
+  token-name: Authorization
+#  hmac-key: boot-hmac-secretboot-hmac-secret
+  hmac-key: BOOT(5DSYiNCQRvgn+8otW8yTXA1yjen/l1pF8cr+Pe+556cpu3LXjeJvlFJMVy11svOgqtF/dQol9BbsFMK1qdoSI4/2njELqnwQ2z0CZZTNUUk=)
+#  jks-file-name: null
+#  jks-password: null
+#  cert-password: null
+  issuer: me
+  subject: me
+  audience: boot
+  not-before-at: 1
+  not-before-in: 1
+  expired-at: 1
+  expired-in: 1
+  
+jasypt:
+  encryptor:
+    password: boot-jasypt-jwt
+    property:
+      prefix: BOOT(
+      suffix: )

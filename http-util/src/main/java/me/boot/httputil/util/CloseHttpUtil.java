@@ -36,7 +36,7 @@ public class CloseHttpUtil implements HttpsUtil {
 
     @Autowired
     public void setClient(CloseableHttpClient client) {
-        this.client = client;
+        CloseHttpUtil.client = client;
     }
 
     public Map<String, String> queryParams;

@@ -5,7 +5,7 @@
   <parent>
     <artifactId>boot-parent</artifactId>
     <groupId>me.boot</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -21,6 +21,12 @@
     <dependency>
       <groupId>me.boot</groupId>
       <artifactId>http-util</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>me.boot</groupId>
+      <artifactId>jwt</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -69,6 +75,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring.boot.version}</version>
         <configuration>
           <!-- devtools依赖此配置（否则，devtools不生效）。 -->
           <fork>true</fork>
