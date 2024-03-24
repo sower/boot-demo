@@ -1,7 +1,12 @@
 package me.boot.jwt.config;
 
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.JWTClaimsSet.Builder;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.Map;
+import java.util.UUID;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.convert.DurationUnit;
@@ -15,20 +20,10 @@ import org.springframework.boot.convert.DurationUnit;
 @ConfigurationProperties(prefix = "jwt")
 public class JwtProperties {
 
-    // JWT 在 HTTP HEADER 中默认的 KEY
-    private String tokenName;
-
     // HMAC 密钥，用于支持 HMAC 算法
     private String hmacKey;
 
-    // JKS 密钥路径，用于支持 RSA 算法
-    private String jksFileName;
-
-    // JKS 密钥密码，用于支持 RSA 算法
-    private String jksPassword;
-
-    // 证书密码，用于支持 RSA 算法
-    private String certPassword;
+    private String rseKey;
 
     // JWT 标准信息：签发人 - iss
     private String issuer;
@@ -39,17 +34,20 @@ public class JwtProperties {
     // JWT 标准信息：受众 - aud
     private String audience;
 
-    // JWT 标准信息：生效时间 - nbf，未来多长时间内生效
-    @DurationUnit(ChronoUnit.MINUTES)
-    private Duration notBeforeIn;
+    // 有效时间：生效时间 - 过期时间
+    @DurationUnit(ChronoUnit.SECONDS)
+    private Duration effectiveTime;
 
-    // JWT 标准信息：生效时间 - nbf，具体哪个时间生效
-    @DurationUnit(ChronoUnit.MINUTES)
-    private Duration notBeforeAt;
 
-    // JWT 标准信息：过期时间 - exp，未来多长时间内过期
-    private long expiredIn;
+    public static JWTClaimsSet buildClaimsSet(JwtProperties properties,Map<String, Object>jsonObject) {
+        Date now = new Date();
+        Date expirationTime = new Date(
+            now.getTime() + 1000 * properties.getEffectiveTime().getSeconds());
+        Builder builder = new Builder().subject(properties.getSubject())
+            .issuer(properties.getIssuer()).audience(properties.getAudience()).issueTime(now)
+            .notBeforeTime(now).expirationTime(expirationTime).jwtID(UUID.randomUUID().toString());
+        jsonObject.forEach(builder::claim);
+        return builder.build();
+    }
 
-    // JWT 标准信息：过期时间 - exp，具体哪个时间过期
-    private long expiredAt;
 }

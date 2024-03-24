@@ -1,6 +1,6 @@
 package me.boot.jwt.service;
 
-import com.nimbusds.jose.Payload;
+import java.util.Map;
 
 /**
  * JwtService
@@ -12,10 +12,11 @@ public interface JwtService {
     /**
      * 对信息进行签名
      */
-    String sign(Payload payload);
+    String sign(Map<String, Object> jsonObject);
 
     /**
      * 验证并返回信息
      */
-    Payload verify(String token);
+    Map<String, Object> verify(String token);
+
 }

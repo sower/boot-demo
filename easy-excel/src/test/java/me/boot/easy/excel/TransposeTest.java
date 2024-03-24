@@ -9,7 +9,7 @@ import me.boot.easy.excel.strategy.AutoFilterHandler;
 import me.boot.easy.excel.strategy.AutoSequenceStrategy;
 import me.boot.easy.excel.strategy.DropDownHandler;
 import me.boot.easy.excel.strategy.FreezeHandler;
-import me.boot.easy.excel.util.TransposeUtil;
+import me.boot.easy.excel.util.TransposeUtils;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +25,7 @@ public class TransposeTest {
         new WebSite("bing", "123111111111111111111111"));
 
     public List<List<String>> data() {
-        List<List<String>> transpose = TransposeUtil.transpose(webSites);
+        List<List<String>> transpose = TransposeUtils.transpose(webSites);
         transpose.add(Lists.newArrayList("head", "body", "body", "123111111111111111111111"));
         System.out.println(transpose);
         return transpose;

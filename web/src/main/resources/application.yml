@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /${spring.application.name}
+    context-path: /web
   http2:
     enabled: true
   compression:
@@ -43,10 +43,12 @@ spring:
       - optional:classpath:application-core.yml
       - optional:classpath:application-jwt.yml
       - optional:D:\Code\Mine\boot-demo\http-util\src\main\resources\application.yml
+      - optional:D:\Code\Mine\boot-demo\redis-cache\data-redisson\src\main\resources\application.yml
 
   application:
-    name: web
+    name: @project.name@
     version: @project.version@
+    description: @project.description@
 
 
   mvc:

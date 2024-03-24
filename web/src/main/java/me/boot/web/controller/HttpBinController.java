@@ -1,7 +1,6 @@
 package me.boot.web.controller;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.nimbusds.jose.Payload;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,6 +8,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.boot.base.annotation.DistributedLock;
+import me.boot.base.annotation.LogRecord;
 import me.boot.httputil.service.HttpBinService;
 import me.boot.jwt.service.JwtService;
 import me.boot.web.validation.AnyOf;
@@ -43,6 +44,7 @@ public class HttpBinController {
 
     private final JwtService jwtService;
 
+    @DistributedLock(leaseTime = "10s")
     @Operation(summary = "Generate UUID")
     @ApiResponse(responseCode = "200", description = "UUID")
     @GetMapping("uuid")
@@ -63,14 +65,16 @@ public class HttpBinController {
     public String map(
         @SizePlus(min = "1", max = "${validation.bin.max:3}") @RequestBody Map<String, Object> body) {
 //        return httpBinService.put(body).toString();
-        return jwtService.sign(new Payload(body));
+        return jwtService.sign(body);
     }
 
+    @LogRecord(content = "#method.name + ' ==> ' + #args[0]")
     @Operation(summary = "状态码", description = "HTTP 状态")
     @DeleteMapping(value = "status/{code}")
     public JSONObject status(@AnyOf(values = {"200", "300", "400", "500"})
     @Parameter(description = "Status code", example = "200") @PathVariable String code) {
         return httpBinService.delete(code);
     }
+
 
 }

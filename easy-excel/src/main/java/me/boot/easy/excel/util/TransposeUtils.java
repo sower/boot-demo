@@ -16,7 +16,7 @@ import org.springframework.cglib.beans.BeanMap;
  * @description
  * @date 2023/09/24
  **/
-public class TransposeUtil {
+public class TransposeUtils {
 
     public static List<List<Object>> getHeaders(List<?> data) {
         List<Field> fields = getExcelPropertyFields(data);

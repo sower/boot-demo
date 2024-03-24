@@ -17,7 +17,8 @@ import java.util.function.BiConsumer;
 import lombok.Data;
 import me.boot.base.constant.Constants;
 import org.springdoc.core.GroupedOpenApi;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -27,12 +28,20 @@ import org.springframework.http.HttpHeaders;
  *
  * @since 2024/03/09
  **/
-@Data
 @Configuration
+@ConfigurationPropertiesScan
 public class SwaggerConfig {
 
+    @Data
+    @ConfigurationProperties("spring.application")
+    public static class AppInfo {
+        private String name;
+        private String description;
+        private String version;
+    }
+
     @Bean
-    public OpenAPI bootOpenAPI(@Value("${spring.application.version:unknown}") String appVersion) {
+    public OpenAPI bootOpenAPI(AppInfo appInfo) {
         final String securitySchemeName = "bearerAuth";
         Components components = new Components().addSecuritySchemes(securitySchemeName,
             new SecurityScheme().name(securitySchemeName).type(SecurityScheme.Type.HTTP)
@@ -57,8 +66,7 @@ public class SwaggerConfig {
         SecurityRequirement requirement = new SecurityRequirement();
         securitySchemes.keySet().forEach(requirement::addList);
         return new OpenAPI().info(
-            new Info().title("Boot Demo API").description("Boot Demo application")
-                .version(appVersion)
+            new Info().title(appInfo.name).description(appInfo.description).version(appInfo.version)
                 .license(new License().name("Apache 2.0").url("https://boot.me"))).externalDocs(
             new ExternalDocumentation().description("Boot Demo Wiki Documentation")
                 .url("https://boot.me/docs")).components(components).addSecurityItem(requirement);

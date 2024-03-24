@@ -16,7 +16,7 @@ import org.springframework.core.type.classreading.SimpleMetadataReaderFactory;
  * @date 2023/07/31
  **/
 @Slf4j
-public class CommonUtil {
+public class CommonUtils {
 
     public static List<String> getAllClassNames() throws IOException {
         PathMatchingResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();

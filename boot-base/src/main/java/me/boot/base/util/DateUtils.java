@@ -8,11 +8,23 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class DateUtils {
+public abstract class DateUtils {
 
-    public static final DateTimeFormatter DFY_MD_HMS =
-        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    public static final DateTimeFormatter DFY_MD = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    /**
+     * 默认日期时间格式
+     */
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(
+        DATE_TIME_FORMAT);
+    /**
+     * 默认日期格式 "yyyy-MM-dd"
+     */
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE;
+    /**
+     * 默认时间格式 "HH:mm:ss"
+     */
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ISO_LOCAL_TIME;
 
     /**
      * LocalDateTime 转时间戳
@@ -93,8 +105,8 @@ public class DateUtils {
      * @param localDateTime /
      * @return /
      */
-    public static String localDateTimeFormatyMdHms(LocalDateTime localDateTime) {
-        return DFY_MD_HMS.format(localDateTime);
+    public static String localDateTimeFormat(LocalDateTime localDateTime) {
+        return DATE_TIME_FORMATTER.format(localDateTime);
     }
 
     /**
@@ -103,8 +115,8 @@ public class DateUtils {
      * @param localDateTime /
      * @return /
      */
-    public String localDateTimeFormatyMd(LocalDateTime localDateTime) {
-        return DFY_MD.format(localDateTime);
+    public String localDateFormat(LocalDateTime localDateTime) {
+        return DATE_FORMATTER.format(localDateTime);
     }
 
     /**
@@ -124,8 +136,8 @@ public class DateUtils {
      * @param localDateTime /
      * @return /
      */
-    public static LocalDateTime parseLocalDateTimeFormat(
-        String localDateTime, DateTimeFormatter dateTimeFormatter) {
+    public static LocalDateTime parseLocalDateTimeFormat(String localDateTime,
+        DateTimeFormatter dateTimeFormatter) {
         return LocalDateTime.from(dateTimeFormatter.parse(localDateTime));
     }
 
@@ -135,7 +147,7 @@ public class DateUtils {
      * @param localDateTime /
      * @return /
      */
-    public static LocalDateTime parseLocalDateTimeFormatyMdHms(String localDateTime) {
-        return LocalDateTime.from(DFY_MD_HMS.parse(localDateTime));
+    public static LocalDateTime parseLocalDateTimeFormat(String localDateTime) {
+        return LocalDateTime.from(DATE_TIME_FORMATTER.parse(localDateTime));
     }
 }

@@ -7,28 +7,23 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * 分布式锁
+ *
+ * @since 2024/03/19
+ **/
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface LogRecord {
+public @interface DistributedLock {
 
-    /**
-     * 操作类型
-     */
-    String type() default "";
+    String key() default "";
 
-    /**
-     * 业务编号
-     */
-    String bizNo() default "";
+    String waitTime() default "2s";
 
-    String content() default "";
+    String leaseTime() default "3s";
 
-    String condition() default "";
+    boolean ignoreFailed() default false;
 
-    String unless() default "";
-
-    // 是否异步执行
-    boolean sync() default false;
 }

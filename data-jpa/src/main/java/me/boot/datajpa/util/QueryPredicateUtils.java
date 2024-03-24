@@ -75,6 +75,7 @@ public abstract class QueryPredicateUtils {
         }
     }
 
+    // TODO support class annotation situation
     public static List<QueryCriteriaProperty> getCriteriaProperties(Object query) {
         List<Field> fields = FieldUtils.getFieldsListWithAnnotation(query.getClass(),
             QueryCriteria.class);

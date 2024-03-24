@@ -1,11 +1,10 @@
 package me.boot.easy.excel.strategy;
 
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
-import java.util.Collection;
 import java.util.List;
 import me.boot.easy.excel.controller.SheetObject;
 import me.boot.easy.excel.spi.SheetWriterHandler;
-import me.boot.easy.excel.util.TransposeUtil;
+import me.boot.easy.excel.util.TransposeUtils;
 
 /**
  * @description
@@ -19,7 +18,7 @@ public class TransposeStrategy implements SheetWriterHandler {
         if(sheetObject.getHeadClass() != null) {
             sheetObject.setHeadClass(null);
             List<?> data = (List<?>) sheetObject.getData();
-            List<List<String>> transposeList = TransposeUtil.transpose(data);
+            List<List<String>> transposeList = TransposeUtils.transpose(data);
             sheetObject.setData(transposeList);
         }
     }

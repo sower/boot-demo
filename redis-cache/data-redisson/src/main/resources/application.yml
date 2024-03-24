@@ -6,7 +6,7 @@ spring:
 #    port: ${REDIS_PORT:6379}
 #    password: ${REDIS_PWD:}
     # 连接超时时间（记得添加单位，Duration）
-    timeout: 10000ms
+    timeout: 10s
 #    cluster:
 #      nodes: 123
 #      max-redirects: 5
@@ -28,5 +28,5 @@ spring:
     type: redis
     redis:
       cache-null-values: true
-      time-to-live: 30000
+      time-to-live: 5m
       key-prefix: 'boot:data.redisson:'

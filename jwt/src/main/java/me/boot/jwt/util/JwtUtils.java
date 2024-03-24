@@ -1,5 +1,8 @@
 package me.boot.jwt.util;
 
+import com.nimbusds.jose.EncryptionMethod;
+import com.nimbusds.jose.JWEAlgorithm;
+import com.nimbusds.jose.JWEHeader;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSHeader.Builder;
@@ -9,10 +12,13 @@ import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
+import com.nimbusds.jose.crypto.RSADecrypter;
+import com.nimbusds.jose.crypto.RSAEncrypter;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.proc.BadJOSEException;
+import com.nimbusds.jwt.EncryptedJWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.SneakyThrows;
@@ -126,4 +132,31 @@ public abstract class JwtUtils {
     }
 
 
+    @SneakyThrows
+    public static String encryptJwt(JWTClaimsSet jwtClaims, RSAKey publicKey) {
+        JWEHeader header = new JWEHeader(JWEAlgorithm.RSA_OAEP_256, EncryptionMethod.A128GCM);
+        // Create the encrypted JWT object
+        EncryptedJWT jwt = new EncryptedJWT(header, jwtClaims);
+
+        // Create an encrypter with the specified public RSA key
+        RSAEncrypter encrypter = new RSAEncrypter(publicKey);
+
+        // Do the actual encryption
+        jwt.encrypt(encrypter);
+
+        // Serialise to JWT compact form
+        return jwt.serialize();
+    }
+
+    @SneakyThrows
+    public static JWTClaimsSet decryptJwt(String token, RSAKey privateKey) {
+        // Create the encrypted JWT object
+        EncryptedJWT jwt = EncryptedJWT.parse(token);
+
+        /// Create a decrypter with the specified private RSA key
+        RSADecrypter decrypter = new RSADecrypter(privateKey);
+        // Decrypt
+        jwt.decrypt(decrypter);
+        return jwt.getJWTClaimsSet();
+    }
 }

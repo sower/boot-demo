@@ -1,18 +1,15 @@
 jwt:
-  token-name: Authorization
 #  hmac-key: boot-hmac-secretboot-hmac-secret
   hmac-key: BOOT(5DSYiNCQRvgn+8otW8yTXA1yjen/l1pF8cr+Pe+556cpu3LXjeJvlFJMVy11svOgqtF/dQol9BbsFMK1qdoSI4/2njELqnwQ2z0CZZTNUUk=)
-#  jks-file-name: null
+  rse-key: '{"p":"0b7oErnd_ysXf_j7URoFLg8GQONBwrgggawqap7DkSTkelzk7Qkng-n7cfX23u0f5sjl6VGBrTgv_w4NpWOtIadkdypQKFxUgjNkykLFyCGmDC23xUmYRJsZaCfsLFhGlyUabMX5dWZ0li3t_-9b9gQ5hpQX6onDrY8rIGJKgOE","kty":"RSA","q":"ySkk72MW11mpRVH73WZZt-z5MJX3qdhjJX3Z1FSu9tELffTknEvdze0r20sHkO8_vD0edvCiZZx0pcs6mPTxjc0IinNscXVsk0isvGUdYZzz0GtZFRr43dEnJggxwmCliqqYxGxFDSlONJ6ehFZ2bqFpsV8WgGQ75l2UE1sa4R8","d":"MxmoQcbOR0vj_R4m-dZkdSIRPTi2Me-1gG933O_OELg367H9yFTuvT8ZO3SsMY8-I1weOogoNjTYTePsq9ENv8n64wmBF1aGgWdYLZ4WG9LPSAXxxGE12jgEi2mSoxdGenvQ5jChoRZO20g2FpcG0fD71gBJxP8Mvq9hReAGbZbzZiQ2VouJ-mEWMyy3ebp2PsFahvLUrJJNNn9bOU8abOP1gfIpXavYDMCOc52mbH8_03mwpo1HwF4yrz1zMLxZUflk3L-jKa6zQxwPDbdxGVVtnmcd-bMhwLQDaZCbusYGhXnN42vnHDyzoMtXi9MXuBK2xekND1DbovU7T_aa4Q","e":"AQAB","use":"enc","kid":"123","qi":"J2q7pckOsSSV7k5iRm9wjvm7w7Jx4CSq7drGEzDzEJJHOkAJ4TDLA6-SH8OqYbw4_agbD5kGZJH1YIelzyATGO_3da-u38e10WwQZ0w2b8kUaeUqDbzPOJk7_rs7JKXlIa5m51cW9SWUJ8zLaWz-iYgO7xoNDmuBIjQY5IZ2D-E","dp":"OM0OZCPZrsSotItk4-28AWEoPGJO6MCcbQGG6yDbrW7kQQ7vIBIelWbEJXSKyoxE22cEfE8KYzKYLOZNY8C-niKK3oqi8osuh6QLY4r5rN0P7rRi1Ba-GbY3BzHoj4nIdB4kLdjfWZ_JavI9RdY4fUNfoMZyQ53TVCk1cKutqYE","dq":"QQEUuG7y4KBOvOHjXAZJE9B2LicoIzCTyXfDvoOnDoc7CXbrsT4q7PKpa3HxffpyRCgUAid8sw09_J2Rz__HVyVcjzEBaCCj92xStYaPWg3YFA-8d7-BkFyYJAgd3ExS8l5yg3bhUYF5jjN70hQGrXVnrDOoF9FMMgMnaKHWK80","n":"pNCaDNn76B1r8JS3dnBlo_-AMIEnpmv6B69SSzKaVBmiRuRYcnsqh39SkqKu3Ft8-xIhdTRgQkhcaIwUbpAi_BWtp6ZmP9U86F6CrHE1cvGLVWdDTNu5kN1rd2F7u_c50aC1PtfGuPyHQT5PzEIpP3N4jQGxD1Yw5HEcZPuM1707S7ojyvMeV8n3_-7HugC49Y-lSIjixvc37WeqUcjXeKKcy3Yv6RVxS12XoFrhc_BEn78_kvEo2udxbrrnXEyXvEXVtH8PrATwpL9dixYqrij2vpTfq13rhZQ4Ad4Cnt14ioFpsRxeKmOdA-HVVCxuOWHRC4ayWAwTPstjdCVcPw"}'
+  #  jks-file-name: null
 #  jks-password: null
 #  cert-password: null
-  issuer: me
+  issuer: boot
   subject: me
-  audience: boot
-  not-before-at: 1
-  not-before-in: 1
-  expired-at: 1
-  expired-in: 1
-  
+  audience: client
+  effective-time: 3m
+
 jasypt:
   encryptor:
     password: boot-jasypt-jwt

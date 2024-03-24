@@ -39,6 +39,7 @@
     <spring.boot.version>2.7.18</spring.boot.version>
     <spring.cloud.version>2021.0.9</spring.cloud.version>
     <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+    <commons-lang3.version>3.14.0</commons-lang3.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <service.version>0.0.2-SNAPSHOT</service.version>
   </properties>
@@ -78,6 +79,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+      <scope>provided</scope>
       <optional>true</optional>
     </dependency>
 
@@ -85,6 +87,7 @@
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
       <version>${org.mapstruct.version}</version>
+      <scope>provided</scope>
       <optional>true</optional>
     </dependency>
 
@@ -125,7 +128,7 @@
         <configuration>
           <!--pom不备份-->
           <generateBackupPoms>false</generateBackupPoms>
-          <newVersion>${service.version}</newVersion>
+<!--          <newVersion>${service.version}</newVersion>-->
         </configuration>
       </plugin>
 

@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import me.boot.base.util.DateUtils;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +29,7 @@ public class JacksonConfig {
     /**
      * 默认日期时间格式
      */
-    private final String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+    private final String dateTimeFormat = DateUtils.DATE_TIME_FORMAT;
     /**
      * 默认日期格式 "yyyy-MM-dd"
      */

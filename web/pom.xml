@@ -10,6 +10,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>web</artifactId>
+  <name>Boot Web App</name>
+  <description>Power by spring web mvc</description>
+
 
   <dependencies>
     <!--    <dependency>-->
@@ -29,6 +32,12 @@
       <artifactId>jwt</artifactId>
       <version>${project.version}</version>
     </dependency>
+
+<!--    <dependency>-->
+<!--      <groupId>me.boot</groupId>-->
+<!--      <artifactId>data-redisson</artifactId>-->
+<!--      <version>${project.version}</version>-->
+<!--    </dependency>-->
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
