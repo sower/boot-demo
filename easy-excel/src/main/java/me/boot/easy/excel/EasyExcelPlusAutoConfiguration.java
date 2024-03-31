@@ -18,7 +18,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.Validator;
-import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
@@ -75,18 +74,5 @@ public class EasyExcelPlusAutoConfiguration {
         argumentResolvers.addAll(adapter.getArgumentResolvers());
         adapter.setArgumentResolvers(argumentResolvers);
     }
-
-
-    @Bean
-    public CommonsRequestLoggingFilter logFilter() {
-        CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
-        filter.setIncludeQueryString(true);
-        filter.setIncludePayload(true);
-        filter.setMaxPayloadLength(1000);
-        filter.setIncludeHeaders(false);
-        filter.setAfterMessagePrefix("REQUEST DATA : ");
-        return filter;
-    }
-
 
 }

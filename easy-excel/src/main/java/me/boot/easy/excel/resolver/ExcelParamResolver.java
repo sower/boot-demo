@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import me.boot.base.context.SpringContextHolder;
 import me.boot.easy.excel.annotation.ExcelParam;
-import me.boot.easy.excel.util.RequestContextUtil;
+import me.boot.easy.excel.util.RequestContextUtils;
 import me.boot.easy.excel.validator.CompositeExcelValidator;
 import me.boot.easy.excel.validator.ExcelValidException;
 import me.boot.easy.excel.validator.ExcelValidator;
@@ -34,7 +34,7 @@ public class ExcelParamResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
-        HttpServletRequest request = RequestContextUtil.getContextRequest();
+        HttpServletRequest request = RequestContextUtils.getContextRequest();
         String contentType = request.getContentType();
         boolean isMultipart =
             contentType != null && contentType.toLowerCase(Locale.ROOT).startsWith("multipart/");

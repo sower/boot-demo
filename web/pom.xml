@@ -7,11 +7,16 @@
     <groupId>me.boot</groupId>
     <version>0.0.2-SNAPSHOT</version>
   </parent>
+  <packaging>pom</packaging>
+  <modules>
+    <module>swagger</module>
+    <module>mvc</module>
+    <module>flux</module>
+  </modules>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>web</artifactId>
-  <name>Boot Web App</name>
-  <description>Power by spring web mvc</description>
+  <name>web</name>
 
 
   <dependencies>
@@ -27,44 +32,18 @@
       <version>${project.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>me.boot</groupId>
-      <artifactId>jwt</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
 <!--    <dependency>-->
 <!--      <groupId>me.boot</groupId>-->
 <!--      <artifactId>data-redisson</artifactId>-->
 <!--      <version>${project.version}</version>-->
 <!--    </dependency>-->
 
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <exclusions>
-        <exclusion>
-          <artifactId>spring-boot-starter-tomcat</artifactId>
-          <groupId>org.springframework.boot</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-undertow</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-ui</artifactId>
-      <version>1.7.0</version>
-    </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -92,10 +71,6 @@
             <exclude>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
-            </exclude>
-            <exclude>
-              <groupId>org.mapstruct</groupId>
-              <artifactId>mapstruct</artifactId>
             </exclude>
           </excludes>
           <additionalProperties>

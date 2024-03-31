@@ -33,13 +33,14 @@ public interface HttpBinService {
     JSONObject get(@RequestParam("msg") String msg, @RequestHeader Map<String, String> headers);
 
     @PostMapping(value = "/post", consumes = MediaType.APPLICATION_JSON_VALUE)
-    JSONObject post(@RequestBody SingleResult<?> body, @RequestHeader("Authorization") String token);
+    JSONObject post(@RequestBody SingleResult<?> body,
+        @RequestHeader("Authorization") String token);
 
     @PostMapping(value = "/post", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    JSONObject postFormUrl(Map<String,?> form);
+    JSONObject postFormUrl(Map<String, ?> form);
 
     @PostMapping(value = "/post", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    JSONObject postFormData(Map<String,?> form);
+    JSONObject postFormData(Map<String, ?> form);
 
     @PostMapping(value = "/post", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     JSONObject uploadFile(@RequestPart(value = "file") MultipartFile file);

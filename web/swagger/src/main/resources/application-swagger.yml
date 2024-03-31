@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: Boot Web
+    version: @project.version@
+    description: Spring web demo app
+
+
+springdoc:
+  api-docs:
+    enabled: true
+  override-with-generic-response: false
+  writer-with-order-by-keys: true
+  default-support-form-data: true
+
+  swagger-ui:
+    enabled: true
+    filter: true
+#    operationsSorter: method
+    tagsSorter: alpha
+    displayOperationId: true
+    displayRequestDuration: true
+    docExpansion: none
+    showExtensions: true
+    showCommonExtensions: true
+    persistAuthorization: true
+
+  # management actuator
+  show-actuator: true
+#  paths-to-match: /**
+#  packages-to-scan: me.boot
+#  use-management-port: true
+
+management:
+  server:
+    port: 9090
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+#        openapi, swagger-ui, health, info, env, mappings, beans, features
+  endpoint:
+    health:
+      show-details: always
