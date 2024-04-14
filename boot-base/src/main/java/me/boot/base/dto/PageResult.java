@@ -4,38 +4,31 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 分页结果
  */
+@ToString
 public class PageResult<T> extends Result {
 
+    @Setter
+    @Getter
     private int totalCount = 0;
 
+    @Getter
     private int pageSize = 1;
 
+    @Getter
     private int pageIndex = 1;
 
+    @Setter
     private Collection<T> data;
-
-    public int getTotalCount() {
-        return totalCount;
-    }
-
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
 
     public void setPageSize(int pageSize) {
         this.pageSize = Math.max(pageSize, 1);
-    }
-
-    public int getPageIndex() {
-        return pageIndex;
     }
 
     public void setPageIndex(int pageIndex) {
@@ -50,10 +43,6 @@ public class PageResult<T> extends Result {
             return (List<T>) data;
         }
         return new ArrayList<>(data);
-    }
-
-    public void setData(Collection<T> data) {
-        this.data = data;
     }
 
     public int getTotalPages() {

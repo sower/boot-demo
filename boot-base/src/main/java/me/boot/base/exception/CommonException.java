@@ -3,6 +3,7 @@ package me.boot.base.exception;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.StandardException;
 
 /**
  * 公共异常
@@ -12,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@StandardException
 public class CommonException extends RuntimeException {
 
     private static final long serialVersionUID = 1;

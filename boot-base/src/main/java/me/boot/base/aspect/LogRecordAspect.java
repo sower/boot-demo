@@ -26,7 +26,7 @@ public class LogRecordAspect {
     // auto record log
     @AfterReturning("@annotation(logRecord)")
     public void doAround(JoinPoint joinPoint, LogRecord logRecord) {
-        String record = spelParser.getValueBySpel(logRecord.content(), joinPoint);
+        String record = spelParser.parseValue(logRecord.content(), joinPoint);
         System.err.println(record);
     }
 

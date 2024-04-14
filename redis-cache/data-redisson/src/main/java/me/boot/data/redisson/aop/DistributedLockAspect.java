@@ -69,14 +69,14 @@ public class DistributedLockAspect {
         if (StringUtils.isBlank(key)) {
             return String.join(".", declaringTypeName, name, args);
         }
-        return spelParser.getValueBySpel(key, joinPoint);
+        return spelParser.parseValue(key, joinPoint);
     }
 
     private long parseTime(String input) {
         if (StringUtils.isBlank(input)) {
             return 0;
         }
-        String value = spelParser.getValueBySpel(input);
+        String value = spelParser.parseValue(input);
         return DurationStyle.detectAndParse(value).toMillis();
     }
 

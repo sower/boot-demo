@@ -42,12 +42,12 @@ public class SpelParser {
     private final SpelExpressionParser parser = new SpelExpressionParser();
 
 
-    public String getValueBySpel(@NonNull String spelString, JoinPoint joinPoint) {
-        return getValueBySpel(spelString, joinPoint, String.class);
+    public String parseValue(@NonNull String spelString, JoinPoint joinPoint) {
+        return parseValue(spelString, joinPoint, String.class);
     }
 
 
-    public <T> T getValueBySpel(@NonNull String spelString, JoinPoint joinPoint,
+    public <T> T parseValue(@NonNull String spelString, JoinPoint joinPoint,
         Class<T> resultType) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String[] parameterNames = methodSignature.getParameterNames();
@@ -61,20 +61,20 @@ public class SpelParser {
         for (int i = 0; i < args.length; i++) {
             objectMap.put(parameterNames[i], args[i]);
         }
-        return getValueBySpel(spelString, resultType, objectMap);
+        return parseValue(spelString, resultType, objectMap);
     }
 
 
-    public String getValueBySpel(@NonNull String spelString) {
-        return getValueBySpel(spelString, Collections.emptyMap());
+    public String parseValue(@NonNull String spelString) {
+        return parseValue(spelString, Collections.emptyMap());
     }
 
-    public String getValueBySpel(@NonNull String spelString,
+    public String parseValue(@NonNull String spelString,
         Map<String, Object> varMap) {
-        return getValueBySpel(spelString, String.class, varMap);
+        return parseValue(spelString, String.class, varMap);
     }
 
-    public <T> T getValueBySpel(@NonNull String spelString, Class<T> resultType,
+    public <T> T parseValue(@NonNull String spelString, Class<T> resultType,
         Map<String, Object> varMap) {
         String placeholders = propertyResolver.resolvePlaceholders(spelString);
         Expression expression = parseExpression(placeholders);

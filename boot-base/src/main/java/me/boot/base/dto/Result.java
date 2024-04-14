@@ -2,10 +2,12 @@ package me.boot.base.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Getter
 @Setter
+@ToString
 public class Result {
 
     private boolean success;

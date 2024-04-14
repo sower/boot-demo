@@ -3,6 +3,7 @@ package me.boot.base.context;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Data;
+import lombok.experimental.Delegate;
 
 /**
  * 基础上下文
@@ -14,21 +15,7 @@ public class BootContext {
 
     private String userId;
 
+    @Delegate
     private Map<String, Object> properties = new HashMap<>();
 
-    public Object getProperty(String var) {
-        return this.properties.get(var);
-    }
-
-    public void addProperty(String varKey, Object varValue) {
-        this.properties.put(varKey, varValue);
-    }
-
-    public void removeProperty(String var) {
-        this.properties.remove(var);
-    }
-
-    public void removeAllProperties() {
-        this.properties.clear();
-    }
 }

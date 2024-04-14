@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RAtomicLong;
 import org.redisson.api.RBucket;
 import org.redisson.api.RLock;
+import org.redisson.api.RRateLimiter;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
 import org.springframework.lang.NonNull;
@@ -135,6 +136,11 @@ public abstract class RedissonUtils {
      */
     public static RLock getLock(String key) {
         return redisson.getLock(normalize(key));
+    }
+
+
+    public static RRateLimiter getRateLimiter(String key) {
+        return redisson.getRateLimiter(normalize(key));
     }
 
 

@@ -4,7 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Setter
 @MappedSuperclass
