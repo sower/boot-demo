@@ -15,7 +15,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 /**
  * 线程池配置
  *
- * @date 2023/02/19
+ * @since 2023/02/19
  */
 //@EnableAsync
 @Configuration

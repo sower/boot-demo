@@ -1,31 +1,15 @@
 package me.boot.easy.excel.validator;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class ReadRow<T> {
 
-    private final Integer rowIndex;
+    private Integer rowIndex;
 
-    private final T data;
+    private T data;
 
-
-    public ReadRow(Integer rowIndex, T data) {
-        this.rowIndex = rowIndex;
-        this.data = data;
-    }
-
-    public Integer getRowIndex() {
-        return rowIndex;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    @Override
-    public String toString() {
-        return "ReadRow{" +
-            "rowIndex=" + rowIndex +
-            ", data=" + data +
-            '}';
-    }
 }

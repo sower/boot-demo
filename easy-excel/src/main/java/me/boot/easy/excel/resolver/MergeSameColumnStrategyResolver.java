@@ -8,9 +8,10 @@ import me.boot.easy.excel.annotation.MergeSameColumn;
 import me.boot.easy.excel.strategy.MergeSameColumnStrategy;
 
 /**
- * @description
- * @date 2023/10/10
- **/
+ * MergeSameColumnStrategyResolver
+ *
+ * @since 2023/10/10
+ */
 public class MergeSameColumnStrategyResolver implements WriteStrategyResolver {
 
     @Override

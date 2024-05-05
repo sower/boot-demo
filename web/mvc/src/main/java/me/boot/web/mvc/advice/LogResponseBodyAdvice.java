@@ -9,9 +9,10 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /**
- * @description
- * @date 2023/08/06
- **/
+ * LogResponseBodyAdvice
+ *
+ * @since 2023/08/06
+ */
 @Slf4j
 //@ControllerAdvice
 public class LogResponseBodyAdvice implements ResponseBodyAdvice {

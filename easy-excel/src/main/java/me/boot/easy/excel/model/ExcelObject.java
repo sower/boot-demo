@@ -1,18 +1,17 @@
-package me.boot.easy.excel.controller;
+package me.boot.easy.excel.model;
 
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.alibaba.excel.write.handler.WriteHandler;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
- * @description
- * @date 2023/09/29
- **/
+ * Excel对象
+ *
+ * @since 2023/09/29
+ */
 @Data
-@NoArgsConstructor
 public class ExcelObject {
 
     /**

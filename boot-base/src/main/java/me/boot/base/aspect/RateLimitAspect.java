@@ -29,11 +29,19 @@ public class RateLimitAspect {
 
     private final RateLimitManger rateLimitManger;
 
-    // TODO 类级注解
-
+    @Before("@within(rateLimit) && !@annotation(me.boot.base.annotation.RateLimit)")
+    public void classPointcut(JoinPoint point, RateLimit rateLimit) {
+        System.err.println("classPointcut");
+        limitRate(point, rateLimit);
+    }
 
     @Before("@annotation(rateLimit)")
-    public void pointcut(JoinPoint point, RateLimit rateLimit) {
+    public void methodPointcut(JoinPoint point, RateLimit rateLimit) {
+        System.err.println("methodPointcut");
+        limitRate(point, rateLimit);
+    }
+
+    private void limitRate(JoinPoint point, RateLimit rateLimit) {
         if (rateLimit.qps() <= RateLimit.NOT_LIMITED) {
             return;
         }
@@ -53,7 +61,6 @@ public class RateLimitAspect {
                 throw new RuntimeException("请求太快，慢点重试");
             }
         }
-
     }
 
     private Duration parseTime(String input) {

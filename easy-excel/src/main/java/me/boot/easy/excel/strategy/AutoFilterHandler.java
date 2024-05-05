@@ -7,9 +7,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 /**
- * @description
- * @date 2023/09/26
- **/
+ * AutoFilterHandler
+ *
+ * @since 2023/09/26
+ */
 public class AutoFilterHandler implements SheetWriteHandler {
 
     private int firstRow;

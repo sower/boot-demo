@@ -13,9 +13,10 @@ import org.springframework.web.servlet.function.RouterFunctions;
 import org.springframework.web.servlet.function.ServerResponse;
 
 /**
- * @description
- * @date 2023/06/25
- **/
+ * WebConfig
+ *
+ * @since 2023/06/25
+ */
 @Configuration
 public class WebConfig {
 

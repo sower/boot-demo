@@ -11,7 +11,7 @@ import org.springframework.lang.Nullable;
 /**
  * i18 message
  *
- * @date 2022/10/07
+ * @since 2022/10/07
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

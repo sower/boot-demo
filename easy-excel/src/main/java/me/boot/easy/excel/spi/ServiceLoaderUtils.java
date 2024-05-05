@@ -6,10 +6,11 @@ import java.util.ServiceLoader;
 import me.boot.easy.excel.resolver.WriteStrategyResolver;
 
 /**
- * @description
- * @date 2023/10/13
- **/
-public class ServiceLoaderUtil {
+ * ServiceLoaderUtils
+ *
+ * @since 2023/10/13
+ */
+public class ServiceLoaderUtils {
 
     public static List<WriteStrategyResolver> writeStrategyResolvers() {
         ServiceLoader<WriteStrategyResolver> loader = ServiceLoader.load(

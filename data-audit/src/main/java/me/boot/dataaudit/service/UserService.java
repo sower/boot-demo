@@ -14,9 +14,10 @@ import org.javers.spring.annotation.JaversAuditable;
 import org.springframework.stereotype.Service;
 
 /**
- * @description
- * @date 2023/07/16
- **/
+ * UserService
+ *
+ * @since 2023/07/16
+ */
 @Service
 @AllArgsConstructor
 @Slf4j

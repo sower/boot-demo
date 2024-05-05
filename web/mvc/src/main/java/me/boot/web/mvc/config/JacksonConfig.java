@@ -21,7 +21,7 @@ import org.springframework.core.annotation.Order;
 /**
  * 日期时间转换配置
  *
- * @date 2023/07/15
+ * @since 2023/07/15
  **/
 @Configuration
 public class JacksonConfig {

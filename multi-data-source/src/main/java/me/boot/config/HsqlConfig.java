@@ -11,7 +11,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 /**
  * 嵌入式(内存级别)数据库Hsql 用于创建初始化batch相关表
  *
- * @date 2023/03/05
+ * @since 2023/03/05
  **/
 @Configuration
 public class HsqlConfig {

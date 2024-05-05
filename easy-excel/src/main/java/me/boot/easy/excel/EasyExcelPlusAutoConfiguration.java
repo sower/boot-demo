@@ -64,7 +64,7 @@ public class EasyExcelPlusAutoConfiguration {
     /**
      * 设置解析器，保证自定义解析器优先级最高
      *
-     * @param adapter
+     * @param adapter /
      */
     @Autowired
     public void setArgumentResolvers(RequestMappingHandlerAdapter adapter) {

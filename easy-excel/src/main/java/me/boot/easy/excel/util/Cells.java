@@ -8,8 +8,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 /**
- * @description
- * @date 2023/09/29
+ * 单元格工具
+ *
+ * @since 2023/09/29
  **/
 public abstract class Cells {
 
@@ -34,7 +35,7 @@ public abstract class Cells {
         }
     }
 
-    public static boolean equals(Cell cell1, Cell cell2) {
+    public static boolean equals(@NonNull Cell cell1, @NonNull Cell cell2) {
         return Objects.equals(getValue(cell1), getValue(cell2));
     }
 }

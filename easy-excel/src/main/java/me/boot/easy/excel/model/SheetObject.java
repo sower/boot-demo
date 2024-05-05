@@ -1,4 +1,4 @@
-package me.boot.easy.excel.controller;
+package me.boot.easy.excel.model;
 
 import java.util.Collection;
 import java.util.List;
@@ -6,8 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @description
- * @date 2023/10/14
+ * Sheet对象
+ *
+ * @since 2023/10/14
  **/
 @Data
 @NoArgsConstructor

@@ -7,8 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @description
- * @date 2023/09/29
+ * 过滤器
+ *
+ * @since 2023/09/29
  */
 @Documented
 @Target(ElementType.TYPE)

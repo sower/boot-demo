@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 请求配置
  *
- * @date 2022/09/04
+ * @since 2022/09/04
  */
 @Data
 @Configuration

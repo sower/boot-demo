@@ -5,8 +5,9 @@ import me.boot.easy.excel.annotation.AutoCellSize;
 import me.boot.easy.excel.strategy.AutoCellSizeStrategy;
 
 /**
- * @description
- * @date 2023/10/10
+ * AutoCellSizeStrategyResolver
+ *
+ * @since 2023/10/10
  **/
 public class AutoCellSizeStrategyResolver implements WriteStrategyResolver {
 

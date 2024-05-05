@@ -20,4 +20,6 @@ public interface UserDao extends BaseRepository<User, String> {
 
     <T> Collection<T> findByOnline(boolean online, Class<T> type);
 
+    <T> Optional<T> findByName(String name, Class<T> type);
+
 }

@@ -12,10 +12,11 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 /**
- * @description
- * @date 2023/09/15
+ * AutoSequenceStrategy
+ *
+ * @since 2023/09/15
  */
-public class AutoSequenceStrategy implements RowWriteHandler,SheetWriteHandler {
+public class AutoSequenceStrategy implements RowWriteHandler, SheetWriteHandler {
 
 
     private int startColumn;

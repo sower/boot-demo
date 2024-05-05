@@ -3,7 +3,7 @@ package me.boot.datajpa.property;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.boot.base.constant.Operation;
+import me.boot.base.constant.QueryOperation;
 
 /**
  * QueryCriteriaProperty
@@ -17,7 +17,7 @@ public class QueryCriteriaProperty {
 
     private String name;
 
-    private Operation operation;
+    private QueryOperation operation;
 
     private Object value;
 

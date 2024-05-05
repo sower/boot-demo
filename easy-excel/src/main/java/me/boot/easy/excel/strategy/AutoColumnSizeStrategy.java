@@ -22,7 +22,7 @@ import org.apache.poi.ss.usermodel.Cell;
  * 自动列宽策略
  * <p>适用于内容存在换行场景</p>
  *
- * @date 2023/09/10
+ * @since 2023/09/10
  **/
 @NoArgsConstructor
 public class AutoColumnSizeStrategy extends AbstractColumnWidthStyleStrategy {

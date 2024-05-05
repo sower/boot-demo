@@ -7,8 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @description
- * @date 2023/09/29
+ * 下拉框
+ *
+ * @since 2023/09/29
  **/
 @Documented
 @Target(ElementType.FIELD)
@@ -23,7 +24,7 @@ public @interface ExcelDropDown {
     /**
      * 动态下拉内容
      */
-    Class<? extends Enum<?>>[] enumClasses() default {};
+    Class<? extends Enum<?>> enumClass() default Empty.class;
 
     /**
      * 下拉框的起始行，默认head下一行
@@ -38,4 +39,8 @@ public @interface ExcelDropDown {
 
     boolean showErrorBox() default true;
 
+
+    enum Empty {
+
+    }
 }

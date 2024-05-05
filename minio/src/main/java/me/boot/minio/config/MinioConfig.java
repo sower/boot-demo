@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Minio 配置
  *
- * @date 2023/04/02
+ * @since 2023/04/02
  **/
 @Data
 @Configuration

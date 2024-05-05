@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import lombok.NoArgsConstructor;
 import me.boot.easy.excel.util.Cells;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.ss.usermodel.Row;
@@ -14,9 +15,11 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.lang.Nullable;
 
 /**
- * @description
- * @date 2023/09/15
+ * MergeSameColumnStrategy
+ *
+ * @since 2023/09/15
  */
+@NoArgsConstructor
 public class MergeSameColumnStrategy implements RowWriteHandler {
 
     /**
@@ -33,9 +36,6 @@ public class MergeSameColumnStrategy implements RowWriteHandler {
      * 需要合并行的下标，从0开始
      */
     private Collection<Integer> mergeRows;
-
-    public MergeSameColumnStrategy() {
-    }
 
     public MergeSameColumnStrategy(int startColumn, int endColumn,
         @Nullable Collection<Integer> mergeRows) {

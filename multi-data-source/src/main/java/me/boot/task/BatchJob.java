@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 批处理任务
  *
- * @date 2023/03/04
+ * @since 2023/03/04
  **/
 @Configuration
 @EnableBatchProcessing

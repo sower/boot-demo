@@ -9,10 +9,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 /**
- * @date 2023/03/12
- **/
+ * RedisUtil
+ *
+ * @since 2023/03/12
+ */
 @Component
-public class RedisUtil {
+public class RedisUtils {
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;

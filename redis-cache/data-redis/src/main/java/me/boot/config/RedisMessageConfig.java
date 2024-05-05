@@ -13,7 +13,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 
 /**
  * @description
- * @date 2023/07/02
+ * @since 2023/07/02
  **/
 @Configuration
 public class RedisMessageConfig {

@@ -3,19 +3,19 @@ package me.boot.easy.excel.strategy;
 import com.alibaba.excel.write.handler.SheetWriteHandler;
 import com.alibaba.excel.write.metadata.holder.WriteSheetHolder;
 import com.alibaba.excel.write.metadata.holder.WriteWorkbookHolder;
+import lombok.NoArgsConstructor;
 import org.apache.poi.ss.usermodel.Sheet;
 
 /**
- * @description
- * @date 2023/09/26
- **/
+ * FreezeHandler
+ *
+ * @since 2023/09/26
+ */
+@NoArgsConstructor
 public class FreezeHandler implements SheetWriteHandler {
 
     private int rowSplit = -1;
     private int colSplit = 0;
-
-    public FreezeHandler() {
-    }
 
     public FreezeHandler(int rowSplit, int colSplit) {
         this.rowSplit = rowSplit;

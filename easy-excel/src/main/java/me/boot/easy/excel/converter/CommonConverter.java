@@ -6,9 +6,10 @@ import com.alibaba.excel.metadata.data.WriteCellData;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
 
 /**
- * @description
- * @date 2023/09/24
- **/
+ * CommonConverter
+ *
+ * @since 2023/09/24
+ */
 public interface CommonConverter<T> extends Converter<T> {
 
     @Override

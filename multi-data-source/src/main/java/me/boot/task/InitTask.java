@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 /**
  * 初始化任务
  *
- * @date 2023/02/27
+ * @since 2023/02/27
  */
 @Slf4j
 @Component

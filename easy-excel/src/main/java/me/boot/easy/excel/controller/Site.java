@@ -6,9 +6,10 @@ import lombok.Data;
 import me.boot.easy.excel.annotation.ExcelContent;
 
 /**
- * @description
- * @date 2023/09/10
- **/
+ * Site
+ *
+ * @since 2023/09/10
+ */
 @Data
 @ExcelIgnoreUnannotated
 @ExcelContent(method = "getValue")

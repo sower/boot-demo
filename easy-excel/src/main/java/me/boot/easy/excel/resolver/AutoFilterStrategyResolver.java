@@ -5,9 +5,10 @@ import me.boot.easy.excel.annotation.AutoFilter;
 import me.boot.easy.excel.strategy.AutoFilterHandler;
 
 /**
- * @description
- * @date 2023/10/10
- **/
+ * AutoFilterStrategyResolver
+ *
+ * @since 2023/10/10
+ */
 public class AutoFilterStrategyResolver implements WriteStrategyResolver {
 
     @Override

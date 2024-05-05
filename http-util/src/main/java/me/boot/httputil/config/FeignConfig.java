@@ -12,8 +12,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
- * @description
- * @date 2023/01/15
+ * FeignConfig
+ *
+ * @since 2023/01/15
  */
 @Configuration
 @EnableFeignClients(basePackages = "me.boot.httputil")

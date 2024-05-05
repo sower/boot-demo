@@ -12,9 +12,10 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.type.classreading.SimpleMetadataReaderFactory;
 
 /**
- * @description
- * @date 2023/07/31
- **/
+ * CommonUtils
+ *
+ * @since 2023/07/31
+ */
 @Slf4j
 public class CommonUtils {
 

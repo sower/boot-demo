@@ -1,6 +1,12 @@
 package me.boot.easy.excel.validator.errors;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
 
+@Getter
+@ToString
+@AllArgsConstructor
 public class SimpleExcelObjectError implements ExcelValidObjectError {
 
     /**
@@ -13,27 +19,4 @@ public class SimpleExcelObjectError implements ExcelValidObjectError {
      */
     private final String message;
 
-    public SimpleExcelObjectError(Integer row, String message) {
-        this.row = row;
-        this.message = message;
-    }
-
-    @Override
-    public Integer getRow() {
-        return row;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
-    }
-
-
-    @Override
-    public String toString() {
-        return "DefaultExcelObjectError{" +
-            "row=" + row +
-            ", message='" + message + '\'' +
-            '}';
-    }
 }

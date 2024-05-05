@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import me.boot.base.constant.Operation;
+import me.boot.base.constant.QueryOperation;
 import me.boot.datajpa.annotation.QueryCriteria;
 import me.boot.datajpa.base.QuerySpecification;
 import me.boot.datajpa.constant.Gender;
@@ -18,8 +18,6 @@ import me.boot.datajpa.repository.WebSiteDao;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 
 @SpringBootTest
 class DataJpaApplicationTests {
@@ -50,19 +48,19 @@ class DataJpaApplicationTests {
     @Test
     void queryWebSite() {
 
-        WebSite jack = webSiteDao.save(
-            new WebSite().version("1.0").name("jack").url("https://www.jack.com"));
-        webSiteDao.save(new WebSite().version("2.0").name("bing").url("https://www.bing.com"));
-//        webSiteDao.findAllByName("jack").forEach(System.err::println);
+//        WebSite jack = webSiteDao.save(
+//            new WebSite().version("1.0").name("jack").url("https://www.jack.com"));
+//        webSiteDao.save(new WebSite().version("2.0").name("bing").url("https://www.bing.com"));
+        System.err.println(webSiteDao.findAll());
+        webSiteDao.findAllByName("jack").forEach(System.err::println);
 //        webSiteDao.findById(new VersionId("1.0", "1.0")).ifPresent(System.err::println);
 //        List<WebSite> bing = webSiteDao.findAllByNameAndVersion("bing", "2.0");
 //        webSiteDao.deleteAll(bing);
-//        System.err.println(webSiteDao.findAll());
     }
 
     @Test
     void predicateQuery() {
-        userDao.findAll(QuerySpecification.of(new QueryBean(null, Gender.UNKNOWN)))
+        userDao.findAll(new QueryBean(null, Gender.UNKNOWN))
             .forEach(System.err::println);
         webSiteDao.findAll(QuerySpecification.of(new QueryBean("jac", null)))
             .forEach(System.err::println);
@@ -77,16 +75,19 @@ class DataJpaApplicationTests {
 
     @Test
     void exampleQueryTest() {
-        List<User> users = userDao.findAll(Example.of(new User().online(true)));
-        System.err.println(users);
+//        List<User> users = userDao.findAll(Example.of(new User().online(true)));
+//        System.err.println(users);
+//
+//        ExampleMatcher matcher = ExampleMatcher.matching()
+//            .withIgnorePaths("gender")
+//            .withIncludeNullValues()
+//            .withStringMatcher(StringMatcher.ENDING);
+//
+//        Example<User> example = Example.of(new User().name("ck"), matcher);
+//        System.err.println(userDao.findAll(example));
+        Example<WebSite> jac = Example.of(new WebSite().name("jac"));
+        System.err.println(webSiteDao.findAll(jac));
 
-        ExampleMatcher matcher = ExampleMatcher.matching()
-            .withIgnorePaths("gender")
-            .withIncludeNullValues()
-            .withStringMatcher(StringMatcher.ENDING);
-
-        Example<User> example = Example.of(new User().name("ck"), matcher);
-        System.err.println(userDao.findAll(example));
     }
 
 //    @Test
@@ -100,7 +101,7 @@ class DataJpaApplicationTests {
     @AllArgsConstructor
     static class QueryBean {
 
-        @QueryCriteria(operation = Operation.RIGHT_LIKE)
+        @QueryCriteria(operation = QueryOperation.RIGHT_LIKE)
         private String name;
 
         @QueryCriteria

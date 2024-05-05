@@ -29,7 +29,8 @@ public class RequestContextUtils {
         String contentType = MediaTypeFactory.getMediaType(fileName).map(MediaType::toString)
             .orElse(MediaType.APPLICATION_OCTET_STREAM_VALUE);
         response.setContentType(contentType);
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName=" + UriUtils.encode(fileName, StandardCharsets.UTF_8));
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
+            "attachment;fileName=" + UriUtils.encode(fileName, StandardCharsets.UTF_8));
         return response;
     }
 }

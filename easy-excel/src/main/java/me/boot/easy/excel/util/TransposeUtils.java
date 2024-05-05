@@ -13,9 +13,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanMap;
 
 /**
- * @description
- * @date 2023/09/24
- **/
+ * TransposeUtils
+ *
+ * @since 2023/09/24
+ */
 public class TransposeUtils {
 
     public static List<List<Object>> getHeaders(List<?> data) {

@@ -6,9 +6,10 @@ import me.boot.easy.excel.annotation.ExcelDropDown;
 import me.boot.easy.excel.strategy.DropDownHandler;
 
 /**
- * @description
- * @date 2023/10/10
- **/
+ * DropDownStrategyResolver
+ *
+ * @since 2023/10/10
+ */
 public class DropDownStrategyResolver implements WriteStrategyResolver {
 
     @Override

@@ -10,9 +10,10 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
 
 /**
- * @description
- * @date 2023/08/06
- **/
+ * LogRequestBodyAdvice
+ *
+ * @since 2023/08/06
+ */
 @Slf4j
 //@ControllerAdvice
 public class LogRequestBodyAdvice implements RequestBodyAdvice {

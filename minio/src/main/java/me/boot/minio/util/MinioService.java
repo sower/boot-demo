@@ -30,9 +30,10 @@ import org.apache.commons.lang3.SystemUtils;
 import org.springframework.stereotype.Service;
 
 /**
- * @description
- * @date 2023/04/02
- **/
+ * MinioService
+ *
+ * @since 2023/04/02
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

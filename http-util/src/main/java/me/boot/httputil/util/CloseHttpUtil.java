@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 /**
  * CloseableHttpClient
  *
- * @date 2023/03/26
+ * @since 2023/03/26
  **/
 @Slf4j
 @Builder

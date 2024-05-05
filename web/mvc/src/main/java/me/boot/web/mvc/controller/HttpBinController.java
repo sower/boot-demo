@@ -40,6 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/bin")
+@RateLimit(qps = 3, timeout = "", strategy = Strategy.TOTAL)
 public class HttpBinController {
 
     private final HttpBinService httpBinService;

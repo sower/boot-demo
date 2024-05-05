@@ -9,6 +9,8 @@ import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import me.boot.easy.excel.annotation.ExcelDropDown;
 import me.boot.easy.excel.property.ExcelDropDownProperty;
 import org.apache.poi.ss.usermodel.DataValidation;
@@ -18,20 +20,15 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddressList;
 
 /**
- * @description
- * @date 2023/09/29
- **/
+ * DropDownHandler
+ *
+ * @since 2023/09/29
+ */
+@NoArgsConstructor
+@AllArgsConstructor
 public class DropDownHandler implements SheetWriteHandler {
 
     private Map<Integer, ExcelDropDownProperty> selectedMap;
-
-    public DropDownHandler() {
-    }
-
-    public DropDownHandler(
-        Map<Integer, ExcelDropDownProperty> selectedMap) {
-        this.selectedMap = selectedMap;
-    }
 
     @Override
     public void afterSheetCreate(WriteWorkbookHolder writeWorkbookHolder,
@@ -46,7 +43,7 @@ public class DropDownHandler implements SheetWriteHandler {
         }
 
         selectedMap.forEach((colIndex, property) -> {
-            buildDropDown(sheet,  colIndex, property);
+            buildDropDown(sheet, colIndex, property);
         });
     }
 

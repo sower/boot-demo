@@ -7,7 +7,9 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
- * @date 2022/09/26
+ * JpaAuditingConfiguration
+ *
+ * @since 2022/09/26
  */
 @Configuration
 @EnableJpaAuditing

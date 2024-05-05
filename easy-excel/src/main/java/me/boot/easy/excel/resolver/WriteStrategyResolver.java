@@ -1,7 +1,7 @@
 package me.boot.easy.excel.resolver;
 
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
-import me.boot.easy.excel.controller.SheetObject;
+import me.boot.easy.excel.model.SheetObject;
 
 public interface WriteStrategyResolver {
 

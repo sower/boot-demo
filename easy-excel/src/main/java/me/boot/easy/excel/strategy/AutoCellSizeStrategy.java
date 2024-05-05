@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Cell;
  * 自动单元格大小适应
  * <p>适用于有单元格合并场景</p>
  *
- * @date 2023/09/10
+ * @since 2023/09/10
  **/
 @NoArgsConstructor
 public class AutoCellSizeStrategy extends AutoColumnSizeStrategy {

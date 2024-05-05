@@ -8,7 +8,7 @@ import org.apache.commons.collections4.ListUtils;
 /**
  * 字符串集合转换器
  *
- * @date 2022/10/02
+ * @since 2022/10/02
  */
 @Converter
 public class StrListConverter extends JsonConverter<List<String>> {

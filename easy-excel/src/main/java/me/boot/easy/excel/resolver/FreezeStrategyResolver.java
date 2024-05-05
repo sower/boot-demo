@@ -5,9 +5,10 @@ import me.boot.easy.excel.annotation.FreezePane;
 import me.boot.easy.excel.strategy.FreezeHandler;
 
 /**
- * @description
- * @date 2023/10/10
- **/
+ * FreezeStrategyResolver
+ *
+ * @since 2023/10/10
+ */
 public class FreezeStrategyResolver implements WriteStrategyResolver {
 
     @Override
@@ -16,7 +17,7 @@ public class FreezeStrategyResolver implements WriteStrategyResolver {
         FreezePane annotation = headClass.getAnnotation(FreezePane.class);
         if (annotation != null) {
             excelWriterSheetBuilder.registerWriteHandler(
-                new FreezeHandler(annotation.rowIndex(), annotation.rowIndex()));
+                new FreezeHandler(annotation.rowIndex(), annotation.colIndex()));
         }
     }
 }

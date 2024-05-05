@@ -13,7 +13,7 @@ import org.apache.commons.io.FilenameUtils;
 /**
  * 文件处理工具
  *
- * @date 2022/10/23
+ * @since 2022/10/23
  */
 @Slf4j
 public class FileUtil {

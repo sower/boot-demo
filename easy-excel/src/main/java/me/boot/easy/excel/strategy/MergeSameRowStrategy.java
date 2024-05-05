@@ -7,6 +7,7 @@ import com.alibaba.excel.write.metadata.holder.WriteSheetHolder;
 import com.alibaba.excel.write.metadata.holder.WriteTableHolder;
 import java.util.Collection;
 import java.util.List;
+import lombok.NoArgsConstructor;
 import me.boot.easy.excel.util.Cells;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -16,9 +17,11 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.lang.Nullable;
 
 /**
- * @description
- * @date 2023/09/15
+ * MergeSameRowStrategy
+ *
+ * @since 2023/09/15
  */
+@NoArgsConstructor
 public class MergeSameRowStrategy implements CellWriteHandler {
 
     // 开始合并行
@@ -28,9 +31,6 @@ public class MergeSameRowStrategy implements CellWriteHandler {
 
     // 需要合并列的下标，从0开始
     private Collection<Integer> mergeColumns;
-
-    public MergeSameRowStrategy() {
-    }
 
     public MergeSameRowStrategy(
         int startRow, int endRow, @Nullable Collection<Integer> mergeColumns) {

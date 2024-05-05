@@ -4,9 +4,10 @@ import org.javers.spring.auditable.AuthorProvider;
 import org.springframework.context.annotation.Bean;
 
 /**
- * @description
- * @date 2023/07/16
- **/
+ * JaversAuthorConfig
+ *
+ * @since 2023/07/16
+ */
 public class JaversAuthorConfig {
 
     private static class SimpleAuthorProvider implements AuthorProvider {

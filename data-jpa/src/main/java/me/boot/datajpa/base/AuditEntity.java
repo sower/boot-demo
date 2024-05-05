@@ -19,7 +19,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 /**
  * 审计基类
  *
- * @date 2022/09/26
+ * @since 2022/09/26
  */
 @ToString
 @Getter

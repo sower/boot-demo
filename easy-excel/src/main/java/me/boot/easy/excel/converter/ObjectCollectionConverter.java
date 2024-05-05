@@ -13,9 +13,10 @@ import org.apache.commons.lang3.reflect.MethodUtils;
 import org.springframework.util.CollectionUtils;
 
 /**
- * @description
- * @date 2023/09/24
- **/
+ * ObjectCollectionConverter
+ *
+ * @since 2023/09/24
+ */
 @Slf4j
 public class ObjectCollectionConverter implements CommonConverter<Collection<Object>> {
 

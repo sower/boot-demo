@@ -2,7 +2,7 @@ package me.boot.easy.excel.handler;
 
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
-import me.boot.easy.excel.controller.ExcelObject;
+import me.boot.easy.excel.model.ExcelObject;
 import me.boot.easy.excel.util.RequestContextUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.context.request.NativeWebRequest;

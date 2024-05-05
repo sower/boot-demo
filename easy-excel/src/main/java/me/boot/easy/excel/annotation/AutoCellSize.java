@@ -7,8 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @description
- * @date 2023/09/29
+ * 单元格自适应
+ *
+ * @since 2023/09/29
  **/
 @Documented
 @Target(ElementType.TYPE)
@@ -16,11 +17,14 @@ import java.lang.annotation.Target;
 public @interface AutoCellSize {
 
     /**
-     * 冻结的行数 默认为表头最后一行
+     * 最大列宽
      */
     int maxColumnWidth() default 50;
 
-    // 冻结的列数
+
+    /**
+     * 最大行高，默认自适应
+     */
     int maxRowHeight() default -1;
 
 }

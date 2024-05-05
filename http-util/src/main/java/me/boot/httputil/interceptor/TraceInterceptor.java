@@ -19,9 +19,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 
 /**
- * @description
- * @date 2023/07/19
- **/
+ * TraceInterceptor
+ *
+ * @since 2023/07/19
+ */
 @Slf4j
 public class TraceInterceptor implements RequestInterceptor {
 

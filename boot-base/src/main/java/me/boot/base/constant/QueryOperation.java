@@ -1,6 +1,6 @@
 package me.boot.base.constant;
 
-public enum Operation {
+public enum QueryOperation {
     EQUAL,
     // 不等于
     NOT_EQUAL,

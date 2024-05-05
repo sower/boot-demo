@@ -17,9 +17,10 @@ import me.boot.easy.excel.annotation.MergeSameRow;
 import me.boot.easy.excel.converter.ObjectCollectionConverter;
 
 /**
- * @description
- * @date 2023/09/10
- **/
+ * WebSite
+ *
+ * @since 2023/09/10
+ */
 @Data
 @ExcelIgnoreUnannotated
 @NoArgsConstructor

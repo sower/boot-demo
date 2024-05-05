@@ -1,7 +1,6 @@
 package me.boot.datajpa.util;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -13,27 +12,44 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import me.boot.datajpa.annotation.QueryCriteria;
 import me.boot.datajpa.property.QueryCriteriaProperty;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 /**
- * QueryHelp
+ * QueryHelper
  *
  * @since 2023/12/24
  **/
 @Slf4j
 public abstract class QueryPredicateUtils {
 
-    public static <T, Q> Predicate toPredicate(Root<T> root, CriteriaBuilder cb, Q query) {
-        if (query == null) {
+    /**
+     * 转换为查询组合谓词
+     *
+     * @param root      /
+     * @param cb        /
+     * @param queryBean 查询条件对象
+     * @return {@link Predicate}
+     */
+    public static <T> Predicate toPredicate(Root<T> root, CriteriaBuilder cb, Object queryBean) {
+        if (queryBean == null) {
             return cb.and();
         }
-        List<QueryCriteriaProperty> properties = getCriteriaProperties(query);
+        List<QueryCriteriaProperty> properties = getCriteriaProperties(queryBean);
         return cb.and(properties.stream().map(property -> toPredicate(root, cb, property))
             .filter(Objects::nonNull).toArray(Predicate[]::new));
     }
 
+    /**
+     * 转换为单个查询谓词
+     *
+     * @param root     /
+     * @param cb       /
+     * @param property 查询条件属性
+     * @return {@link Predicate}
+     */
     public static <T> Predicate toPredicate(Root<T> root, CriteriaBuilder cb,
         QueryCriteriaProperty property) {
         switch (property.getOperation()) {
@@ -65,27 +81,33 @@ public abstract class QueryPredicateUtils {
             case LESS_THAN_NQ:
                 return cb.lessThan(root.get(property.getName()), (Comparable) property.getValue());
             case BETWEEN:
-                List<?> between = new ArrayList<>((Collection<?>) property.getValue());
+                Collection<?> between = (Collection<?>) property.getValue();
                 if (between.size() == 2) {
-                    return cb.between(root.get(property.getName()), (Comparable) between.get(0),
-                        (Comparable) between.get(1));
+                    return cb.between(root.get(property.getName()),
+                        (Comparable) IterableUtils.get(between, 0),
+                        (Comparable) IterableUtils.get(between, 1));
                 }
             default:
+                log.warn("not support operation: {}", property.getOperation());
                 return null;
         }
     }
 
-    // TODO support class annotation situation
-    public static List<QueryCriteriaProperty> getCriteriaProperties(Object query) {
-        List<Field> fields = FieldUtils.getFieldsListWithAnnotation(query.getClass(),
+    /**
+     * 获取规格属性列表
+     *
+     * @param queryBean 查询条件对象
+     * @return {@link List}<{@link QueryCriteriaProperty}>
+     */
+    public static List<QueryCriteriaProperty> getCriteriaProperties(Object queryBean) {
+        List<Field> fields = FieldUtils.getFieldsListWithAnnotation(queryBean.getClass(),
             QueryCriteria.class);
-        return fields.stream().map(field -> toCriteriaProperty(query, field))
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList());
+        return fields.stream().map(field -> toCriteriaProperty(queryBean, field))
+            .filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     @SneakyThrows
-    public static QueryCriteriaProperty toCriteriaProperty(Object query, Field field) {
+    private static QueryCriteriaProperty toCriteriaProperty(Object query, Field field) {
         Object value = FieldUtils.readField(field, query, true);
         if (ObjectUtils.isEmpty(value)) {
             return null;

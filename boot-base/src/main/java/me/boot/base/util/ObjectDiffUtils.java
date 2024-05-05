@@ -5,11 +5,13 @@ import com.google.common.collect.MapDifference;
 import com.google.common.collect.MapDifference.ValueDifference;
 import com.google.common.collect.Maps;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import me.boot.base.dto.FiledDifference;
-import org.springframework.cglib.beans.BeanMap;
+import org.apache.commons.lang3.builder.ReflectionDiffBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.lang.NonNull;
 
 /**
@@ -27,25 +29,38 @@ public abstract class ObjectDiffUtils {
      * @return a list of filed differences between the two objects
      */
     public static List<FiledDifference> diff(@NonNull Object before, @NonNull Object after) {
-        Map<String, ?> beforeMap = (Map<String, ?>) BeanMap.create(before);
-        Map<String, ?> afterMap = (Map<String, ?>) BeanMap.create(after);
-        return diff(beforeMap, afterMap);
+        return diff(before, after, Collections.emptyList());
     }
+
+    public static <T> List<FiledDifference> diff2(@NonNull T before, @NonNull T after) {
+        return diff2(before, after, Collections.emptyList());
+    }
+
+    public static <T> List<FiledDifference> diff2(@NonNull T before, @NonNull T after,
+        Collection<String> ignoreProperties) {
+        String[] array = ignoreProperties.toArray(new String[0]);
+        return new ReflectionDiffBuilder<>(before, after,
+            ToStringStyle.SHORT_PREFIX_STYLE).setExcludeFieldNames(array).build().getDiffs()
+            .stream()
+            .map(item -> new FiledDifference(item.getFieldName(), item.getLeft(), item.getRight()))
+            .collect(Collectors.toList());
+    }
+
 
     public static List<FiledDifference> diff(@NonNull Object before, @NonNull Object after,
         Collection<String> ignoreProperties) {
-//        Map<String, ?> beforeMap =new HashMap<String, Object>(BeanMap.create(before)) ;
-//        Map<String, ?> afterMap =  new HashMap<String, Object>(BeanMap.create(after)) ;
+        // Map<String, ?> beforeMap = (Map<String, ?>) BeanMap.create(before);
+        // Map<String, ?> afterMap = (Map<String, ?>) BeanMap.create(after);
 
         Map<String, ?> beforeMap = JSONObject.from(before);
         Map<String, ?> afterMap = JSONObject.from(after);
 
         beforeMap = Maps.filterKeys(beforeMap, key -> !ignoreProperties.contains(key));
         afterMap = Maps.filterKeys(afterMap, key -> !ignoreProperties.contains(key));
-//        for (String ignoreProperty : ignoreProperties) {
-//            beforeMap.remove(ignoreProperty);
-//            afterMap.remove(ignoreProperty);
-//        }
+        // for (String ignoreProperty : ignoreProperties) {
+        //     beforeMap.remove(ignoreProperty);
+        //     afterMap.remove(ignoreProperty);
+        // }
         return diff(beforeMap, afterMap);
     }
 

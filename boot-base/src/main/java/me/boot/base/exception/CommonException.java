@@ -8,7 +8,7 @@ import lombok.experimental.StandardException;
 /**
  * 公共异常
  *
- * @date 2022/09/18
+ * @since 2022/09/18
  */
 @Getter
 @Setter

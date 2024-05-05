@@ -4,9 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @description
- * @date 2023/07/05
- **/
+ * MessageReceiver
+ *
+ * @since 2023/07/05
+ */
 @Component
 @Slf4j
 public class MessageReceiver {

@@ -10,7 +10,7 @@ import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintVa
 /**
  * 自定义校验器
  *
- * @date 2023/02/04
+ * @since 2023/02/04
  */
 public class AnyOfValidator implements ConstraintValidator<AnyOf, String> {
 

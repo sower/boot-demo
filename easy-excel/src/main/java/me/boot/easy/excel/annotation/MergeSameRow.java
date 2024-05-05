@@ -7,8 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @description
- * @date 2023/09/29
+ * 纵向合并单元格
+ *
+ * @since 2023/09/29
  **/
 @Documented
 @Target(ElementType.TYPE)

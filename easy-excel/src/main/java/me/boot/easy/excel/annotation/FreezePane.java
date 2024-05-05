@@ -7,8 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @description
- * @date 2023/09/29
+ * 冻结窗口
+ *
+ * @since 2023/09/29
  **/
 @Documented
 @Target(ElementType.TYPE)
@@ -16,7 +17,7 @@ import java.lang.annotation.Target;
 public @interface FreezePane {
 
     /**
-     * 冻结的行数 默认为表头最后一行
+     * 冻结的行数 默认为表头第一行
      */
     int rowIndex() default -1;
 

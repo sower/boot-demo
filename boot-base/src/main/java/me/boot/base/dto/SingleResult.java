@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @date 2022/09/18
+ * SingleResult
+ *
+ * @since 2022/09/18
  */
 public class SingleResult<T> extends Result {
 

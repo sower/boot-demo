@@ -5,18 +5,22 @@ import com.alibaba.excel.write.handler.RowWriteHandler;
 import com.alibaba.excel.write.handler.context.RowWriteHandlerContext;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import lombok.Setter;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 
 /**
- * @description
- * @date 2023/09/15
- **/
+ * VerticalTableStyleStrategy
+ *
+ * @since 2023/09/15
+ */
 public class VerticalTableStyleStrategy implements RowWriteHandler {
 
     private final int lastHeaderIndex;
+
+    @Setter
     private HorizontalCellStyleStrategy cellStyleStrategy;
 
     public VerticalTableStyleStrategy() {
@@ -28,9 +32,6 @@ public class VerticalTableStyleStrategy implements RowWriteHandler {
         cellStyleStrategy = ExcelStyle.defaultCenterStyle();
     }
 
-    public void setCellStyleStrategy(HorizontalCellStyleStrategy cellStyleStrategy) {
-        this.cellStyleStrategy = cellStyleStrategy;
-    }
 
     @Override
     public void afterRowDispose(RowWriteHandlerContext context) {

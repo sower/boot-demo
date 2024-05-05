@@ -1,12 +1,13 @@
 package me.boot.easy.excel.spi;
 
 import com.alibaba.excel.write.builder.ExcelWriterSheetBuilder;
-import me.boot.easy.excel.controller.SheetObject;
+import me.boot.easy.excel.model.SheetObject;
 
 /**
- * @description
- * @date 2023/10/13
- **/
+ * SheetWriterHandler
+ *
+ * @since 2023/10/13
+ */
 public interface SheetWriterHandler {
 
     void beforeHandleSheetWriter(ExcelWriterSheetBuilder excelWriterSheetBuilder,

@@ -19,7 +19,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 /**
  * mysql 用于jpa
  *
- * @date 2023/03/05
+ * @since 2023/03/05
  **/
 @Configuration
 //@EnableTransactionManagement

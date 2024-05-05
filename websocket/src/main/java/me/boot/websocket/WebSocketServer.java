@@ -16,9 +16,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 /**
- * @description
- * @date 2023/06/28
- **/
+ * WebSocketServer
+ *
+ * @since 2023/06/28
+ */
 @ServerEndpoint("/websocket/{userId}")
 @Component
 @Slf4j

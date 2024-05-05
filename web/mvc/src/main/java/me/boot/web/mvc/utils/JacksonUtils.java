@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Jackson utils
  *
- * @date 2022/10/15
+ * @since 2022/10/15
  */
 @Slf4j
 public class JacksonUtils {
