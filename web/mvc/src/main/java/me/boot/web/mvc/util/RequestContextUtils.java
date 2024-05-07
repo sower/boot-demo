@@ -1,4 +1,4 @@
-package me.boot.web.mvc.utils;
+package me.boot.web.mvc.util;
 
 import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletRequest;

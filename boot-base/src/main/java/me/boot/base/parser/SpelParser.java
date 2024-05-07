@@ -1,4 +1,4 @@
-package me.boot.base.util;
+package me.boot.base.parser;
 
 import java.util.Arrays;
 import java.util.Collections;

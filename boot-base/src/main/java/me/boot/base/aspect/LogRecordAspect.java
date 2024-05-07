@@ -3,7 +3,7 @@ package me.boot.base.aspect;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import me.boot.base.annotation.LogRecord;
-import me.boot.base.util.SpelParser;
+import me.boot.base.parser.SpelParser;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;

@@ -1,4 +1,4 @@
-package me.boot.datajpa.base;
+package me.boot.datajpa.criteria.core;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +23,6 @@ public interface AutoSpecificationExecutor<T> extends JpaSpecificationExecutor<T
         return findAll(QuerySpecification.of(object));
     }
 
-
     default Page<T> findAll(@Nullable Object object, Pageable pageable) {
         return findAll(QuerySpecification.of(object), pageable);
     }
@@ -39,4 +38,5 @@ public interface AutoSpecificationExecutor<T> extends JpaSpecificationExecutor<T
     default boolean exists(Object object) {
         return exists(QuerySpecification.of(object));
     }
+
 }

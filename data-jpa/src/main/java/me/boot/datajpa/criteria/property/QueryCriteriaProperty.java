@@ -1,9 +1,9 @@
-package me.boot.datajpa.property;
+package me.boot.datajpa.criteria.property;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.boot.base.constant.QueryOperation;
+import me.boot.datajpa.criteria.constant.QueryOperation;
 
 /**
  * QueryCriteriaProperty
@@ -21,6 +21,10 @@ public class QueryCriteriaProperty {
 
     private Object value;
 
+    /**
+     * 值类型
+     * <p>预留</p>
+     */
     private Class<?> clazz;
 
 }

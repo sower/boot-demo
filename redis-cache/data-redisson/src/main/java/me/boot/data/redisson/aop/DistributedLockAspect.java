@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import me.boot.base.annotation.DistributedLock;
-import me.boot.base.util.SpelParser;
+import me.boot.base.parser.SpelParser;
 import me.boot.data.redisson.util.RedissonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;

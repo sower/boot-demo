@@ -1,4 +1,4 @@
-package me.boot.web.mvc.utils;
+package me.boot.web.mvc.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonParser.Feature;

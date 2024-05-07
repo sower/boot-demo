@@ -1,4 +1,4 @@
-package me.boot.datajpa.util;
+package me.boot.datajpa.criteria.util;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -10,12 +10,13 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import me.boot.datajpa.annotation.QueryCriteria;
-import me.boot.datajpa.property.QueryCriteriaProperty;
+import me.boot.datajpa.criteria.annotation.QueryCriteria;
+import me.boot.datajpa.criteria.property.QueryCriteriaProperty;
 import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.springframework.core.annotation.AnnotationUtils;
 
 /**
  * QueryHelper
@@ -24,6 +25,8 @@ import org.apache.commons.lang3.reflect.FieldUtils;
  **/
 @Slf4j
 public abstract class QueryPredicateUtils {
+
+    public static final String PERCENT = "%";
 
     /**
      * 转换为查询组合谓词
@@ -38,8 +41,10 @@ public abstract class QueryPredicateUtils {
             return cb.and();
         }
         List<QueryCriteriaProperty> properties = getCriteriaProperties(queryBean);
-        return cb.and(properties.stream().map(property -> toPredicate(root, cb, property))
-            .filter(Objects::nonNull).toArray(Predicate[]::new));
+        Predicate[] predicates = properties.stream()
+            .map(property -> toPredicate(root, cb, property)).filter(Objects::nonNull)
+            .toArray(Predicate[]::new);
+        return cb.and(predicates);
     }
 
     /**
@@ -58,12 +63,14 @@ public abstract class QueryPredicateUtils {
             case NOT_EQUAL:
                 return cb.notEqual(root.get(property.getName()), property.getValue());
             case LIKE:
-                return cb.like(root.get(property.getName()), "%" + property.getValue() + "%");
+                return cb.like(root.get(property.getName()),
+                    PERCENT + property.getValue() + PERCENT);
             case LEFT_LIKE:
-                return cb.like(root.get(property.getName()), "%" + property.getValue());
+                return cb.like(root.get(property.getName()), PERCENT + property.getValue());
             case RIGHT_LIKE:
-                return cb.like(root.get(property.getName()), property.getValue() + "%");
+                return cb.like(root.get(property.getName()), property.getValue() + PERCENT);
             case IN:
+                // support Object[]
                 return root.get(property.getName()).in((Collection<?>) property.getValue());
             case NOT_IN:
                 return root.get(property.getName()).in((Collection<?>) property.getValue()).not();
@@ -73,8 +80,8 @@ public abstract class QueryPredicateUtils {
                 return cb.isNull(root.get(property.getName()));
             case GREATER_THAN:
                 return cb.greaterThanOrEqualTo(root.get(property.getName())
-                        .as((Class<? extends Comparable>) property.getClazz()),
-                    (Comparable) property.getValue());
+                    // .as((Class<? extends Comparable>) property.getClazz())
+                    , (Comparable) property.getValue());
             case LESS_THAN:
                 return cb.lessThanOrEqualTo(root.get(property.getName()),
                     (Comparable) property.getValue());
@@ -100,22 +107,26 @@ public abstract class QueryPredicateUtils {
      * @return {@link List}<{@link QueryCriteriaProperty}>
      */
     public static List<QueryCriteriaProperty> getCriteriaProperties(Object queryBean) {
-        List<Field> fields = FieldUtils.getFieldsListWithAnnotation(queryBean.getClass(),
+        QueryCriteria queryCriteria = AnnotationUtils.findAnnotation(queryBean.getClass(),
             QueryCriteria.class);
-        return fields.stream().map(field -> toCriteriaProperty(queryBean, field))
+        List<Field> fields =
+            queryCriteria == null ? FieldUtils.getFieldsListWithAnnotation(queryBean.getClass(),
+                QueryCriteria.class) : FieldUtils.getAllFieldsList(queryBean.getClass());
+        return fields.stream().map(field -> toCriteriaProperty(queryBean, field, queryCriteria))
             .filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     @SneakyThrows
-    private static QueryCriteriaProperty toCriteriaProperty(Object query, Field field) {
+    private static QueryCriteriaProperty toCriteriaProperty(Object query, Field field,
+        QueryCriteria defaultCriteria) {
         Object value = FieldUtils.readField(field, query, true);
         if (ObjectUtils.isEmpty(value)) {
             return null;
         }
-        QueryCriteria queryCriteria = field.getAnnotation(QueryCriteria.class);
+        QueryCriteria queryCriteria = ObjectUtils.defaultIfNull(
+            field.getAnnotation(QueryCriteria.class), defaultCriteria);
         String queryKey = StringUtils.defaultIfBlank(queryCriteria.name(), field.getName());
         return new QueryCriteriaProperty(queryKey, queryCriteria.operation(), value,
             field.getType());
     }
-
 }

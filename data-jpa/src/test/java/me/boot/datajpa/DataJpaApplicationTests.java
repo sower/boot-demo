@@ -7,10 +7,10 @@ import java.util.List;
 import javax.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import me.boot.base.constant.QueryOperation;
-import me.boot.datajpa.annotation.QueryCriteria;
-import me.boot.datajpa.base.QuerySpecification;
 import me.boot.datajpa.constant.Gender;
+import me.boot.datajpa.criteria.annotation.QueryCriteria;
+import me.boot.datajpa.criteria.constant.QueryOperation;
+import me.boot.datajpa.criteria.core.QuerySpecification;
 import me.boot.datajpa.entity.User;
 import me.boot.datajpa.entity.WebSite;
 import me.boot.datajpa.repository.UserDao;
@@ -98,13 +98,13 @@ class DataJpaApplicationTests {
 //    }
 
     @Data
+    @QueryCriteria
     @AllArgsConstructor
     static class QueryBean {
 
         @QueryCriteria(operation = QueryOperation.RIGHT_LIKE)
         private String name;
 
-        @QueryCriteria
         private Gender gender;
     }
 }

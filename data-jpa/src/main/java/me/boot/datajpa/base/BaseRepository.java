@@ -1,5 +1,6 @@
 package me.boot.datajpa.base;
 
+import me.boot.datajpa.criteria.core.AutoSpecificationExecutor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
