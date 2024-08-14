@@ -1,0 +1,9 @@
+logging:
+  config: classpath:log4j2.yml
+
+
+#  -Dlog4j.skipJansi = false
+#spring:
+#  output:
+#    ansi:
+#      enabled: always

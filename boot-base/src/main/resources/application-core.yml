@@ -17,12 +17,12 @@ spring:
     time-zone: GMT+8
     locale: zh_CN
     date-format: yyyy-MM-dd HH:mm:ss
-    #    property-naming-strategy: LOWER_CAMEL_CASE
+    # property-naming-strategy: LOWER_CAMEL_CASE
     default-property-inclusion: NON_NULL #不为空的属性才会序列化
     mapper:
       SORT_PROPERTIES_ALPHABETICALLY: true
     deserialization:
-      #      # 常用,json中含pojo不存在属性时是否失败报错,默认true
+      # 常用,json中含pojo不存在属性时是否失败报错,默认true
       FAIL_ON_UNKNOWN_PROPERTIES: false
     serialization:
       INDENT_OUTPUT: true

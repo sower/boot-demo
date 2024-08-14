@@ -5,16 +5,17 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>me.boot</groupId>
-    <artifactId>boot-parent</artifactId>
+    <artifactId>nacos</artifactId>
     <version>0.0.2-SNAPSHOT</version>
   </parent>
 
-  <artifactId>message-queue</artifactId>
-  <packaging>pom</packaging>
-  <modules>
-    <module>rabbitmq</module>
-    <module>cloud-stream</module>
-  </modules>
+  <artifactId>consumer</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.alibaba.cloud</groupId>
+      <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>

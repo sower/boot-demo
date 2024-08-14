@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="1 seconds">
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <contextName>logback</contextName>
+
+  <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+    <!-- 在logstash启动文件logstash-app-search.conf中配置的IP地址和端口 -->
+    <destination>localhost:5044</destination>
+    <!-- encoder必须配置,有多种可选 -->
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+      <!-- 在elasticsearch的index中追加applicationName字段  -->
+      <customFields>{"applicationName":"${applicationName}"}</customFields>
+    </encoder>
+  </appender>
+
+  <property name="pattern"
+    value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg %n"/>
+  <!-- 输出到CONSOLE控制台 -->
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>${pattern}</pattern>
+    </encoder>
+  </appender>
+
+  <root level="info">
+    <appender-ref ref="stash"/>
+    <appender-ref ref="CONSOLE"/>
+  </root>
+</configuration>

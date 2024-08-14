@@ -20,6 +20,10 @@
     <module>cloud-config</module>
     <module>message-queue</module>
     <module>jwt</module>
+    <module>data-mybatis</module>
+    <module>log</module>
+    <module>breaker</module>
+    <module>cloud-alibaba</module>
   </modules>
 
   <parent>
@@ -68,6 +72,12 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
+<!--      <exclusions>-->
+<!--        <exclusion>-->
+<!--          <artifactId>spring-boot-starter-logging</artifactId>-->
+<!--          <groupId>org.springframework.boot</groupId>-->
+<!--        </exclusion>-->
+<!--      </exclusions>-->
     </dependency>
 
     <dependency>
@@ -97,14 +107,14 @@
     </dependency>
 
     <!-- devtools热部署依赖 -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-devtools</artifactId>
-      <!-- 防止将依赖传递到其他模块中 -->
-      <optional>true</optional>
-      <!-- 只在运行时起作用，打包时不打进去（防止线上执行打包后的程序，启动文件监听线程File Watcher，耗费大量的内存资源） -->
-      <scope>runtime</scope>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.springframework.boot</groupId>-->
+<!--      <artifactId>spring-boot-devtools</artifactId>-->
+<!--      &lt;!&ndash; 防止将依赖传递到其他模块中 &ndash;&gt;-->
+<!--      <optional>true</optional>-->
+<!--      &lt;!&ndash; 只在运行时起作用，打包时不打进去（防止线上执行打包后的程序，启动文件监听线程File Watcher，耗费大量的内存资源） &ndash;&gt;-->
+<!--      <scope>runtime</scope>-->
+<!--    </dependency>-->
 
   </dependencies>
 

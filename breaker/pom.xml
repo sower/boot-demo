@@ -9,12 +9,13 @@
     <version>0.0.2-SNAPSHOT</version>
   </parent>
 
-  <artifactId>message-queue</artifactId>
-  <packaging>pom</packaging>
-  <modules>
-    <module>rabbitmq</module>
-    <module>cloud-stream</module>
-  </modules>
+  <artifactId>breaker</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>
