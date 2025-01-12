@@ -24,6 +24,7 @@
     <module>log</module>
     <module>breaker</module>
     <module>cloud-alibaba</module>
+    <module>misc</module>
   </modules>
 
   <parent>
