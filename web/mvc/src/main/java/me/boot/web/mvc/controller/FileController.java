@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
+import me.boot.web.mvc.bean.FileData;
+import me.boot.web.mvc.bean.MiscData;
 import me.boot.web.mvc.util.RequestContextUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
@@ -18,11 +20,16 @@ import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRange;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 文件控制器
@@ -33,8 +40,35 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("/file")
+@RequestMapping("/files")
 public class FileController {
+
+    @Operation(summary = "文件上传")
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String handleFileUpload(@RequestParam("files") List<MultipartFile> files,
+        @RequestParam(required = false) String description) {
+        log.info("receive {} file", files.size());
+        return "OK";
+    }
+
+    @Operation(summary = "文件上传-Part")
+    @PostMapping(value = "part", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String uploadPart(@RequestPart("file") MultipartFile file,
+        @RequestPart(required = false) MiscData miscData) {
+        log.info("misc data: {}", miscData);
+        if (file.isEmpty()) {
+            return "File is Empty";
+        }
+        return "OK";
+    }
+
+    @Operation(summary = "文件及数据上传")
+    @PostMapping(value = "data", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String upload(FileData data) {
+        log.info("receive file data {} ", data);
+        MultipartFile file = data.getFile();
+        return file.getOriginalFilename();
+    }
 
     @Operation(summary = "文件下载", description = "支持断点续传")
     @GetMapping("/{fileName}")
